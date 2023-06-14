@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5aeb799ba50272be76450264a821308",
+    "content-hash": "96d8835100b1d96b80212c21a2ba92a4",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -1962,26 +1962,24 @@
         },
         {
             "name": "pagerfanta/core",
-            "version": "v3.8.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/core.git",
-                "reference": "a995f69ff9af64a45c3dc3d8217100624ae214f2"
+                "reference": "157a6178bf49087c4d347ec9f5c0565aeea50121"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/a995f69ff9af64a45c3dc3d8217100624ae214f2",
-                "reference": "a995f69ff9af64a45c3dc3d8217100624ae214f2",
+                "url": "https://api.github.com/repos/Pagerfanta/core/zipball/157a6178bf49087c4d347ec9f5c0565aeea50121",
+                "reference": "157a6178bf49087c4d347ec9f5c0565aeea50121",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.4 || ^8.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0",
-                "symfony/polyfill-php80": "^1.15"
+                "php": "^8.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.6 || ^10.0"
+                "phpunit/phpunit": "^10.1"
             },
             "type": "library",
             "autoload": {
@@ -2001,35 +1999,32 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/core/tree/v3.8.0"
+                "source": "https://github.com/Pagerfanta/core/tree/v4.1.0"
             },
-            "time": "2023-04-15T16:39:14+00:00"
+            "time": "2023-04-15T16:44:14+00:00"
         },
         {
             "name": "pagerfanta/doctrine-orm-adapter",
-            "version": "v3.8.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/doctrine-orm-adapter.git",
-                "reference": "d0865fbfc7f8dd6e4c16f76135f904c60c3af3b5"
+                "reference": "0f4865e8ac6a1481d0d223259c49ceca50b40d4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/d0865fbfc7f8dd6e4c16f76135f904c60c3af3b5",
-                "reference": "d0865fbfc7f8dd6e4c16f76135f904c60c3af3b5",
+                "url": "https://api.github.com/repos/Pagerfanta/doctrine-orm-adapter/zipball/0f4865e8ac6a1481d0d223259c49ceca50b40d4d",
+                "reference": "0f4865e8ac6a1481d0d223259c49ceca50b40d4d",
                 "shasum": ""
             },
             "require": {
-                "doctrine/orm": "^2.8",
-                "pagerfanta/core": "^3.0",
-                "php": "^7.4 || ^8.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0"
+                "doctrine/orm": "^2.14",
+                "pagerfanta/core": "^3.7 || ^4.0",
+                "php": "^8.1"
             },
             "require-dev": {
-                "doctrine/annotations": "^1.11.1",
-                "doctrine/cache": "^1.11 || ^2.0",
-                "phpunit/phpunit": "^9.6 || ^10.0",
-                "symfony/cache": "^4.4 || ^5.4 || ^6.0"
+                "phpunit/phpunit": "^10.1",
+                "symfony/cache": "^5.4 || ^6.2"
             },
             "type": "library",
             "autoload": {
@@ -2051,32 +2046,31 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/doctrine-orm-adapter/tree/v3.8.0"
+                "source": "https://github.com/Pagerfanta/doctrine-orm-adapter/tree/v4.1.0"
             },
-            "time": "2023-04-15T16:39:14+00:00"
+            "time": "2023-04-15T16:44:14+00:00"
         },
         {
             "name": "pagerfanta/twig",
-            "version": "v3.8.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pagerfanta/twig.git",
-                "reference": "19ba831401d7bc5249997c09c574e5c922773b12"
+                "reference": "58f6b8f3c8fed141b5bfb6648a55deb07b517f4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/19ba831401d7bc5249997c09c574e5c922773b12",
-                "reference": "19ba831401d7bc5249997c09c574e5c922773b12",
+                "url": "https://api.github.com/repos/Pagerfanta/twig/zipball/58f6b8f3c8fed141b5bfb6648a55deb07b517f4c",
+                "reference": "58f6b8f3c8fed141b5bfb6648a55deb07b517f4c",
                 "shasum": ""
             },
             "require": {
-                "pagerfanta/core": "^3.0",
-                "php": "^7.4 || ^8.0",
-                "symfony/polyfill-php80": "^1.15",
+                "pagerfanta/core": "^3.7 || ^4.0",
+                "php": "^8.1",
                 "twig/twig": "^2.13 || ^3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.6 || ^10.0"
+                "phpunit/phpunit": "^10.1"
             },
             "type": "library",
             "autoload": {
@@ -2096,9 +2090,9 @@
                 "pagerfanta"
             ],
             "support": {
-                "source": "https://github.com/Pagerfanta/twig/tree/v3.8.0"
+                "source": "https://github.com/Pagerfanta/twig/tree/v4.1.0"
             },
-            "time": "2023-04-15T16:39:14+00:00"
+            "time": "2023-04-15T16:44:14+00:00"
         },
         {
             "name": "psr/cache",
