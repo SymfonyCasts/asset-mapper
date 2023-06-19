@@ -1,43 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container">
-    <h1>Browse {{ genre ? genre : 'All Genres' }}</h1>
-
-    <h2 class="mt-5 mb-4">Filter by Genre</h2>
-    <ul class="genre-list ps-0 mt-2 mb-3">
-        <li class="d-inline">
-            <a class="btn btn-primary btn-sm" href="{{ path('app_browse', {
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold">{{ genre ? genre : 'All Genres' }}</h1>
+    <ul class="list-none mt-8 mb-12">
+        <li class="inline">
+            <a class="btn bg-blue-500 text-white py-1 px-2" href="{{ path('app_browse', {
                 slug: 'pop'
             }) }}">Pop</a>
         </li>
-        <li class="d-inline">
-            <a class="btn btn-primary btn-sm" href="{{ path('app_browse', {
+        <li class="inline ml-2">
+            <a class="btn bg-blue-500 text-white py-1 px-2" href="{{ path('app_browse', {
                 slug: 'rock'
             }) }}">Rock</a>
         </li>
-        <li class="d-inline">
-            <a class="btn btn-primary btn-sm" href="{{ path('app_browse', {
+        <li class="inline ml-2">
+            <a class="btn bg-blue-500 text-white py-1 px-2" href="{{ path('app_browse', {
                 slug: 'heavy-metal'
             }) }}">Heavy Metal</a>
         </li>
     </ul>
 
     <div>
-        <h2 class="mt-5">Mixes</h2>
+        <h2 class="mt-10 text-2xl font-bold">Mixes</h2>
         <turbo-frame id="mix-browse-list-{{ pager.currentPage }}" target="_top">
-            <div class="row">
+            <div class="flex flex-wrap -mx-2">
                 {% for mix in pager %}
-                <div class="col col-md-4">
+                <div class="w-full md:w-1/3 px-2">
                     <a href="{{ path('app_mix_show', {
                         slug: mix.slug
-                    }) }}" class="mixed-vinyl-container p-3 text-center">
-                        <img src="{{ mix.getImageUrl(300) }}" alt="Mix album cover">
-                        <p class="mt-2"><strong>{{ mix.title }}</strong></p>
+                    }) }}" class="mixed-vinyl-container p-6 text-center block">
+                        <img src="{{ mix.getImageUrl(300) }}" alt="Mix album cover" class="mx-auto">
+                        <p class="mt-8 font-bold">{{ mix.title }}</p>
                         <span>{{ mix.trackCount }} Tracks</span>
-                        |
+                        <span class="mx-1">|</span>
                         <span>{{ mix.genre }}</span>
-                        |
+                        <span class="mx-1">|</span>
                         <span>{{ mix.createdAt|ago }}</span>
                         <br>
                         {{ mix.votesString }} votes
