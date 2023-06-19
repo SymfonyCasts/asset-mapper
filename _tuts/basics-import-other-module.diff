@@ -1,0 +1,36 @@
+diff --git a/public/app.js b/public/app.js
+index 3ad5783..93fa1fe 100644
+--- a/public/app.js
++++ b/public/app.js
+@@ -1,13 +1,4 @@
+-class MixedVinyl {
+-    constructor(title, year) {
+-        this.title = title;
+-        this.year = year;
+-    }
+-
+-    describe() {
+-        return `${this.title} was released in ${this.year}`;
+-    }
+-}
++import MixedVinyl from './vinyl.js';
+ 
+ const mix = new MixedVinyl('Awesome Mix Vol. 1', 2014);
+ console.log(mix.describe());
+diff --git a/public/vinyl.js b/public/vinyl.js
+new file mode 100644
+index 0000000..8d9ee64
+--- /dev/null
++++ b/public/vinyl.js
+@@ -0,0 +1,11 @@
++export default class {
++    constructor(title, year) {
++        this.title = title;
++        this.year = year;
++    }
++
++    describe() {
++        return `${this.title} was released in ${this.year}`;
++    }
++}
++

@@ -1,0 +1,19 @@
+diff --git a/public/app.js b/public/app.js
+new file mode 100644
+index 0000000..2ae0050
+--- /dev/null
++++ b/public/app.js
+@@ -0,0 +1 @@
++console.log('Awesome Mix Vol. 1');
+diff --git a/templates/base.html.twig b/templates/base.html.twig
+index dfeb727..466b1b0 100644
+--- a/templates/base.html.twig
++++ b/templates/base.html.twig
+@@ -12,6 +12,7 @@
+         {% endblock %}
+ 
+         {% block javascripts %}
++            <script src="{{ asset('app.js') }}"></script>
+             <script src="https://kit.fontawesome.com/5a377fab5b.js" crossorigin="anonymous"></script>
+         {% endblock %}
+     </head>

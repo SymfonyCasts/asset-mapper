@@ -1,0 +1,90 @@
+{
+    "steps": [
+        {
+            "id": "start",
+            "name": "start",
+            "description": null
+        },
+        {
+            "id": "basics-app-js-in-public",
+            "name": "Basics: app.js in public\/",
+            "description": null
+        },
+        {
+            "id": "basics-use-es6-class",
+            "name": "Basics: Use ES6 class",
+            "description": null
+        },
+        {
+            "id": "basics-import-other-module",
+            "name": "Basics: import other module",
+            "description": null
+        },
+        {
+            "id": "basics-script-type-module",
+            "name": "Basics: script type=\"module\"",
+            "description": null
+        },
+        {
+            "id": "basics-use-lodash-from-cdn",
+            "name": "Basics: use lodash from CDN",
+            "description": null
+        },
+        {
+            "id": "install-install-asset-mapper",
+            "name": "Install: install asset-mapper",
+            "description": null
+        },
+        {
+            "id": "assetpaths-copy-image-into-project",
+            "name": "AssetPaths: copy image into project",
+            "description": null
+        },
+        {
+            "id": "assetpaths-asset-map-compile",
+            "name": "AssetPaths: asset-map:compile",
+            "description": null
+        },
+        {
+            "id": "assetpaths-remove-public-assets",
+            "name": "AssetPaths: remove public\/assets",
+            "description": null
+        },
+        {
+            "id": "assetpaths-move-favicons",
+            "name": "AssetPaths: move favicons",
+            "description": null
+        },
+        {
+            "id": "css-reference-image",
+            "name": "CSS: reference image",
+            "description": null
+        },
+        {
+            "id": "css-add-bootstrap-from-cdn",
+            "name": "CSS: add bootstrap from CDN",
+            "description": null
+        },
+        {
+            "id": "css-override-border-radius-css-variable",
+            "name": "CSS: override border-radius css variable",
+            "description": null
+        },
+        {
+            "id": "css-try-to-override-primary-color",
+            "name": "CSS: try to override primary color",
+            "description": null
+        },
+        {
+            "id": "css-customize-button-fully",
+            "name": "CSS: Customize button fully",
+            "description": null
+        },
+        {
+            "id": "css-add-inter-font",
+            "name": "CSS: Add Inter font",
+            "description": null
+        }
+    ],
+    "sha": "614a7eb61c2c66e47211e8b624c0b8ef54b3710e"
+}
