@@ -1,5 +1,5 @@
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index 54103fd..b4bd930 100644
+index eef70aa..0bad433 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
 @@ -9,6 +9,7 @@
@@ -15,6 +15,6 @@ index 54103fd..b4bd930 100644
          </div>
  
 +        <button class="btn btn-primary">Primary Button</button>
-         <img src="{{ asset('images/symfony-ep2.png') }}">
+         <img src="{{ asset('images/penguin.png') }}">
  
          {% block body %}{% endblock %}
