@@ -1,5 +1,8 @@
 # AssetMapper: Modern JS with Zero Build System  
 
+Screencast code, script and freckles behind the 
+[AssetMapper: Modern JS with Zero Build System](https://symfonycasts.com/screencast/asset-mapper) tutorial.
+
 Well hi there! This repository holds the code and script
 for the [Symfony6 Tutorials](https://symfonycasts.com/screencast/asset-mapper) on SymfonyCasts.
 
