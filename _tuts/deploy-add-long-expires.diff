@@ -1,0 +1,16 @@
+diff --git a/.platform.app.yaml b/.platform.app.yaml
+index 07e1a55..119eeda 100644
+--- a/.platform.app.yaml
++++ b/.platform.app.yaml
+@@ -34,8 +34,9 @@ web:
+             root: "public"
+             expires: 1h
+             passthru: "/index.php"
+-
+-
++            rules:
++                '^\/assets\/.*':
++                    expires: 365d
+ 
+ mounts:
+     "/var": { source: local, source_path: var }

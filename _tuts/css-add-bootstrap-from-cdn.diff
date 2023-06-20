@@ -1,8 +1,8 @@
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index 4b07b0e..cf22a02 100644
+index 15fab3b..c071aff 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
-@@ -9,6 +9,7 @@
+@@ -10,6 +10,7 @@
          <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
  
          {% block stylesheets %}
@@ -10,7 +10,7 @@ index 4b07b0e..cf22a02 100644
              <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
          {% endblock %}
  
-@@ -46,6 +47,7 @@
+@@ -47,6 +48,7 @@
              <!-- End Main Navigation -->
          </div>
  

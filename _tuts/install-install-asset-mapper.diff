@@ -201,10 +201,10 @@ index 978c970..44e6fe6 100644
          "version": "v6.0.2"
      },
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index 9002593..0f5ab47 100644
+index a26913f..dd4c21e 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
-@@ -9,9 +9,11 @@
+@@ -10,9 +10,11 @@
          <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
  
          {% block stylesheets %}

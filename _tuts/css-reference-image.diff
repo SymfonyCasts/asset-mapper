@@ -15,10 +15,10 @@ index dd6181a..3faac3c 100644
 +    background-repeat: no-repeat;
 +}
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index e09388f..4b07b0e 100644
+index 9c940c3..15fab3b 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
-@@ -23,7 +23,7 @@
+@@ -24,7 +24,7 @@
              <nav class="bg-gray-900">
                  <div class="container mx-auto flex items-center justify-between px-4 py-2">
                      <a href="{{ path('app_homepage') }}" class="flex">

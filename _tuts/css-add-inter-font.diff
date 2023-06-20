@@ -11,10 +11,10 @@ index 929165e..5a7dc81 100644
  .bg-logo {
      display: inline-block;
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index cf22a02..87f526c 100644
+index c071aff..953cb5e 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
-@@ -9,6 +9,7 @@
+@@ -10,6 +10,7 @@
          <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
  
          {% block stylesheets %}

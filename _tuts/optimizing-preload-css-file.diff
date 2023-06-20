@@ -1,0 +1,12 @@
+diff --git a/templates/base.html.twig b/templates/base.html.twig
+index 9ab9f7e..3ec1fa7 100644
+--- a/templates/base.html.twig
++++ b/templates/base.html.twig
+@@ -8,6 +8,7 @@
+         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}">
+         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
+         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
++        <link rel="preload" href="{{ preload(asset('styles/app.tailwind.css'), { as: 'style' }) }}">
+         <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5.0.3/files/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+ 
+         {% block stylesheets %}

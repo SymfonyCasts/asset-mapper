@@ -27,10 +27,10 @@ index 8d9ee64..0000000
 -}
 -
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index 05ab59a..9002593 100644
+index 94020c4..a26913f 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
-@@ -12,7 +12,6 @@
+@@ -13,7 +13,6 @@
          {% endblock %}
  
          {% block javascripts %}

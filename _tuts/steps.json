@@ -264,7 +264,72 @@
             "id": "deploy-symfony-project-init",
             "name": "Deploy: symfony project:init",
             "description": null
+        },
+        {
+            "id": "deploy-adding-composer-pgsql",
+            "name": "Deploy: Adding composer + pgsql",
+            "description": null
+        },
+        {
+            "id": "deploy-adding-database-relationship",
+            "name": "Deploy: Adding database relationship",
+            "description": null
+        },
+        {
+            "id": "deploy-add-asset-map-compile-to-build",
+            "name": "Deploy: Add asset-map:compile to build",
+            "description": null
+        },
+        {
+            "id": "deploy-add-tailwind-compile",
+            "name": "Deploy: Add tailwind compile",
+            "description": null
+        },
+        {
+            "id": "deploy-add-long-expires",
+            "name": "Deploy: Add long expires",
+            "description": null
+        },
+        {
+            "id": "optimizing-inlining-font-files",
+            "name": "Optimizing: inlining font files",
+            "description": null
+        },
+        {
+            "id": "optimizing-add-defer-to-fontawesome",
+            "name": "Optimizing: add defer to fontawesome",
+            "description": null
+        },
+        {
+            "id": "optimizing-preloading-font",
+            "name": "Optimizing: preloading font",
+            "description": null
+        },
+        {
+            "id": "optimizing-install-web-link",
+            "name": "Optimizing: install web-link",
+            "description": null
+        },
+        {
+            "id": "optimizing-preload-css-file",
+            "name": "Optimizing: preload CSS file",
+            "description": null
+        },
+        {
+            "id": "optimizing-turn-off-preloading",
+            "name": "Optimizing: turn off preloading",
+            "description": null
+        },
+        {
+            "id": "optimizing-reactivate-preload",
+            "name": "Optimizing: reactivate preload",
+            "description": null
+        },
+        {
+            "id": "optimizing-preload-other-js-files",
+            "name": "Optimizing: Preload other .js files",
+            "description": null
         }
     ],
-    "sha": "74054a4757ed6439189abfaeaeb78b3ee20f6b05"
+    "sha": "6068d2e87778917b66276db7c02f7aa0cfec3331"
 }
