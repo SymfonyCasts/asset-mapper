@@ -11,7 +11,7 @@ similarity index 100%
 rename from public/favicon-32x32.png
 rename to assets/images/favicon-32x32.png
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index d8452dd..f435277 100644
+index eb219e7..e09388f 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
 @@ -4,9 +4,9 @@

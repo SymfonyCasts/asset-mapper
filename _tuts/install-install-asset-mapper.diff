@@ -201,7 +201,7 @@ index 978c970..44e6fe6 100644
          "version": "v6.0.2"
      },
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index ac93bcd..7539e6a 100644
+index 9002593..0f5ab47 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
 @@ -9,9 +9,11 @@
@@ -213,6 +213,6 @@ index ac93bcd..7539e6a 100644
  
          {% block javascripts %}
 +            {{ importmap() }}
-             <script type="module">import '{{ asset('app.js') }}';</script>
              <script src="https://kit.fontawesome.com/5a377fab5b.js" crossorigin="anonymous"></script>
          {% endblock %}
+     </head>

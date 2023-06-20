@@ -1,0 +1,10 @@
+diff --git a/config/packages/asset_mapper.yaml b/config/packages/asset_mapper.yaml
+index 6f48eec..f9d5883 100644
+--- a/config/packages/asset_mapper.yaml
++++ b/config/packages/asset_mapper.yaml
+@@ -4,4 +4,4 @@ framework:
+         paths:
+             - assets/
+         excluded_patterns:
+-            - 'assets/styles/app.css'
++            - '*/assets/styles/app.css'

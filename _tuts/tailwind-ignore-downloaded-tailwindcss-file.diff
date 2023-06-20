@@ -1,0 +1,10 @@
+diff --git a/.gitignore b/.gitignore
+index 97cd391..2d10178 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -11,3 +11,5 @@
+ ###> symfony/asset-mapper ###
+ /public/assets/
+ ###< symfony/asset-mapper ###
++
++/bin/tailwindcss

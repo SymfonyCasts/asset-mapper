@@ -6,7 +6,7 @@ index 0000000..2ae0050
 @@ -0,0 +1 @@
 +console.log('Awesome Mix Vol. 1');
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index dfeb727..466b1b0 100644
+index 9002593..8626478 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
 @@ -12,6 +12,7 @@

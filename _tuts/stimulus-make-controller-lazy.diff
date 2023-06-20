@@ -1,0 +1,11 @@
+diff --git a/assets/controllers/goodbye_controller.js b/assets/controllers/goodbye_controller.js
+index 81ea992..050eeb0 100644
+--- a/assets/controllers/goodbye_controller.js
++++ b/assets/controllers/goodbye_controller.js
+@@ -1,5 +1,6 @@
+ import { Controller } from '@hotwired/stimulus';
+ 
++/* stimulusFetch: 'lazy' */
+ export default class extends Controller {
+     connect() {
+         this.element.textContent = 'Goodbye controller!';

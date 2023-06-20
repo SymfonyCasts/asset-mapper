@@ -1,0 +1,13 @@
+diff --git a/templates/vinyl/homepage.html.twig b/templates/vinyl/homepage.html.twig
+index a2e282f..6bce04f 100644
+--- a/templates/vinyl/homepage.html.twig
++++ b/templates/vinyl/homepage.html.twig
+@@ -6,7 +6,7 @@
+ <div class="px-4">
+     <h1 class="text-3xl font-semibold text-center mb-5 mr-3">{{ title }} <i class="fa fa-edit pl-3 text-xs"></i></h1>
+     <div {{ stimulus_controller('hello') }}></div>
+-    <img src="{{ asset('images/duck.png') }}">
++    <img src="{{ asset('images/penguin.png') }}">
+     <div class="flex justify-center mt-5 bg-gray-600 p-5 rounded-xl">
+         <div class="">
+             {{ include('mix/_recordSvg.html.twig') }}

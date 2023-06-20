@@ -2428,10 +2428,10 @@ literal 0
 HcmV?d00001
 
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index 7539e6a..d8452dd 100644
+index 0f5ab47..eb219e7 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
-@@ -47,6 +47,8 @@
+@@ -46,6 +46,8 @@
              <!-- End Main Navigation -->
          </div>
  

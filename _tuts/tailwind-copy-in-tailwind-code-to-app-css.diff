@@ -1,0 +1,24 @@
+diff --git a/assets/styles/app.css b/assets/styles/app.css
+index 5a7dc81..227b057 100644
+--- a/assets/styles/app.css
++++ b/assets/styles/app.css
+@@ -1,15 +1,7 @@
+-:root {
+-    --bs-primary: #0de1fd;
+-    --bs-border-radius: 1rem;
+-}
+-.btn-primary {
+-    --bs-btn-bg: var(--bs-primary);
+-    --bs-btn-border-color: var(--bs-primary);
+-    --bs-btn-disabled-bg: var(--bs-primary);
+-    --bs-btn-disabled-border-color: var(--bs-primary);
+-    --bs-btn-hover-bg: #0bbfd7;
+-    --bs-btn-hover-border-color: #0ba7d7;
+-}
++@tailwind base;
++@tailwind components;
++@tailwind utilities;
++
+ body {
+     background-color: skyblue;
+     font-family: 'Inter Variable', sans-serif;

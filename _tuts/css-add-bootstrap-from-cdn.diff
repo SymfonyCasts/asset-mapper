@@ -1,5 +1,5 @@
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index eef70aa..0bad433 100644
+index 4b07b0e..cf22a02 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
 @@ -9,6 +9,7 @@
@@ -10,7 +10,7 @@ index eef70aa..0bad433 100644
              <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
          {% endblock %}
  
-@@ -47,6 +48,7 @@
+@@ -46,6 +47,7 @@
              <!-- End Main Navigation -->
          </div>
  

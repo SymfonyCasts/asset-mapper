@@ -15,15 +15,15 @@ index dd6181a..3faac3c 100644
 +    background-repeat: no-repeat;
 +}
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index f435277..eef70aa 100644
+index e09388f..4b07b0e 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
-@@ -24,7 +24,7 @@
+@@ -23,7 +23,7 @@
              <nav class="bg-gray-900">
-                 <div class="container mx-auto flex items-center justify-between px-4 py-6">
-                     <a href="{{ path('app_homepage') }}">
+                 <div class="container mx-auto flex items-center justify-between px-4 py-2">
+                     <a href="{{ path('app_homepage') }}" class="flex">
 -                        <i class="fas fa-record-vinyl"></i>
 +                        <span class="bg-logo"></span>
-                         Mixed Vinyl
+                         <span class="pt-1 px-2 font-bold">Mixed Vinyl</span>
                      </a>
                      <!-- For simplicity, the collapse feature is omitted -->

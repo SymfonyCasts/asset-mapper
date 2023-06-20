@@ -1,0 +1,23 @@
+diff --git a/assets/app.js b/assets/app.js
+index 8b9786c..343a4d4 100644
+--- a/assets/app.js
++++ b/assets/app.js
+@@ -1,5 +1,5 @@
+ import Vinyl from './lib/vinyl.js';
+-import _ from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm';
++import _ from 'lodash';
+ 
+ const mix = new Vinyl('Awesome Mix Vol. 1', 2014);
+ console.log(_.camelCase(mix.describe()));
+diff --git a/importmap.php b/importmap.php
+index 5c2c21d..5dd6286 100644
+--- a/importmap.php
++++ b/importmap.php
+@@ -18,4 +18,7 @@ return [
+         'path' => 'app.js',
+         'preload' => true,
+     ],
++    'lodash' => [
++        'url' => 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm',
++    ],
+ ];
