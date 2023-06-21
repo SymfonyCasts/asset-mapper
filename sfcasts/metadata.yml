@@ -1,1 +1,3 @@
-chapters: []
+chapters:
+    - setup
+    - es6-browser
