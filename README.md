@@ -35,7 +35,7 @@ First, make sure you have [Docker installed](https://docs.docker.com/get-docker/
 and running. To start the container, run:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Next, build the database and the schema with:
