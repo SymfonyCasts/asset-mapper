@@ -1,3 +1,20 @@
 chapters:
     - setup
     - es6-browser
+    - install
+    - usage
+    - css
+    - vendor-css
+    - tailwind
+    - importmap
+    - import-require
+    - import-specific-files
+    - stimulus
+    - ux-packages
+    - lazy-controllers
+    - debugging
+    - page-specific
+    - exclude-files
+    - deploy
+    - deploy-assets
+    - optimization
