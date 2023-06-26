@@ -1,5 +1,108 @@
 # Mapping Assets
 
-Coming soon...
+AssetMapper is not that big of a deal. I mean, it tries to dress cool and has
+some good dance moves, but it's really quite simple. It has two main feature.
 
-AssetMapper is not that big of a deal. I mean, I think it's great, but it's really quite simple. It has two jobs. First, it exposes its main job. It's really simple. Any paths we have configured, like the assets directory, it makes these available publicly. Let me show you. If you downloaded the course code, you should have a tutorial directory with a nice little penguin.png inside. I'm going to copy that. Instead of assets, we can organize things however we want. It makes no difference. But I'm going to create an images directory and then paste that penguin.png inside of there. Now, remember, the only thing that should be publicly accessible technically are things inside the public directory. So there should, in theory, be no way for us to add an image tag to that file, but we can. Head in templates, base.html, twig, just as a place to go. And down here, right above the body block, I'm going to add an image. With source equals curly curly asset. And then I'm going to write the path relative to the assets directory. So images slash penguin.png. That's it. This is known as the logical path to the asset. Because you've pointed asset mapper at the assets directory, so then you can just refer to things inside of that directory. And actually, there's a really great way to see all of the possible assets in the asset mapper by going to your terminal and running bin console debug asset. This is awesome. So first of all, you can see up here, these are the asset mapper paths, you can see the assets directory. And actually, we have pager font installed in this project. And bundles can actually add their own asset mapper paths. This is not going to be important for us. But technically speaking, anything inside this directory is also available publicly. Down here, we can see our image file, our CSS file, and our JavaScript file. These are their file system paths, and these are their asset, their logical paths. And the really important thing is just by using the asset function and using the logical path, when we refresh, it works. That's it. And check this out. If I inspect element on this, look at the URL on that. That is a versioned URL.  I'm actually going to view the page source, it might be a little bit easier. Yeah. So not only does it actually work somehow, you can see like slash assets slash images, but it's not just Penguin dot png, it's got this long version hash. And if we modified updated that Penguin dot png file, that version hash would automatically change, which is awesome. This is also how our app dot CSS is being brought in. If you remember up near the top here, we said assets style slash app dot CSS, that's the logical path to app dot CSS. And it's being output with a nice versioned file name. Okay, so how does that work, though? I don't really like magic like this. Well, in the dev environment, it works thanks to a core listener. So for example, if I, there we go. I open up this image here, this is actually going through symphony. So symphony handles this request, and then it goes and finds the assets slash images slash Penguin dot png file and it serves it. Look, you can even see this down here. If you go to the main tab, if you click anything to go into the web debug toolbar, and click last 10, you can actually see there's the request right there for our Penguin, it's actually proxying through symphony. So in the dev environment, there's some symphony code that is actually returning these images for you. In production, that's not going to be fast enough. It's no problem. Because during deploy, you're going to run a special new bin console asset map compile command. We're talking more about deployment later. But this is really simple. It basically copies all of your files that are in your asset mapper directories into your public slash assets directory. And that's it. So suddenly, this file here is no longer being served by symphony, that's actually being served from a physical file. We can see it over here in public assets. Yep, there's all of our files just sitting there right there. Of course, I'm gonna remove that directory right now, because we do want things to stay dynamic. Actually, while we're here, notice I have a bunch of fav icons instead of my public directory, and I'm linking to them up here. That totally works.  The asset function can still refer to things inside of your public directory. But to get free asset versioning, let's copy that into our images directory. Sweet. And then I'm just going to prefix each of these with images slash to get their logical path. And just like that, you can still see the fav icon up here. And more importantly, I view the page source. Sweet, we've got free asset versioning on those files as well. All right, let's talk a bit more about CSS, go deeper with CSS and asset mapper next. Like how could we make CSS more accessible? Well, we can do that. We can do that by using a third party CSS library like bootstrap. What about fonts? And what if we need to reference image files instead of our CSS for things like backgrounds?
+Feature number one: we configure "paths" = like the `assets/` directory - it makes
+the files inside available publicly.
+
+Let's see this in action. If you downloaded the course code, you should have a
+`tutorial/` directory with an important `penguin.png` file inside. Copy that.
+Inside `assets/`, we can organize things *however* we want. So let's create an
+`images/` directory and then paste `penguin.png` inside.
+
+Now, remember, without the magic of AssetMapper, the only files that our browser
+should be able to access are those inside the `public/` directory. So it should
+be *impossible* to add an `img` tag to that loads our penguin. But it *is* possible.
+
+## Using the "Logical Path"
+
+Head into, how about, `templates/base.html.twig`. Anywhere - I'll go above the
+`body` block - add an `img` with `src={{ asset() }}` passing this the path to
+our file *relative* to the `assets/` directory. So `images/penguin.png`.
+
+That's it. This is known as the "logical path" to the asset. Because we've pointed
+AssetMapper at the `assets/` directory, we can refer to things inside of that via
+their path *relative* to that root.
+
+There's actually a great way to see *all* assets that are in the AssetMapper
+paths by going to the terminal and running:
+
+```terminal
+php bin/console debug:asset
+```
+
+Awesome! First, on top, it shows the AssetMapper paths, including the `assets/`
+directory. This project also has Pagerfanta installed. And we're already seeing
+how bundles can add their *own* AssetMapper paths to make their *own* files
+available publicly. This won't be important for us, but anything in this directory
+*is* also available publicly.
+
+Below the top, we see our image file, our CSS file, and our JavaScript file. These
+are their filesystem paths and these are their logical paths.
+
+## Versioned Filenames
+
+The point is, by using the `asset()` function and the logical path to an asset,
+when we refresh... it works! Woh! And if we Inspect Element, check out the URL!
+It contains a *version* hash in the middle! I'm actually going to view the page
+source... it's a little easier to see.
+
+So not only is `penguin.png` available publicly, but the path is *not* just
+`penguin.png`: it contains a version hash. If we *modified* the original `penguin.png`
+file, the version hash would automatically change forcing anyone using our site
+to download the fresh file. Booya!
+
+This is also how `app.css` is loaded! Up near the top, the link tag uses
+`assets('styles/app.css')`, which is the *logical* path in AssetMapper to that file.
+And so it's *also* output with a nice, versioned filename.
+
+## How Are the Files Made Public?
+
+Okay, but how does this *work*? If you're like me, you want to know *how* the
+sausages are made. Well, in the `dev` environment, it works thanks to a core event
+listener... basically a fancy, internal Symfony controller.
+
+For example, when the browser loads this image, that request goes through Symfony.
+It sees that we're trying to load `/assets/images/penguin-something.png`, it
+finds the source file and serves it.
+
+I can prove it! On the main tab, click any icon on the web debug toolbar to go
+into the profiler, then click "Last 10" to see the 10 most recent requests
+through Symfony. And there it is: the request that served the penguin image. Adorable.
+
+In production, loading our files through Symfony will *not* be fast enough. So,
+instead, during deploy, you'll run a new console command:
+
+```terminal
+php bin/console asset-map:compile
+```
+
+We're going to talk more about deployment later. But this is really cool! It copies
+*each* file in all of the AssetMapper paths into the `public/assets/` directory
+using the correct, versioned filename. That's it.
+
+Then, suddenly, this file is no longer being served by Symfony: we're seeing a real,
+physical file! Over in `public/assets/`, yep! We can see the final files in all
+their glory.
+
+But... while we're developing, remove that directory so that everything continues
+to load dynamically.
+
+## Moving favicons into Assetmapper
+
+And actually, while we're here, notice we have some favicons inside the `public/`
+directory... and then we're linking to them at the top of `base.html.twig`.
+That totally works: the `asset()` function can *still* refer to things inside of
+the `public/` directory.
+
+But... with almost no work, we can add free asset versioning to these! Step 1:
+move them into the `assets/images/` directory. Step 2: prefix each path with
+`images/` to get their logical path.
+
+And... just like that, we still see the favicon up here... but more importantly,
+if we view the page source, those are now versioned!
+
+Let's go a bit deeper into CSS files next. Like, how could we use a 3rd party
+CSS file like Bootstrap? What about custom fonts? And how can we refer to background
+images from inside of CSS if the final filename is versioned?

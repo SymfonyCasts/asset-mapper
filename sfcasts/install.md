@@ -1,5 +1,60 @@
 # Installing AssetMapper
 
-Coming soon...
+We now knowthat we can run modern JavaScript directly in our browsers. But to help
+smooth the process, we're going to install a new Symfony component called
+AssetMapper.
 
-So we've seen that we can run modern JavaScript code directly in browsers, but to help smooth the process a bit, we're going to install a new Symfony component called assetMapper. So let's find our terminal and run a compose or require Symfony slash assetMapper and also Symfony slash asset. That second one gives us the asset function. I actually already have that installed in my application, but you're definitely going to want it. It pairs well with assetMapper. All right, so assetMapper is experimental in Symfony 6.3, so there could still be some backwards compatibility breaks in the future. But as we will see, the concepts are solid and you can deploy a super performance site with assetMapper today. So installing this just installed a new library, but if we run git status, a flex recipe for assetMapper added several things. So let's take a quick tour here. The first thing is this assets directory. This is going to look pretty much exactly like what you get if you install webpack-encore. We have an app.js file. This will be the main one file that's executed on your page and also an app.css file, which is going to be your main CSS file. In templates-base.html.twig, the recipe also added this line right here. So we're going to talk more about style sheets later, but you can see it's just literally a style sheet pointing at this app.css file. And there's also this import map function. That's something we're going to talk about more later. It deals with this import map.php file, which we are also going to talk more about later. At this point, really the big takeaway is that it created a couple files in our styles, in our assets directory, and it added a link tag for it. But really not a lot going on yet, and we're going to uncover what it's doing behind the scenes little by little. If we look back at our terminal, it also added a new assetMapper.yaml file. We're not going to need to look at this too much, but I want to open that up. Config packages to assetMapper.yaml. So the main concept of assetMapper is that you're going to point it at a directory or directories like assets, and anything inside of assets is going to be exposed publicly.  So normally we think of only things in our public directory as being accessible to the user, but thanks to assetMapper, anything in the assets directory is going to be exposed publicly. But thanks to assetMapper, anything in the assets directory is going to be accessible, and we'll talk in a minute about how that actually works. Right now the important thing to see is that assets is our one asset path instead of assetMapper. And yeah, with just those changes, if we refresh the page, yeah, check that out. The background turned blue. That's coming from our app.css file. And also you can see a console.log that's coming from assets.app.js. So somehow, magically, just by installing this, these two files are already being made publicly and are being imported somehow in our base.h2o file. So let's talk next about what assetMapper is, how this is all working.
+Find your terminal and run:
+
+```terminal
+composer require symfony/asset-mapper symfony/asset
+```
+
+I'm including the second package just because it gives us the nice `asset()` function
+in Twig. It's *already* installed in this project - so just make sure you have it
+in yours.
+
+Before we start: AssetMapper *is* experimental in Symfony 6.3, so there will likely
+be some backwards compatibility breaks before 6.4. but as we will see, the concepts
+are solid and you can deploy a super-performant site with AssetMapper today.
+
+## Changes from the Flex Recipe
+
+Ok, run:
+
+```terminal
+git status
+```
+
+Oooh: the Flex recipe for AssetMapper added several things. Time for a quick tour!
+First, it gave us an `assets/` directory... which looks pretty much *identical*
+to what you would get if you installed WebpackEncore. We have an `app.js` file -
+this will be the main, *one* file that's executed - and also `app.css`: the main
+CSS file.
+
+In `templates/base.html.twig`, the recipe also added a `link` tag to point to
+`app.css`. We're going to talk more about stylesheets later, but you can already
+see that the CSS setup is perfectly straightforward.
+
+The recipe added one more important line to this file: `{{ importmap() }}`. That
+partners with a new `importmap.php` file. Those *are* important, and we'll go into
+detail about them soon.
+
+The takeaway is that the recipe created a few files in the `assets/` and added a
+`link` tag to `base.html.twig`. But otherwise, there's not a lot going on yet.
+
+## AssetMapper "Paths"
+
+Looking back at the terminal, the recipe also added a new `asset_mapper.yaml` file.
+Let's open that up: `config/packages/asset_mapper.yaml`.
+
+AssetMapper has one, *main* concept: you point it at a directory or set of directories,
+like `assets/`, and it will make all of the files inside available publicly, as
+*if* they lived in the `public/` directory. We'll see *how* that's accomplished in
+a minute.
+
+But before we do *anything* else, refresh the page and... the background turned blue!
+That's coming from the `app.css` file. *And*, in the console log, we see a message
+that's coming from `assets/app.js`. So, somehow, magically, just by running a
+`composer require` command, these two files are already exposed publicly *and* are
+being loaded onto the page. Next, let's learn *how* this is all working.
