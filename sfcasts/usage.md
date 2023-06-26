@@ -103,6 +103,5 @@ move them into the `assets/images/` directory. Step 2: prefix each path with
 And... just like that, we still see the favicon up here... but more importantly,
 if we view the page source, those are now versioned!
 
-Let's go a bit deeper into CSS files next. Like, how could we use a 3rd party
-CSS file like Bootstrap? What about custom fonts? And how can we refer to background
-images from inside of CSS if the final filename is versioned?
+Let's go a bit deeper into CSS files next. Like, how can we refer to background
+images from inside of CSS... if the final filename is versioned?
