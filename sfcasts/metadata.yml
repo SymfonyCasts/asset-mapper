@@ -7,7 +7,7 @@ chapters:
     - vendor-css
     - tailwind
     - importmap
-    - import-require
+    - importmap-require
     - import-specific-files
     - stimulus
     - ux-packages
