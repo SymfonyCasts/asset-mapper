@@ -1,29 +1,129 @@
 # Doing Modern JS Right in your Browser
 
-Before we talk about anything Symfony related, let's first prove that we *can* code with modern JavaScript in our browser. Check this out! We're going to go *directly* into the `/public` directory and create a new `app.js` file. To start, we'll just `console.log()` a message. This won't be processed by Symfony or anything *yet*. We're keeping it simple.
+Before we talk about anything related to Symfony, we're going to first prove that
+we *can* code modern JavaScript, right in our browser.
 
-In `/templates/base.html.twig`, up here in this JavaScript block, we're just going to add a boring `<script>` tag for this: `<script src="{{ asset('app.js') }}">`. We're using the `asset()` function, but that's not doing anything for us here. It's just going to output a `<script>` tag.
+## Directly Loading Some JavaScript
 
-Back over in our browser, open the Console... and refresh. There we go! We got the log! *But* it's not super interesting yet. Now, let's go into `app.js` and write some modern JavaScript code. Copy the mix name here, and let's create a class. We'll say `class MixedVinyl`. We're using the ES syntax here. We'll quickly create a very simple class that takes a `title` and `year` constructor properties... sets those onto properties.... and then we'll add a little `describe()` method. This is going to use string interpolation (another modern JavaScript feature) to return a string. Cool! This is modern JavaScript - the kind of stuff that we write every day - and, historically, that hasn't worked in a browser.
+Go *directly* into the `public/` directory and create a new `app.js` file. To start,
+just `console.log()` a message.
 
-Down here, let's use that. Say `const` (another modern JavaScript feature) `mix = new MixedVinyl`. Then we're going to pass it our mix name, the year, and finally, we'll `console.log(mix.describe)`. *Nice*. That's the way I like to write JavaScript. Normally, we would have a build system like Encore that would read this and change it to *old* JavaScript that would work in our browser. But... *surprise*! It *already* works in our browser. We don't need to do *anything*. That's not just because I'm using a new browser. This is going to work in *every* browser. If you're ever unsure, go to "caniuse.com" to check it out. Let's look up "ES6 class". ES6 is the version of ECMAScript that most of the modern JavaScript features you know and love came from. You can see here that this is supported *everywhere* except for IE 11, which is dead.
+This won't be processed by Symfony or *anything*. In `templates/base.html.twig`,
+up here in the `javascripts` block, though that doesn't make any difference, add
+a boring `<script>` tag for this: `<script src="{{ asset('app.js') }}">`. I *am*
+using the `asset()` function, but that's not doing anything either.
 
-So... what *else* can we do? What about the `import` statement? Copy this `class MixedVinyl` here, and let's create another file directly inside of `/public` called `vinyl.js`. Paste this in here, and then we're going to `export` it. Say `export default class` and then, over in `app.js`, we'll then `import MixedVinyl from` and, just like normal JavaScript, we'll use the relative `./vinyl.js`. Notice that I'm including the `.js` here. We don't always do that. I'll talk more about that later, but know that I'm doing that on purpose.
+Ok, head to the browser, open up your Console and... refresh. There's the log!
+It's *boring*, but working.
 
-In the past, this `import` statement wasn't supported, and when we refresh, we actually *do* get an error: "Cannot use import statement outside a module". This isn't a big deal. Back in `base.html.twig`, when we talk about "modules", we're talking about files that use `export` and `import`. If you want to load your JavaScript into a module system, your original `<script>` tag just needs to change a little. Copy this `asset()` function, and now we're going to say `<script type="module">`. And instead of `src`, inside, we're just going to write some JavaScript and `import` our `app.js` file. This looks kind of crazy, but it's just `import` with `''` like we're writing JavaScript, and then I'll use Twig to print out that path. So we're importing `app.js`, which will execute it as a module, and... everything works! Yes! Our browser supports the `import` statement.
+## Writing Modern JavaScript
 
-We can also use third-party packages inside of a system like this. To find a third-party package, I'm going to use my favorite CDN called "jsDelivr". We'll be using this quite a bit throughout this tutorial. You don't *need* to rely on jsDelivr, but jsDelivr has a mirror of every single NPM package, so if you're looking for a NPM package that you want to use, this is a great place to go. Let's look at a popular library called "Lodash". If we select Lodash, you can see it has a `<script>` tag for us. Click on "ESM", which is the word for "modules". When you're coding with imports and exports, you want the *ESM* version of a package. And down here, you can see that it says:
+Time to make it interesting! Back in `app.js`, copy the mix name. Let's create a
+*class* with `class MixedVinyl`, with a constructor and some properties. This uses
+class syntax introduced in ES6, or ECMAScript 6... basically version "6" of JavaScript.
+You'll hear ES6 a lot because *most* of the modern features you're used to came
+from this version - released *way* back in 2015.
 
-`<script type="module">
+In the `describe()` method, I'm using string interpolation - another modern JavaScript
+feature from ES6 - to return the string. Below, use this: `const` - *another* ES6
+feature - `mix = new MixedVinyl()` and pass in the mix name, the year... and finally,
+`console.log(mix.describe)`.
+
+Cool! *This* is the kind of code that I like to write every day. Unfortunately, this
+is *also* the kind of code that browsers have historically choked on!
+
+So, *normally*, we would have a build system like Encore that would read this modern
+and code and rewrite it to *old* JavaScript so it would work in our browser. But...
+*surprise*! It *already* works in our browser. We don't need to do *anything*. And
+that's not just because I'm using a new browser. This is going to work in *every*
+browser.
+
+If you're ever unsure, go to https://caniuse.com to check it out. Let's look up
+"ES6 class". Yup, it's basically supported by *everything*... except for IE 11, which
+is dead.
+
+## Using "import" in the Browser
+
+But what about the `import` statement? Copy the `class MixedVinyl` then create
+another file directly inside `public/` called `vinyl.js`. Paste this in and
+then `export` it: `export default class`.
+
+Back over in `app.js`, `import MixedVinyl from` and, just like we do in Encore,
+use the relative path: `./vinyl.js`.
+
+Though, notice that I *am* including the `.js` file extension... which you *can*
+do in Encore, but it's not required. More on that later - but this *was* on purpose.
+
+## Importing as a Module
+
+So... does my browser support the `import` statement? Let's find out! Refresh.
+Booo:
+
+> Cannot use import statement outside a module
+
+Ok, not a *huge* boo really. Head back to `base.html.twig`. When you hear the word
+"module", it's referring to files that use `export` and `import`. And if you want
+your JavaScript to be able to *use* these, you need to load the original *file*
+"as a module". It's a simple change. Copy the `asset()` function and *now* say
+`<script type="module">`. Then, instead of `src`, inside, we're going to write some
+JavaScript: `import` our `app.js` file.
+
+This may look nutty at first, but... we're simply importing the path to our
+`app.js` file. By doing this, `app.js` will execute *exactly* like it did before...
+but as a "module"... which just means that `import` and `export` statements
+"should" work.
+
+Do they? Yes! OMG, our browser supports the `import` statement. 
+
+## Importing 3rd Party Package URLs
+
+We can *even* import third-party packages. To find one, I'm going to use my favorite
+CDN: "jsDelivr". We'll be using this quite a bit throughout the tutorial. You don't
+need to *use* jsDelivr if you don't want to. But it's a mirror of *every* NPM
+package... and so it's a *great* place to find what you need.
+
+Let's search for the popular "lodash" package. When we select it, it shows us
+a `<script>` tag we could use. Click on "ESM", which is short for ECMAScript
+modules. When you're coding with imports and exports, you want the *ESM* version
+of a package: it's a version that properly "exports" modules.
+
+*Now* check out that `script` tag:
+
+```js
+<script type="module">
 import lodash from '[...]'
-</script>`
+</script>
+```
 
-This is showing us code that looks very similar to the code we had over here. We won't use that, but I *am* going to copy this URL. And check this out! If we go to `app.js`, we can say `import _ from` and paste that full URL. We can *also* download this file locally. I'll talk more about that later. We don't *have to* rely on a CDN, but it's *really* easy. Down here, let's say `_.camelCase` to call one of the methods on Lodash. Head back over, refresh, and... look at that!. There's no build system here. We just opened up these files inside of our `/public` directory, and we're even using third-party NPM packages. That's pretty amazing.
+That looks *very* similar to the code we have over here. We won't use this exactly,
+but I *am* going to copy the URL. Now go back to `app.js`. To use `lodash` we
+can say `import _ from` and paste that full URL.
 
-*However*, there are two problems with this. First of all, importing packages using the full URL like this is kind of annoying. I want to be able to simply say `import from lodash.` The *second* problem is asset versioning. In order to have an efficient system, we need the final files downloaded by the browser to have version hashes in the file name, like "app.1234abcd.js". We can't get that by just creating files in our `/public` directory.
+Yes, importing from a full URL is *totally* allowed. Or we could download this file
+locally - I'll talk more about that later. Below, let's say `_.camelCase` to call
+one of the methods on Lodash.
 
-These are two things that Symfony's new AssetMapper component is going to solve, but I wanted to start with raw JavaScript files so you can see that most of what we're going to be doing is not solved by Symfony or AssetMapper. It's just solved by your browser and the modern web. Yay!
+Let's try it! Spin over, refresh, and... look at that!. There's *no* build system
+here - we're just playing with files inside the `public/`. And yet, we're writing
+modern JavaScript, importing and exporting modules *and* using a third-party NPM
+package. That's pretty amazing.
 
-Okay, before we hop into AssetMapper, I'm going to delete these two files so we don't get confused, and I'll also take out this `import` inside of our `base.html.twig` file. Don't worry! You'll see all of that code in a different way soon.
+## What Features are Missing?
 
-Next: Let's install AssetMapper and learn more about it.
+*However*, there are *two* problems remaining. First, importing packages using the
+full URL is annoying. I want to be able to say `import from 'lodash'` The *second*
+problem is asset versioning. To have a performant system, we need the final files
+downloaded by the browser to have version hashes in their filenames, like
+`app.1234abcd.js`. We need this so we can instruct browsers to perform long-term
+caching. And we *can't* get this by creating files in our `public/` directory.
+
+These are *precisely* the two things that Symfony's new AssetMapper component will
+help us solve. But I wanted to start with raw JavaScript so we could see that...
+most of what we're doing isn't solved by Symfony or AssetMapper: it's solved
+by your browser and the modern web.
+
+Ok, let's delete these two files so I don't get confused... and also remove the
+`import` inside of `base.html.twig` file. Don't worry! We'll see all of that code
+in a different way soon.
+
+Next: Let's install AssetMapper and get it rocking.
