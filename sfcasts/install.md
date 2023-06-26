@@ -1,6 +1,6 @@
 # Installing AssetMapper
 
-We now knowthat we can run modern JavaScript directly in our browsers. But to help
+We now know that we can run modern JavaScript directly in our browser. But to help
 smooth the process, we're going to install a new Symfony component called
 AssetMapper.
 
@@ -10,13 +10,13 @@ Find your terminal and run:
 composer require symfony/asset-mapper symfony/asset
 ```
 
-I'm including the second package just because it gives us the nice `asset()` function
-in Twig. It's *already* installed in this project - so just make sure you have it
+I'm including the second package because it gives us that nice `asset()` function
+in Twig. It's *already* installed in this project - just make sure you have it
 in yours.
 
-Before we start: AssetMapper *is* experimental in Symfony 6.3, so there will likely
-be some backwards compatibility breaks before 6.4. but as we will see, the concepts
-are solid and you can deploy a super-performant site with AssetMapper today.
+Before we start: AssetMapper *is* experimental in Symfony 6.3, so there *will* likely
+be some backwards compatibility breaks before 6.4. But as we will see, the concepts
+are solid, and you can deploy a super-performant site with AssetMapper today.
 
 ## Changes from the Flex Recipe
 
@@ -45,11 +45,11 @@ The takeaway is that the recipe created a few files in the `assets/` and added a
 
 ## AssetMapper "Paths"
 
-Looking back at the terminal, the recipe also added a new `asset_mapper.yaml` file.
+Looking back at the terminal, the recipe also created a new `asset_mapper.yaml` file.
 Let's open that up: `config/packages/asset_mapper.yaml`.
 
 AssetMapper has one, *main* concept: you point it at a directory or set of directories,
-like `assets/`, and it will make all of the files inside available publicly, as
+like `assets/`, and it makes all the files inside available publicly, as
 *if* they lived in the `public/` directory. We'll see *how* that's accomplished in
 a minute.
 
