@@ -1,0 +1,226 @@
+WEBVTT
+
+00:00:03.066 --> 00:00:03.836 align:middle
+¡Hola!
+
+00:00:04.186 --> 00:00:08.196 align:middle
+Bienvenidos a mi laboratorio de
+frontend, donde vamos a hacer algo
+
+00:00:08.196 --> 00:00:11.416 align:middle
+que, sinceramente, pensé
+que nunca volvería a hacer.
+
+00:00:11.826 --> 00:00:13.086 align:middle
+¡Algo atrevido!
+
+00:00:13.426 --> 00:00:13.866 align:middle
+Algo...
+
+00:00:14.136 --> 00:00:15.956 align:middle
+quizás un poco loco.
+
+00:00:16.576 --> 00:00:20.926 align:middle
+Vamos a escribir un frontend moderno
+con cero sistema de construcción.
+
+00:00:21.626 --> 00:00:22.756 align:middle
+¡Hora de la historia!
+
+00:00:23.246 --> 00:00:28.666 align:middle
+hace 7 años hablaba de cómo el JavaScript
+moderno requiere un sistema de compilación.
+
+00:00:29.356 --> 00:00:33.846 align:middle
+Gritaba al mundo que
+teníamos que pasar de crear
+
+00:00:33.846 --> 00:00:38.036 align:middle
+archivos JavaScript y CSS en un
+directorio "público" a construirlos
+
+00:00:38.036 --> 00:00:40.346 align:middle
+con un sistema, como Webpack o Vite.
+
+00:00:40.996 --> 00:00:42.546 align:middle
+Estos sistemas de compilación se crearon
+
+00:00:42.546 --> 00:00:46.346 align:middle
+porque los navegadores no admitían las
+funciones modernas que queríamos utilizar.
+
+00:00:46.826 --> 00:00:51.786 align:middle
+Me refiero a la declaración import,
+const, la sintaxis de clases, etc.
+
+00:00:51.786 --> 00:00:54.796 align:middle
+Si hubieras intentado ejecutar este tipo
+de JavaScript en un navegador , habrías
+
+00:00:55.216 --> 00:00:57.856 align:middle
+sido recibido con tristes
+mensajes de error. Por
+
+00:00:58.796 --> 00:01:03.896 align:middle
+tanto, el sistema de compilación transpilaría
+(que es una palabra elegante para "convertir")
+
+00:01:04.256 --> 00:01:09.466 align:middle
+ese JavaScript de aspecto nuevo a JavaScript de aspecto
+antiguo, para que pudiera ejecutarse en el navegador.
+
+00:01:10.086 --> 00:01:14.476 align:middle
+También combinaría los archivos JavaScript
+y CSS, para que tuviéramos menos peticiones,
+
+00:01:14.826 --> 00:01:21.066 align:middle
+podría crear nombres de archivo versionados,
+procesar TypeScript y JSX, Sass, y mucho más.
+
+00:01:21.786 --> 00:01:24.496 align:middle
+Estos sistemas son increíblemente potentes.
+
+00:01:24.916 --> 00:01:28.296 align:middle
+Pero también añaden complejidad y
+pueden ralentizar la codificación.
+
+00:01:28.886 --> 00:01:32.246 align:middle
+Así que estoy aquí, 7 años
+después para decir que...
+
+00:01:32.386 --> 00:01:35.046 align:middle
+¡puede que ya no necesitemos
+esos sistemas de construcción!
+
+00:01:35.676 --> 00:01:40.696 align:middle
+En este tutorial, vamos a escribir todo el
+JavaScript moderno que conocemos y amamos...
+
+00:01:40.996 --> 00:01:44.366 align:middle
+pero sin sistema de compilación ni Node.
+
+00:01:44.896 --> 00:01:49.406 align:middle
+Sólo tú y el navegador: tal y como
+lo concibieron los Dioses de Internet.
+
+00:01:50.276 --> 00:01:54.726 align:middle
+Ahora bien, admito que hacer esto no será
+la mejor opción para todos los proyectos.
+
+00:01:55.266 --> 00:02:00.286 align:middle
+Si quieres usar TypeScript, o
+estás usando React, Vue o Next.js,
+
+00:02:00.626 --> 00:02:03.026 align:middle
+probablemente seguirás queriendo
+un sistema de compilación...
+
+00:02:03.426 --> 00:02:05.996 align:middle
+y probablemente deberías usar
+su sistema de compilación.
+
+00:02:06.766 --> 00:02:12.636 align:middle
+Omitir un sistema de compilación también significa que no hay
+agitación automática del árbol -si sabes y te importa eso-,
+
+00:02:13.156 --> 00:02:15.466 align:middle
+aunque aprenderemos cómo
+puede seguir funcionando. En su
+
+00:02:16.356 --> 00:02:21.566 align:middle
+mayor parte, la programación con y sin
+sistema de compilación es idéntica,
+
+00:02:21.986 --> 00:02:24.626 align:middle
+pero señalaré las pequeñas
+diferencias a lo largo del proceso.
+
+00:02:24.626 --> 00:02:29.466 align:middle
+Y si te estás preguntando por cosas
+como los preprocesadores Sass o Tailwind,
+
+00:02:29.796 --> 00:02:32.556 align:middle
+puedes utilizarlos y veremos cómo.
+
+00:02:33.466 --> 00:02:38.666 align:middle
+El sitio final también va a ser tan eficiente y rápido
+como uno construido con un sistema de compilación.
+
+00:02:39.526 --> 00:02:41.016 align:middle
+Bien, ¡manos a la obra!
+
+00:02:41.746 --> 00:02:47.006 align:middle
+Codificar sin un sistema de construcción es
+una gozada: no se necesitan nodos ni pilas.
+
+00:02:47.546 --> 00:02:51.886 align:middle
+Así que deberías descargarte el código del
+curso de esta página y codificar conmigo.
+
+00:02:52.596 --> 00:02:57.096 align:middle
+Después de descomprimir ese archivo, tendrás un
+directorio start/ con el mismo código que ves aquí.
+
+00:02:57.726 --> 00:02:59.796 align:middle
+Abre este archivo README.md.
+
+00:03:00.386 --> 00:03:04.126 align:middle
+Como de costumbre, contiene todos los
+detalles de configuración que necesitarás.
+
+00:03:04.786 --> 00:03:06.436 align:middle
+Yo ya he hecho la mayoría.
+
+00:03:07.156 --> 00:03:10.596 align:middle
+El último paso es buscar tu terminal,
+moverte al proyecto y ejecutar
+
+00:03:10.686 --> 00:03:16.196 align:middle
+symfony serve -d para utilizar el binario
+symfony para iniciar el servidor web incorporado.
+
+00:03:16.986 --> 00:03:19.096 align:middle
+Mantendré pulsado "comando", haré clic y...
+
+00:03:19.586 --> 00:03:21.426 align:middle
+¡hola Mixed Vinyl!
+
+00:03:21.786 --> 00:03:25.466 align:middle
+Pero vaya que esta cosa
+tiene un aspecto raro y feo.
+
+00:03:26.126 --> 00:03:31.176 align:middle
+Se trata de un proyecto Symfony 6.3, el mismo
+que hemos construido en la serie Symfony.
+
+00:03:31.516 --> 00:03:33.136 align:middle
+Tiene Doctrine instalado...
+
+00:03:33.426 --> 00:03:37.156 align:middle
+pero no tiene nada particularmente
+especial, y ahora mismo,
+
+00:03:37.326 --> 00:03:40.396 align:middle
+tiene literalmente cero CSS y JavaScript.
+
+00:03:41.126 --> 00:03:45.756 align:middle
+No hay ningún directorio assets/ ni nada
+escondido dentro del directorio public/.
+
+00:03:46.736 --> 00:03:49.726 align:middle
+Lo primero que quiero explorar es la realidad
+
+00:03:49.726 --> 00:03:54.086 align:middle
+de que nuestro navegador puede manejar más
+cosas modernas de las que nos imaginamos...
+
+00:03:54.456 --> 00:03:57.066 align:middle
+desde luego, mucho más de lo
+que yo creía hace unos meses.
+
+00:03:57.756 --> 00:04:00.556 align:middle
+Veamos de qué va todo este revuelo
+probando nuestro navegador con
+
+00:04:00.556 --> 00:04:03.396 align:middle
+un JavaScript moderno.
