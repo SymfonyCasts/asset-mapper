@@ -14,6 +14,8 @@ up here in the `javascripts` block, though that doesn't make any difference, add
 a boring `<script>` tag for this: `<script src="{{ asset('app.js') }}">`. I *am*
 using the `asset()` function... but that's not doing anything either.
 
+[[[ code('36691e46e5') ]]]
+
 Ok, head to the browser, open up your Console and... refresh. There's the log!
 It's snooze-worthy, but working.
 
@@ -25,10 +27,14 @@ the class syntax introduced in ES6, or ECMAScript 6... basically version "6" of
 JavaScript. You'll hear ES6 a lot because *most* modern features you're used to
 came from this version - released *way* back in 2015.
 
+[[[ code('0a5e0272ff') ]]]
+
 In the `describe()` method, I'm leveraging string interpolation - another modern
 feature from ES6 - to return the string. Below, use this: `const` - yet *another*
 ES6 feature - `mix = new MixedVinyl()` and pass in the mix name and year. Finally,
 `console.log(mix.describe())`.
+
+[[[ code('1cf2eec3fa') ]]]
 
 Cool! *This* is the kind of code I like to write every day. Unfortunately, this
 is *also* the kind of code that browsers have historically choked on!
@@ -49,8 +55,12 @@ But what about the `import` statement? Copy the `class MixedVinyl` then create
 another file directly inside `public/` called `vinyl.js`. Paste this in and
 then `export` it: `export default class`.
 
+[[[ code('92a5ef4225') ]]]
+
 Back over in `app.js`, `import MixedVinyl from` and, just like we do in Encore,
 use the relative path: `./vinyl.js`.
+
+[[[ code('da3b7f12da') ]]]
 
 Though, notice that I *am* including the `.js` file extension... which you *can*
 do in Encore, but it's not required. More on that later - but this *was* on purpose.
@@ -68,6 +78,8 @@ leverage `export` and `import`. And if you want your JavaScript to be able to *u
 these, you need to load the original *file* "as a module". It's a simple change.
 Copy the `asset()` function and *now* say `<script type="module">`. Then, instead
 of `src`, inside, we're going to write some JavaScript to `import` our `app.js` file.
+
+[[[ code('25822ef79c') ]]]
 
 This may look nutty at first, but... we're simply importing the path to our
 `app.js` file. By doing this, `app.js` will execute *exactly* like it did before...
@@ -99,6 +111,8 @@ import lodash from '[...]'
 That looks *very* similar to the code we have over here! We won't use this exactly,
 but I *am* going to copy the URL. Now go back to `app.js`. To use `lodash` we
 can say `import _ from` and paste that full URL.
+
+[[[ code('f3c52fc010') ]]]
 
 Yes, importing from a full URL is *totally* allowed. Or we could download this file
 locally: I'll talk more about that later. Below, let's say `_.camelCase()` to call
