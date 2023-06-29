@@ -5,6 +5,7 @@ chapters:
     - usage
     - css
     - vendor-css
+    - fonts
     - tailwind
     - importmap
     - importmap-require
