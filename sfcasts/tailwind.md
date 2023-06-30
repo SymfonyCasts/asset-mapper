@@ -1,67 +1,123 @@
 # Tailwind CSS
 
-Our site is *actually* styled in Tailwind, and all of the classes you see here are Tailwind classes. So let's get that installed on our site! Tailwind is something that requires a build step, and that's *totally* fine. Even though we don't have a build step for all of our JavaScript and CSS assets, that doesn't mean we can't add a little build code for a few specific things.
+The HTML on our site is *already* styled with Tailwind: all of the classes you see
+here *come* from it. So if we can get Tailwind installed, we should have a *much*
+less ugly site.
 
-As you can see here, you *could* install Tailwind with Node if you wanted to, and that's actually a really flexible way to do it. You would get a `package.json` file, but instead of having Webpack, Encore, and a ton of other stuff in there, you would just have Tailwind. The other option is to use a standalone executable, and *that* doesn't require *anything*. Let's grab that and open this standalone CLI build. This takes us to their Tailwind release page. Now we need to find the exact version we want. For my purposes, it's "tailwind-macos-arm64", but this can differ depending on your operating system. Copy this link address, head back over here, and now we're essentially just going to download that. We'll use these commands in our terminal,
+Tailwind is interesting because it's not just a CSS file you can include: it
+requires a build step. And that's *totally* fine! Even though we don't have a build
+system for *everything* doesn't mean we can't choose to add one for some specific
+things.
 
-```terminal
-curl -slO
-```
+## Using TailwindBundle
 
-and *paste*. Perfect! Then (it doesn't matter where you put this, but I'm going to move it into the `/bin` directory), we'll rename this `tailwindcss` instead of that long name. Finally, since this might be different for certain machines, we're going to go ahead and ignore this new file. So yes, that *does* mean that, with this setup, everyone will need to download their *own* Tailwind CSS file. If you use the Node version, this step wouldn't be necessary.
+Before we dive in... about a week after I recorded this, I built a bundle that makes
+it *super* easy to add Tailwind called, creatively, [TailwindBundle](https://github.com/symfonycasts/tailwind-bundle)!
+Seeing how you can setup a build system is still interesting - but if you want to
+skip over to that bundle to get things working in about 5 minutes, you won't hurt
+my feelings. The bundle basically automates what we're about to do.
 
-The very last step is to make that executable:
+## Downloading the Standalone Executable
 
-```terminal
+To get all of this working, we need the Tailwind binary file. As we see here, we
+*could* install Tailwind with Node... and that's a really flexible way to do it.
+You would get a `package.json` file... but instead of having WebpackEncore and a
+ton of other stuff inside, you would just have Tailwind.
+
+The other option, which avoids the need for Node entirely, is to use the standalone
+executable. Click the "Standalone CLI build" to go to the Tailwind release page.
+Find the version you need - for me, it's "tailwind-macos-arm64". You can download
+that here, but I'll copy the link address... so I can download it *fancily* via
+curl: `curl -slO` then paste!
+
+It doesn't matter where you put this, but I'm going to move it into the `bin/`
+directory and rename it to `tailwindcss`... instead of that long name. Finally,
+because other machines - like the computers of our co-workers or the machine
+that deploys our site - might be different, let's ignore this file.
+
+So yes, this *does* mean that everyone will need to download their *own* Tailwind
+binary.
+
+The very last step is to make this executable. On a Linux-based system, that's:
+
+```terminal skip-ci
 chmod +x bin/tailwindcss
 ```
 
-And say
+Also, in a Mac, I need to run
 
-```terminal
+```terminal skip-ci
 open bin/tailwindcss
 ```
 
-to open it. If this is the first time you've downloaded this file, it will ask you to verify that you *do* want to open it.
+If this is the first time you've downloaded this file, it will ask you to verify
+that you *do* want to open it from a security standpoint.
 
-Okay, now we have this `bin/tailwindcss` executable. It doesn't require Node, and it's *completely* standalone. It's *awesome*. From here, we can just follow the normal docs.  This is the one of the things I really like about the new system. If you *do* need a build system, you can just use Tailwind's build system directly and follow their instructions.
+## Initializing Tailwind
 
-Here, it shows us that we need to run
+Okay! We now have the `bin/tailwindcss` executable, which does *not* require Node.
+From here, we can just follow the normal docs. This is the one of the things I really
+like about this new frontend philosophy. If you *do* need a build system, you can
+just use Tailwind's build system directly and follow their instructions: no need
+for a Symfony-specific solution.
 
-```terminal
+Here, it shows us that we need to run:
+
+```terminal skip-ci
 tailwindcss init
 ```
 
-so let's do that:
+So let's do that!
 
 ```terminal
 ./bin/tailwindcss init
 ```
 
-This will create our new `tailwind.config.js` file. Let's go check that out.
+This creates a shiny new `tailwind.config.js` file. Let's go check it out!
 
-The most important thing for us to configure is `content`. This is where our actual HTML files are going to be. And we can actually search for their Symfony-specific documentation for that. Down here, they have a really nice setup. This tells us we're going to be referencing Tailwind classes in our `/assets` and `/templates` directories. Whoops! Let me paste that in the correct spot... There we go. The last step is to copy three baselines for Tailwind and put those inside of our `app.css` file. We can get rid of the Bootstrap stuff, and we'll just keep a little bit of our custom code down here. Nice!
+The most important thing is to configure the `content` key. This tells Tailwind
+*where* it should look for HTML elements. Search for their Symfony-specific
+documentation. Down here, they have exactly what we want! Copy the `content`...
+then paste! I mean... paste it in the correct spot!
 
-*Now* we're going to point the Tailwind executable at this `app.css` file, have it create a build file, and then we're just going to *reference* that build file. There's nothing very magical about this process. Over at your terminal, run:
+The last step is to copy the three base directive lines for Tailwind... and put those
+inside of `app.css`. I'll remove the Bootstrap stuff... but keep a little bit of
+our custom code down here. Nice!
 
-```terminal
-./bin/tailwindcss -i assets/styles/app.css -o
+## Building the CSS File
+
+Finally, we're ready to build! At your command line, run `bin/tailwind`, use
+`-i` to point to the input `assets/styles/app.css` file, then `-o` to tell it
+where to *output* the file. Use `assets/styles/app.tailwind.css` so it's in
+the same directory:
+
+Putting it in the same directory is important so that any relative image paths
+will still work.
+
+We're putting it in the same directory so that relative paths like this are still
+going to work. At the end I'll add `-w` for watch:
+
+```terminal-silent
+./bin/tailwindcss -i assets/styles/app.css -o assets/styles/app.tailwind.css -w
 ```
 
-And we'll make sure we put it in the same directory with:
+And that's it! Built! *And*, it's watching for changes. Over here, we have an
+`app.tailwind.css` with *all* the goodies inside. Awesome!
 
-```terminal
-assets/styles/app.tailwind.css
-```
+In `base.html.twig`, instead of pointing directly at `app.css` - which is kind
+of an "internal" file at this point - point this at `app.tailwind.css`.
 
-We're putting it in the same directory so that relative paths like this are still going to work. At the end I'll add
+*Moment of truth*. Back to the browse! Refresh. Our site is styled! That means we
+can get rid of the Bootstrap stuff: remove the Bootstrap CDN link... since we were
+just demonstrating how that works... and also the button down here.
 
-```terminal
--w
-```
+That looks good!
 
-for "watch". This is a command that you're going to run while you develop. And that's it! If we head over and check this out... we have `app.tailwind.css` with *all* of our stuff inside of it. Awesome! In `base.html.twig`, we're just going to ignore the `app.css` file. That's kind of like our `/src` file now. We're going to point this at `app.tailwind.css` instead. *Moment of truth*. Back in our browser... refresh, and... beautiful! Our site is *actually* styled now. That means we can get rid of this Bootstrap stuff. Remove this Bootstrap CDN, since we were just demonstrating how that works... and we can also get rid of our Bootstrap button down here. That looks good! But what about this Tailwind file? Do we *ignore* that? Do we *commit* it? This is part of the build process, so we *can* commit it, but we're just going to ignore it. Later, we'll see how we build that *before* we deploy.
+## Ignoring the Built File
 
-Back over in our `.gitignore` file, we're *also* going to ignore `/assets/styles/app.tailwind.css`. That's it! It's important to note that individual people on your team will need to download this `tailwindcss` file. You *can* commit one if everyone's using the same things, and then run this command to build those assets. But ultimately, we're just pointing at the build Tailwind file from inside `base.html.twig`. This is what's being served to the end user.
+But what about this `app.tailwind.css` built file? Do we *ignore* that from git?
+Do we *commit* it? It's up to you! We *can* commit - it - it would make deploying
+easier, but we generally *don't* want to commit built files. I *will* ignore it,
+then we'll see how that works into deployment a bit later.
 
-Next: Let's turn to *JavaScript*.
+Ok, done! Next: Let's turn to *JavaScript*.
