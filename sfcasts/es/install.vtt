@@ -1,0 +1,144 @@
+WEBVTT
+
+00:00:01.136 --> 00:00:04.556 align:middle
+Ahora sabemos que podemos ejecutar JavaScript
+moderno directamente en nuestro navegador.
+
+00:00:05.036 --> 00:00:07.646 align:middle
+Pero para facilitar el proceso, vamos a
+
+00:00:07.646 --> 00:00:10.666 align:middle
+instalar un nuevo componente
+de Symfony llamado AssetMapper.
+
+00:00:11.506 --> 00:00:18.026 align:middle
+Busca tu terminal y ejecuta: composer require
+symfony/asset-mapper symfony/asset Incluyo
+
+00:00:18.026 --> 00:00:22.556 align:middle
+el segundo paquete porque nos proporciona
+esa bonita función asset() en Twig.
+
+00:00:23.006 --> 00:00:27.866 align:middle
+Ya está instalado en este proyecto -
+asegúrate de que lo tienes en el tuyo.
+
+00:00:28.856 --> 00:00:33.886 align:middle
+Antes de empezar: AssetMapper
+es experimental en Symfony 6.3,
+
+00:00:34.176 --> 00:00:39.296 align:middle
+por lo que es probable que haya algunas
+interrupciones de retrocompatibilidad antes de la 6.4.
+
+00:00:39.956 --> 00:00:43.636 align:middle
+Pero como veremos, los conceptos son sólidos,
+
+00:00:43.846 --> 00:00:47.986 align:middle
+y puedes desplegar un sitio
+super-performante con AssetMapper hoy mismo.
+
+00:00:48.906 --> 00:00:56.426 align:middle
+Ejecuta: git status Oooh: la receta de Flex
+para AssetMapper ha añadido varias cosas.
+
+00:00:57.026 --> 00:00:58.756 align:middle
+¡Es hora de dar una vuelta rápida!
+
+00:00:59.306 --> 00:01:02.136 align:middle
+En primer lugar, nos ha proporcionado
+un directorio assets/...
+
+00:01:02.426 --> 00:01:07.566 align:middle
+que es prácticamente idéntico al que
+obtendrías si instalaras WebpackEncore.
+
+00:01:08.016 --> 00:01:12.966 align:middle
+Tenemos un archivo app.js -este será
+el principal, el que se ejecute-
+
+00:01:13.286 --> 00:01:16.596 align:middle
+y también app.css: el archivo CSS principal.
+
+00:01:17.316 --> 00:01:24.756 align:middle
+En templates/base.html.twig, la receta también ha
+añadido una etiqueta link para apuntar a app.css.
+
+00:01:25.226 --> 00:01:28.946 align:middle
+Hablaremos más sobre hojas de estilo
+más adelante, pero ya puedes ver
+
+00:01:28.946 --> 00:01:32.146 align:middle
+que la configuración CSS
+es perfectamente sencilla.
+
+00:01:32.986 --> 00:01:37.766 align:middle
+La receta añadió otra línea importante
+a este archivo: {{ importmap() }}.
+
+00:01:38.356 --> 00:01:41.946 align:middle
+Que se asocia con un nuevo
+archivo importmap.php.
+
+00:01:42.546 --> 00:01:46.266 align:middle
+Estos son importantes, y entraremos en
+detalle sobre ellos en breve. Las conclusiones
+
+00:01:47.016 --> 00:01:51.686 align:middle
+son que la receta creó unos
+cuantos archivos en assets/
+
+00:01:52.136 --> 00:01:55.486 align:middle
+y añadió una etiqueta link a base.html.twig.
+
+00:01:55.886 --> 00:01:58.826 align:middle
+Pero por lo demás, aún
+no ha pasado gran cosa.
+
+00:01:59.686 --> 00:02:04.866 align:middle
+Volviendo a mirar el terminal, la receta también
+creó un nuevo archivo asset_mapper.yaml.
+
+00:02:05.506 --> 00:02:09.286 align:middle
+Vamos a abrirlo:
+config/packages/asset_mapper.yaml.
+
+00:02:10.126 --> 00:02:16.496 align:middle
+AssetMapper tiene un concepto principal: lo
+apuntas a un directorio o conjunto de directorios,
+
+00:02:16.606 --> 00:02:22.616 align:middle
+como assets/, y hace que todos los archivos
+que contiene estén disponibles públicamente,
+
+00:02:22.946 --> 00:02:26.016 align:middle
+como si vivieran en el directorio public/.
+
+00:02:26.666 --> 00:02:28.996 align:middle
+Veremos cómo se consigue en un minuto.
+
+00:02:29.576 --> 00:02:33.666 align:middle
+Pero antes de hacer nada,
+actualiza la página y...
+
+00:02:34.006 --> 00:02:36.366 align:middle
+¡el fondo se ha vuelto azul!
+
+00:02:36.826 --> 00:02:39.656 align:middle
+Eso viene del archivo app.css.
+
+00:02:40.316 --> 00:02:46.886 align:middle
+Y, en el registro de la consola, vemos
+un mensaje que procede de assets/app.js.
+
+00:02:47.356 --> 00:02:52.636 align:middle
+Así que, de algún modo, mágicamente, sólo
+con ejecutar un comando composer require,
+
+00:02:52.816 --> 00:02:58.586 align:middle
+estos dos archivos ya están expuestos
+públicamente y se están cargando en la página.
+
+00:02:59.216 --> 00:03:01.926 align:middle
+A continuación, vamos a ver
+cómo funciona todo esto.
