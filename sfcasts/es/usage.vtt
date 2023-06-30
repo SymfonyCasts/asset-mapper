@@ -1,0 +1,314 @@
+WEBVTT
+
+00:00:01.126 --> 00:00:03.326 align:middle
+AssetMapper no es gran cosa.
+
+00:00:03.756 --> 00:00:08.866 align:middle
+Claro que viste guay y tiene buenos movimientos
+de baile, pero en realidad es bastante sencillo.
+
+00:00:09.286 --> 00:00:10.876 align:middle
+Tiene dos características principales.
+
+00:00:11.606 --> 00:00:17.076 align:middle
+Característica número uno: configuramos
+"rutas" -como el directorio assets/ -
+
+00:00:17.326 --> 00:00:20.616 align:middle
+y pone a disposición del público
+los archivos que contiene.
+
+00:00:21.376 --> 00:00:22.366 align:middle
+Veámoslo en acción.
+
+00:00:22.776 --> 00:00:26.346 align:middle
+Si te has descargado el código del curso,
+deberías tener un directorio tutorial/ con
+
+00:00:26.436 --> 00:00:30.166 align:middle
+un importante archivo penguin.png dentro.
+
+00:00:30.786 --> 00:00:31.406 align:middle
+Cópialo.
+
+00:00:31.976 --> 00:00:35.826 align:middle
+Dentro de assets/, podemos
+organizar las cosas como queramos.
+
+00:00:36.196 --> 00:00:40.336 align:middle
+Así que vamos a crear un directorio images/
+y a transportar allí a nuestro pingüino.
+
+00:00:41.076 --> 00:00:46.386 align:middle
+Ahora, recuerda, sin la magia de AssetMapper, los únicos
+archivos a los que nuestro navegador debería poder
+
+00:00:46.386 --> 00:00:49.866 align:middle
+acceder son los que están
+dentro del directorio public/.
+
+00:00:50.356 --> 00:00:55.296 align:middle
+Así que debería ser imposible añadir una
+etiqueta img que cargue nuestro pingüino.
+
+00:00:55.866 --> 00:00:58.586 align:middle
+Pero... es posible.
+
+00:00:59.256 --> 00:01:02.936 align:middle
+Dirígete a, qué tal,
+templates/base.html.twig. En
+
+00:01:03.776 --> 00:01:06.406 align:middle
+cualquier lugar -iré por
+encima del bloque body -
+
+00:01:06.666 --> 00:01:12.486 align:middle
+añade un img con src="{{
+asset() }}" pasándole la ruta
+
+00:01:12.486 --> 00:01:16.316 align:middle
+a nuestro archivo relativa
+al directorio assets/.
+
+00:01:16.886 --> 00:01:19.816 align:middle
+Así que images/penguin.png.
+
+00:01:20.416 --> 00:01:21.506 align:middle
+Ya está.
+
+00:01:22.056 --> 00:01:25.776 align:middle
+Esto se conoce como la
+"ruta lógica" al activo.
+
+00:01:26.706 --> 00:01:32.166 align:middle
+Como hemos apuntado AssetMapper al directorio
+assets/, podemos referirnos a cosas dentro
+
+00:01:32.166 --> 00:01:35.296 align:middle
+de él a través de su
+ruta relativa a esa raíz.
+
+00:01:35.296 --> 00:01:40.736 align:middle
+Y hay una forma estupenda de ver todos los activos
+que están en las rutas de AssetMapper yendo
+
+00:01:40.736 --> 00:01:46.626 align:middle
+al terminal y ejecutando: php
+bin/console debug:asset ¡Genial!
+
+00:01:46.926 --> 00:01:52.216 align:middle
+En primer lugar, en la parte superior, muestra las
+rutas de AssetMapper, incluido el directorio assets/.
+
+00:01:52.826 --> 00:01:55.576 align:middle
+Este proyecto también
+tiene instalado Pagerfanta.
+
+00:01:56.066 --> 00:02:00.676 align:middle
+Y ya estamos viendo cómo los bundles
+pueden añadir sus propias rutas AssetMapper
+
+00:02:00.786 --> 00:02:03.646 align:middle
+para que sus propios archivos
+estén disponibles públicamente.
+
+00:02:04.346 --> 00:02:07.466 align:middle
+Esto no será importante para nosotros,
+pero podríamos dirigir el navegador
+
+00:02:07.466 --> 00:02:10.756 align:middle
+a cualquier archivo dentro
+de ese directorio del bundle.
+
+00:02:11.666 --> 00:02:16.606 align:middle
+A continuación, vemos nuestro archivo de imagen,
+nuestro archivo CSS y nuestro archivo JavaScript.
+
+00:02:17.066 --> 00:02:21.336 align:middle
+Estas son sus rutas en el sistema de
+archivos y estas son sus rutas lógicas.
+
+00:02:22.046 --> 00:02:28.766 align:middle
+La cuestión es que, utilizando la función asset()
+y la ruta lógica a un activo, cuando actualizamos...
+
+00:02:29.246 --> 00:02:31.276 align:middle
+¡funciona! ¡Woh!
+
+00:02:31.276 --> 00:02:35.506 align:middle
+Y si inspeccionamos Elemento, ¡mira la URL!
+
+00:02:35.926 --> 00:02:39.486 align:middle
+¡Contiene un hash de versión en el medio!
+
+00:02:40.236 --> 00:02:42.186 align:middle
+En realidad voy a ver la
+fuente de la página...
+
+00:02:42.186 --> 00:02:43.556 align:middle
+es un poco más fácil de ver.
+
+00:02:44.426 --> 00:02:48.006 align:middle
+Así que no sólo penguin.png
+está disponible públicamente,
+
+00:02:48.506 --> 00:02:54.026 align:middle
+sino que la ruta no es sólo penguin.png
+: contiene un hash de versión.
+
+00:02:54.826 --> 00:03:00.086 align:middle
+Si modificáramos el archivo fuente penguin.png -por ejemplo,
+poniéndole una pajarita chula- el hash de la versión
+
+00:03:00.326 --> 00:03:04.966 align:middle
+cambiaría automáticamente, obligando
+a cualquiera que utilizara nuestro sitio
+
+00:03:05.046 --> 00:03:07.036 align:middle
+a descargar el archivo nuevo.
+
+00:03:07.406 --> 00:03:11.906 align:middle
+¡Booya! Así es como se carga app.css Arriba
+
+00:03:12.266 --> 00:03:17.926 align:middle
+del todo, la etiqueta de enlace
+utiliza asset('styles/app.css'),
+
+00:03:18.156 --> 00:03:22.326 align:middle
+que es la ruta lógica en
+AssetMapper a ese archivo.
+
+00:03:22.706 --> 00:03:26.766 align:middle
+Y así también sale con un bonito
+nombre de archivo versionado.
+
+00:03:27.516 --> 00:03:30.336 align:middle
+Vale, pero ¿cómo funciona esto?
+
+00:03:30.636 --> 00:03:33.846 align:middle
+Si eres como yo, querrás saber
+cómo se hacen las salchichas.
+
+00:03:34.586 --> 00:03:39.426 align:middle
+Bueno, en el entorno dev, funciona gracias
+a un oyente de eventos del núcleo...
+
+00:03:39.666 --> 00:03:42.506 align:middle
+básicamente un elegante
+controlador interno de Symfony.
+
+00:03:43.326 --> 00:03:48.196 align:middle
+Por ejemplo, cuando el navegador carga esta
+imagen, esa petición pasa por Symfony.
+
+00:03:48.696 --> 00:03:54.566 align:middle
+Ve que estamos intentando cargar
+/assets/images/penguin-versionhash.png,
+
+00:03:54.566 --> 00:03:57.576 align:middle
+encuentra el archivo fuente y lo sirve.
+
+00:03:58.076 --> 00:03:59.176 align:middle
+¡Podemos probarlo!
+
+00:03:59.596 --> 00:04:04.126 align:middle
+En la pestaña principal, haz clic en cualquier icono de la barra
+de herramientas de depuración web para entrar en el perfilador
+
+00:04:05.226 --> 00:04:10.186 align:middle
+y, a continuación, haz clic en "Últimas 10" para ver
+las 10 peticiones más recientes a través de Symfony.
+
+00:04:10.736 --> 00:04:15.516 align:middle
+Y ahí está: la petición que
+sirvió la imagen del pingüino.
+
+00:04:15.666 --> 00:04:22.036 align:middle
+Adorable. En producción, cargar nuestros archivos a
+través de Symfony no sería lo suficientemente rápido.
+
+00:04:22.556 --> 00:04:26.226 align:middle
+Así que, en su lugar, durante el despliegue,
+ejecutarás un nuevo comando de consola:
+
+00:04:26.646 --> 00:04:32.066 align:middle
+php bin/console asset-map:compile Hablaremos
+más sobre el despliegue más adelante.
+
+00:04:32.396 --> 00:04:33.746 align:middle
+¡Pero esto es realmente genial!
+
+00:04:34.226 --> 00:04:37.426 align:middle
+Copia cada archivo de cada ruta AssetMapper
+
+00:04:37.696 --> 00:04:42.726 align:middle
+en el directorio public/assets/ utilizando
+su nombre de archivo versionado.
+
+00:04:42.966 --> 00:04:44.066 align:middle
+Y ya está.
+
+00:04:44.806 --> 00:04:50.856 align:middle
+De repente, este archivo ya no está siendo servido
+por Symfony: ¡estamos viendo un archivo real, físico!
+
+00:04:51.716 --> 00:04:54.536 align:middle
+En public/assets/, ¡sí!
+
+00:04:54.986 --> 00:04:58.126 align:middle
+Podemos ver los archivos
+finales en todo su esplendor.
+
+00:04:58.746 --> 00:05:02.166 align:middle
+Pero... mientras estamos
+desarrollando, elimina ese directorio
+
+00:05:02.216 --> 00:05:04.726 align:middle
+para que todo siga cargándose dinámicamente.
+
+00:05:05.236 --> 00:05:09.846 align:middle
+Y ya que estamos aquí, ¿ves esos
+favicons dentro del directorio public/?
+
+00:05:10.516 --> 00:05:13.866 align:middle
+Los estamos enlazando en la
+parte superior de base.html.twig.
+
+00:05:14.426 --> 00:05:18.206 align:middle
+Eso funciona totalmente: la función
+asset() puede seguir haciendo
+
+00:05:18.206 --> 00:05:20.476 align:middle
+referencia a cosas dentro
+del directorio public/.
+
+00:05:20.976 --> 00:05:26.076 align:middle
+Pero... ¡sin apenas trabajo, podemos
+añadirles el versionado libre de activos!
+
+00:05:27.006 --> 00:05:31.156 align:middle
+Paso 1: muévelos al directorio assets/images/.
+
+00:05:31.966 --> 00:05:37.286 align:middle
+Paso 2: añade a cada ruta el prefijo
+images/ para obtener su ruta lógica.
+
+00:05:38.946 --> 00:05:43.436 align:middle
+Y... así de fácil, seguimos
+viendo el favicon aquí arriba...
+
+00:05:43.866 --> 00:05:49.386 align:middle
+pero lo que es más importante, si vemos el código
+fuente de la página, ¡ahora están versionados!
+
+00:05:50.236 --> 00:05:52.846 align:middle
+A continuación, profundicemos
+un poco más en los archivos CSS.
+
+00:05:53.176 --> 00:05:57.606 align:middle
+Por ejemplo, ¿cómo podemos hacer referencia
+a imágenes de fondo desde dentro de CSS...
+
+00:05:57.736 --> 00:06:00.306 align:middle
+si el nombre final del
+archivo está versionado?
