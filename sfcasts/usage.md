@@ -21,6 +21,8 @@ Head into, how about, `templates/base.html.twig`. Anywhere - I'll go above the
 `body` block - add an `img` with `src="{{ asset() }}"` passing this the path to
 our file *relative* to the `assets/` directory. So `images/penguin.png`.
 
+[[[ code('262e466110') ]]]
+
 That's it. This is known as the "logical path" to the asset. Because we've pointed
 AssetMapper at the `assets/` directory, we can refer to things inside of that via
 their path *relative* to that root.
@@ -94,6 +96,8 @@ to load dynamically.
 And actually, while we're here, see those favicons inside the `public/` directory?
 We're linking to them at the top of `base.html.twig`. That totally works: the
 `asset()` function can *still* refer to things inside the `public/` directory.
+
+[[[ code('d187eec649') ]]]
 
 But... with almost no work, we can add free asset versioning to these! Step 1:
 move them into the `assets/images/` directory. Step 2: prefix each path with
