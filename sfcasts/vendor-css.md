@@ -9,7 +9,7 @@ npm install bootstrap
 ```
 
 In AssetMapper, because there's no Node, we don't have a *such* an easy system for
-grabbing CSS packages. We *can* still get them.
+grabbing CSS packages. But we *can* still get them.
 
 ## Finding Packages on jsDelivr
 
@@ -26,7 +26,7 @@ back over to the `stylesheets` block and, above `styles/app.css`, paste the *new
 `link` tag.
 
 If you want to *avoid* using the CDN, you *could* download this file directly into
-our project. Because there's no package system like NPM, I would probably create
+your project. Because there's no package system like NPM, I would probably create
 an `assets/vendor/` directory and put the file inside of that. Then I would
 *commit* that `assets/vendor/` directory to Git to keep it in your project and
 versioned. Committing vendor files into your project isn't *amazing*, but it's not
@@ -98,9 +98,9 @@ overriding CSS... though we can at least *use* CSS variables when we do this.
 
 Spin back over to `app.css` and I'll paste in some styling for `.btn-primary`.
 This overrides the variables that are set by Bootstrap to a different color.
-We are,m at least, *using* the `bs-primary` variable: we set it up here, and can
+We are, at least, *using* the `bs-primary` variable: we set it up here, and can
 reference it in as many spots as we want. So, pretty basic CSS overriding, but
-with less repition.
+with less repetition.
 
 And when we try it... it *does* change the color. Sweet! *So* CSS variables are
 *one* way to customize Bootstrap, but Sass is still an even more powerful option.

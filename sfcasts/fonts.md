@@ -5,7 +5,7 @@ https://fontsource.org where you can search through a *huge* number of fonts tha
 have various open source licenses.
 
 For example, one popular font is "Inter". Here, you can download the file, and it
-gives some instal instructions, which are interesting: it uses the
+gives some install instructions, which are interesting: it uses the
 font as an `npm` package.
 
 We're not using `npm`, but we *can* use `npm` packages: and we know how.

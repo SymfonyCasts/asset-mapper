@@ -12,7 +12,7 @@ things.
 ## Using TailwindBundle
 
 Before we dive in... about a week after I recorded this, we created a bundle that
-makes it *super* easy to add Tailwind called. It's called, creatively,
+makes it *super* easy to add Tailwind. It's called, creatively,
 [TailwindBundle](https://github.com/symfonycasts/tailwind-bundle)!
 Seeing how you can set up a small build system is still interesting - but if you
 want to skip this chapter and head over to that bundle instead, it won't hurt my
@@ -34,7 +34,8 @@ curl: `curl -slO` then paste!
 It doesn't matter where you put this, but I'm going to move it into the `bin/`
 directory and rename it to `tailwindcss`... instead of that long name. Finally,
 because other machines - like the computers of our co-workers or the machine
-that deploys our site - might be different, let's ignore this file.
+that deploys our site - might need a different version of this file, let's ignore
+it.
 
 So yes, this *does* mean that everyone will need to download their *own* Tailwind
 binary.
@@ -45,7 +46,7 @@ The very last step is to make this executable. On a Linux-based system, that's:
 chmod +x bin/tailwindcss
 ```
 
-Also, on a Mac, I need to run:
+Oh, and there is an extra, very-very last step if you're on a Mac. Run:
 
 ```terminal skip-ci
 open bin/tailwindcss
@@ -79,7 +80,7 @@ This creates a shiny new `tailwind.config.js` file. Let's go check it out!
 The most important thing is to configure the `content` key. This tells Tailwind
 *where* it should look for HTML that may contain Tailwind classes. Search for their
 Symfony-specific  documentation. Down here, they have exactly what we want! Copy
-the `content`... then paste! I mean... paste it in the correct spot!
+the `content` key... then paste! I mean... paste it in the correct spot!
 
 The last step is to copy the three base directive lines for Tailwind... and put 
 those inside `app.css`. I'll remove the Bootstrap stuff... but keep a little bit
@@ -97,13 +98,13 @@ still work. At the end, add `-w` so it will keep running and watching for change
 ./bin/tailwindcss -i assets/styles/app.css -o assets/styles/app.tailwind.css -w
 ```
 
-And that's it! Built! Over here, we have an `app.tailwind.css` containing *all* the
-goodies. Awesome!
+And that's it! Built! Over here, we have an `app.tailwind.css` file containing
+*all* the  goodies. Awesome!
 
 In `base.html.twig`, instead of pointing at `app.css` - which is now kind of an
 "internal" source file - point this at `app.tailwind.css`.
 
-*Moment of truth*. Back to the browse! Refresh. Our site is styled! That means we
+*Moment of truth*. Back to the browser! Refresh. Our site is styled! That means we
 can get rid of the Bootstrap stuff: remove the Bootstrap CDN link... since we were
 just demonstrating how that works... and also the button down here.
 
@@ -112,7 +113,7 @@ That looks good!
 ## Ignoring the Built File
 
 But what about this `app.tailwind.css` built file? Do we *ignore* that from git?
-Do we *commit* it?  It's up to you! We *can* commit - it - it would make deploying
+Do we *commit* it?  It's up to you! We *can* commit it - it would make deploying
 easier, but we generally *don't* want to commit built stuff. I *will* ignore it...
 then we'll see how that works into our deployment process a bit later.
 
