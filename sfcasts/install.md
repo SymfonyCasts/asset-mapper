@@ -32,9 +32,15 @@ to what you would get if you installed WebpackEncore. We have an `app.js` file -
 this will be the main, *one* file that's executed - and also `app.css`: the main
 CSS file.
 
+[[[ code('68df41237d') ]]]
+
+[[[ code('9031ca801a') ]]]
+
 In `templates/base.html.twig`, the recipe also added a `link` tag to point to
 `app.css`. We're going to talk more about stylesheets later, but you can already
 see that the CSS setup is perfectly straightforward.
+
+[[[ code('d44f1d1210') ]]]
 
 The recipe added one more important line to this file: `{{ importmap() }}`. That
 partners with a new `importmap.php` file. Those *are* important, and we'll go into
@@ -47,6 +53,8 @@ The takeaway is that the recipe created a few files in the `assets/` and added a
 
 Looking back at the terminal, the recipe also created a new `asset_mapper.yaml` file.
 Let's open that up: `config/packages/asset_mapper.yaml`.
+
+[[[ code('abd34ac304') ]]]
 
 AssetMapper has one, *main* concept: you point it at a directory or set of directories,
 like `assets/`, and it makes all the files inside available publicly, as
