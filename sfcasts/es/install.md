@@ -32,7 +32,7 @@ En `templates/base.html.twig`, la receta también añadió una etiqueta `link` p
 
 La receta añadió otra línea importante a este archivo: `{{ importmap() }}`. Que se asocia con un nuevo archivo `importmap.php`. Estos son importantes, y entraremos en detalle sobre ellos en breve.
 
-Las conclusiones son que la receta creó unos cuantos archivos en `assets/` y añadió una etiqueta`link` a `base.html.twig`. Pero por lo demás, no hay mucho que hacer todavía.
+Las conclusiones son que la receta creó unos cuantos archivos en `assets/` y añadió una etiqueta`link` a `base.html.twig`. Pero por lo demás, aún no ha pasado gran cosa.
 
 ## AssetMapper "Rutas"
 
