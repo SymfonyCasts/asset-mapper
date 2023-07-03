@@ -21,14 +21,21 @@ Ok: so we know that we can refer to any file in the `assets/` directory using th
 `asset()` function... which we've now done twice.
 
 But what if we need to refer to a file - like this image - from *inside* a CSS file?
+
+[[[ code('de3f8d3200') ]]]
+
 Check it out. Up here, we have a little record icon in the upper-left corner. Change
 that to be a `span` with `class="bg-logo"` so we can include our penguin image
 instead. Copy that `bg-logo` class head to `app.css`, add `.bg-logo` and...
 I'll add some basic styles.
 
+[[[ code('17c2fac770') ]]]
+
 The *big* question is: how can we set the background image... since the final
 `penguin.png` will have a versioned filename? The answer is: exactly how you would
 *normally* do it: `url()` and then the relative path to the file: `../images/penguin.png`.
+
+[[[ code('62ff749566') ]]]
 
 This is *exactly* how you do it in Encore and exactly how you would do it if these
 files were being served directly to our browser. We simply need to write "correct"
