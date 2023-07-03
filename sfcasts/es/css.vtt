@@ -1,0 +1,185 @@
+WEBVTT
+
+00:00:01.106 --> 00:00:03.956 align:middle
+Cuando hablamos del frontend de un
+sitio, nos referimos principalmente
+
+00:00:03.956 --> 00:00:06.586 align:middle
+a dos cosas: CSS y JavaScript.
+
+00:00:07.126 --> 00:00:09.236 align:middle
+Empecemos por la parte CSS...
+
+00:00:09.316 --> 00:00:11.876 align:middle
+que es muy sencillo con AssetMapper.
+
+00:00:12.346 --> 00:00:17.096 align:middle
+Crea un archivo CSS dentro del
+directorio assets/ e inclúyelo
+
+00:00:17.096 --> 00:00:22.366 align:middle
+con una etiqueta link a la antigua usanza
+que utilice la ruta lógica del archivo.
+
+00:00:23.096 --> 00:00:23.756 align:middle
+Y ya está.
+
+00:00:23.996 --> 00:00:25.226 align:middle
+Cero magia.
+
+00:00:25.816 --> 00:00:28.066 align:middle
+Esto es un poco diferente de Encore.
+
+00:00:28.526 --> 00:00:34.776 align:middle
+Con un sistema de compilación como Encore, puede que estés
+familiarizado con hacer cosas como esta: import './styles/app.css.
+
+00:00:34.976 --> 00:00:36.426 align:middle
+Ese
+
+00:00:36.426 --> 00:00:41.826 align:middle
+tipo de cosas no funcionan en un entorno de
+navegador. Las declaraciones de importación
+
+00:00:42.486 --> 00:00:46.406 align:middle
+son para importar archivos
+JavaScript, punto. De acuerdo,
+
+00:00:46.986 --> 00:00:50.856 align:middle
+técnicamente puedes cargar
+CSS de forma perezosa, pero
+
+00:00:50.966 --> 00:00:54.076 align:middle
+ése es un caso extremo del que no
+necesitamos preocuparnos ahora. La
+
+00:00:54.986 --> 00:00:59.146 align:middle
+cuestión es que no puedes importar
+archivos CSS desde archivos JavaScript y
+
+00:00:59.286 --> 00:01:02.416 align:middle
+no pasa nada: añadir una etiqueta
+link funciona de maravilla. De acuerdo:
+
+00:01:03.236 --> 00:01:05.796 align:middle
+ya sabemos que podemos hacer
+referencia a cualquier archivo del
+
+00:01:05.796 --> 00:01:08.726 align:middle
+directorio assets/ utilizando
+la función asset()... lo que
+
+00:01:09.106 --> 00:01:11.186 align:middle
+ya hemos hecho dos veces. Pero,
+
+00:01:12.016 --> 00:01:17.966 align:middle
+¿y si necesitamos hacer referencia a un archivo -como
+esta imagen- desde dentro de un archivo CSS? Echa un
+
+00:01:18.696 --> 00:01:19.256 align:middle
+vistazo.
+
+00:01:19.456 --> 00:01:22.776 align:middle
+Aquí arriba, tenemos un pequeño icono de
+registro en la esquina superior izquierda.
+
+00:01:24.546 --> 00:01:32.046 align:middle
+Cámbialo por un span con class="bg-logo" para que podamos
+incluir nuestra imagen del pingüino en su lugar. Copia
+
+00:01:34.736 --> 00:01:41.196 align:middle
+ese encabezado de clase bg-logo en
+app.css, añade .bg-logo y ... Añadiré
+
+00:01:41.196 --> 00:01:42.606 align:middle
+algunos estilos básicos. La
+
+00:01:43.516 --> 00:01:47.746 align:middle
+gran pregunta es: ¿cómo podemos
+establecer la imagen de fondo... ya que
+
+00:01:48.036 --> 00:01:52.716 align:middle
+el penguin.png final tendrá un
+nombre de archivo versionado? La
+
+00:01:53.566 --> 00:01:58.126 align:middle
+respuesta es: exactamente como
+lo harías normalmente: url()
+
+00:01:58.126 --> 00:02:02.566 align:middle
+y luego la ruta relativa al
+archivo: ../images/penguin.png. Así
+
+00:02:02.716 --> 00:02:04.826 align:middle
+es
+
+00:02:04.826 --> 00:02:11.556 align:middle
+exactamente como se hace en Encore y
+exactamente como se haría si estos archivos se
+
+00:02:11.556 --> 00:02:14.856 align:middle
+sirvieran directamente a
+nuestro navegador. Simplemente
+
+00:02:15.316 --> 00:02:18.806 align:middle
+tenemos que escribir el código
+"correcto" y funcionará. Vamos a añadir
+
+00:02:19.986 --> 00:02:22.406 align:middle
+2 estilos más para el
+fondo... ¡hora de probar
+
+00:02:24.286 --> 00:02:25.956 align:middle
+! Actualiza y...
+
+00:02:26.526 --> 00:02:27.616 align:middle
+sí, ¡ funciona
+
+00:02:28.146 --> 00:02:30.146 align:middle
+! Inspecciona la
+
+00:02:30.616 --> 00:02:31.786 align:middle
+imagen... y luego
+
+00:02:32.376 --> 00:02:34.606 align:middle
+mira el archivo CSS final. Abrámoslo
+
+00:02:36.826 --> 00:02:38.156 align:middle
+en una pestaña nueva. ¡Perfecto! En su
+
+00:02:38.156 --> 00:02:45.456 align:middle
+mayor parte, los archivos finales coinciden
+exactamente con los archivos fuente. Sin magia.
+
+00:02:45.586 --> 00:02:52.546 align:middle
+Sin embargo, en este caso, AssetMapper
+hizo un pequeño cambio. En el
+
+00:02:52.966 --> 00:02:55.706 align:middle
+archivo original, nos referíamos
+a ../images/penguin.png. Pero
+
+00:02:55.706 --> 00:02:57.916 align:middle
+aquí
+
+00:02:57.916 --> 00:03:01.276 align:middle
+tenemos ../images/penguin-versionhash.png.
+Sí, Ass etMapper hizo
+
+00:03:01.406 --> 00:03:06.046 align:middle
+ese pequeño cambio
+
+00:03:06.046 --> 00:03:13.046 align:middle
+para que las cosas siguieran funcionando, a pesar de
+los nombres de archivo versionados. La cuestión es:
+
+00:03:13.596 --> 00:03:16.006 align:middle
+puedes codificar como si
+nada... y todo funciona.
+
+00:03:16.286 --> 00:03:18.606 align:middle
+A continuación: ¡invitemos
+
+00:03:19.426 --> 00:03:23.916 align:middle
+a la fiesta a CSS de terceros
+como Bootstrap y fuentes!
