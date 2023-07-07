@@ -1,5 +1,43 @@
 # Importing Specific Package Files
 
-Coming soon...
+Sometimes, instead of importing *everything* from a package, you may only want to import *part* of a package, or even a single *file* from a package. Lodash is a pretty good example of this. Normally, we could say `import { camelCase } from 'lodash'` and, down here, we would use `camelCase`. *However*, when we go over here, we'll get a syntax error:
 
-Sometimes, instead of importing everything from a package, you might just want to import part of a package or just a file from a package. Lodash is a pretty good example of this. One of the things that you can normally do is you can actually say import camelCase from lodash like that instead of everything. Then down here, you would use camelCase. However, when you go over here, you get syntax error. The requested module lodash does not provide an export named camelCase. This is complicated. Due to the way that this specific library lodash packages their module, you can't actually import it using this method. This will work in other cases, however. It's a little confusing. For example, if you say import modal from bootstrap, if you're using bootstrap JavaScript, that will work because bootstrap actually has their stuff packaged together correctly. However, in both cases, there's a problem with this syntax anyways. It is one of those spots where with AssetMapper, you need to do a little bit more thinking than you might need to do with the build system. Here's the problem. Let's suppose that this did work. If we ran this code with something called through Encore, Encore would do something called tree shaking where it would actually know that we are importing only the camelCase from lodash. Ultimately, in the final JavaScript, it would only give us the code for camelCase, not give us the code for all of the lodash package. In a browser environment, if you import from lodash, you're going to get all of lodash, even if you're importing just one part of it. Now, that might not be that big of a deal. Lodash is not that big of a library, but in other cases, you might want to import just specific things. The way to do this is instead of importing... The way to do that is actually import a specific file. A lot of times, there's some specific file that you can import like slash camelCase or something like that. A lot of times, you'll find that kind of stuff in the documentation. In fact, lodash will show you that. You can also go look for it. I'm going to go back to JS Deliver. Down here, we'll search for lodash. There we go.  Down here under files, you can actually see all of the different files that are available. It's a huge list because this is a huge library. Down here, you can actually see this one called camelCase.js. It's very common for there to be additional files inside of a package that you actually want to import. What we're basically going to do is say this, lodash slash camelCase. If we try that, that by itself is not going to work. It's going to say, failed to resolve module specifier lodash slash camelCase. Relative references must start with this kind of stuff. This is the error that means that you're importing something and it wasn't found in the import map. If we review the page service, we have an import map for lodash, but not lodash slash camelCase. The matching is done exactly. There is a way to make this match. The simplest way to handle import maps is to have them match exactly. I'm not using lodash anymore. I'm using lodash slash camelCase. I'm actually going to do it first over here and run bin console import map, remove lodash. Let's actually remove lodash. Very simply, that's going to remove it from our import map. It also actually deleted the file from the vendor directory as well, which is nice. Now, in order to get this lodash slash camelCase, we're actually going to import map require and you actually say the package name slash the path that you want. CamelCase. Actually, we could go to camelCase.js here. That works in this case. That's actually the name of the file over in the CDN, but you notice a lot of times in the documentation, they're just going to say import lodash slash camelCase and you actually are allowed to do that. We import the specific file just like last time. It's just going to add a new entry to our import map. I'll copy that so we can see it. There we go. You can see it's kind of showing you which file it's getting. It's getting the camelCase.js from that library. Now when we try it, it works. So long way of saying is that when you want to import a specific file from a package, you can do that. Just use the import map require to get the specific one that you want. That's it.  Next, let's add stimulus to our application.
+`The requested module 'lodash' does not provide an export named 'camelCase'`
+
+This is *complicated*. Due to the way that this specific library, `lodash`, packages their module, you *can't* actually import it using this method. It *will* work in other cases, however, so it's a little confusing.
+
+For example, if you say `import { Modal } from 'bootstrap'` (if you're using Bootstrap), that *will* work because Bootstrap actually has their stuff packaged together correctly. There's a problem with this syntax in both cases anyway. With AssetMapper, you need to do a *little* more thinking than you might need to do with the build system.
+
+Here's the problem. Suppose that this *did* work. If we ran this code through Encore, Encore would do something called "tree shaking", where it would know that we're only importing `camelCase` from `lodash`. Ultimately, in the final JavaScript, it would only give us the code for `camelCase`, not the entire `lodash` package. In a browser environment, if you `import` from `lodash`, you're going to get *all* of `lodash`, even if you're only importing one part of it. Now, that *might* not be that big of a deal, since `lodash` isn't a huge library. But in *other* cases where the libraries are much larger, you may only want to import *specific* things.
+
+A lot of times, there's a specific file that we can import, like `/camelCase` , and you'll find those details in the documentation. Lodash will show you that, but you can also go look for it. We can head back to JSDelivr... and down here, we'll search for "lodash". Then, down here under "Files", you can see all of the different files that are available. It's a *huge* list because this is a *huge* library. Here, you can see one called `camelCase.js`. It's very common for these packages to contain additional files that you'll want to import. *We're* going to say `lodash/camelCase`. If we try that... it looks like *that*, by itself, is not going to work. It's going to say `Failed to resolve module specifier 'lodash/camelCase'. Relative references must start with either "/", "./", or "../"`. This error that means that you're importing something and it wasn't found in the `importmap`. If we "View Page Source", we have an `importmap` for `lodash`, but not `lodash/camelCase`. The simplest way to handle `importmaps` is to have them match *exactly*. Instead of using `lodash`, we're using `lodash/camelCase`.
+
+Head over to your terminal and run:
+
+```terminal
+./bin/console importmap:remove lodash
+```
+
+That's going to remove `lodash` from our `importmap`, and it will also delete the file from the `/vendor` directory as well. *Convenient*. In order to get `lodash/camelCase`, we're going to
+
+```terminal
+./bin/console importmap:require
+```
+
+with "the package name / the path that you want", so
+
+```terminal
+lodash/camelCase.js
+```
+
+This `camelCase.js` is actually the name of the file over in the CDN, but you'll notice that, a lot of times in the documentation, they're just going to say
+
+```terminal
+lodash/camelCase
+```
+
+You *are* allowed to do that.
+
+We'll import this specific file and, just like last time, it's going to add a new entry to our `importmap`. I'll copy that so we can see it. There we go. This is showing you which file it's getting - `camelCase.js` - from that library. Now when we try it... it *works*! So this was a long way of saying that, when you want to import a specific file from a package, you can do that. Just use `importmap:require` to get the specific one you want. That's *it*.
+
+Next, let's add Stimulus to our application.
