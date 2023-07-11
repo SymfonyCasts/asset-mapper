@@ -25,6 +25,8 @@ Okay, we know that CSS with AssetMapper is delightfully *boring*... so go
 back over to the `stylesheets` block and, above `styles/app.css`, paste the *new*
 `link` tag.
 
+[[[ code('46fdf5251c') ]]]
+
 If you want to *avoid* using the CDN, you *could* download this file directly into
 your project. Because there's no package system like NPM, I would probably create
 an `assets/vendor/` directory and put the file inside of that. Then I would
@@ -35,6 +37,8 @@ You'll see me do this later for a JavaScript. file.
 
 Ok, let's see if this is working! Scroll down to the middle of the page and add
 a `button` with `btn btn-primary` to use a few common Bootstrap styles.
+
+[[[ code('795e079dad') ]]]
 
 When we head over to the site and refresh... it works! Lovely!
 
@@ -75,6 +79,8 @@ is a common place to initialize variables that will be used later. Here, overrid
 a CSS variable that Bootstrap provides and uses: `--bs-border-radius`. Set it
 to `1rem`.
 
+[[[ code('10e0bc3030') ]]]
+
 That *should* make the borders noticeably larger. Back at the browser... it works!
 The border radius is now larger across the site. That's one of the variables you
 would find in the Bootstrap documentation.
@@ -86,6 +92,8 @@ up here... and overriding something like `--bs-primary`. That's *sort of* correc
 If you inspect our button, this color *is* the actual background color. But watch.
 Try to override that by changing it to a slightly lighter color. Then head back and
 try it. It doesn't do *anything*.
+
+[[[ code('447b6893dd') ]]]
 
 Copy the CDN URL, pop that into your browser, and take off the `.min` so we can
 see what's going on. On top, it's setting all of those nice CSS variables. Look
@@ -101,6 +109,8 @@ This overrides the variables that are set by Bootstrap to a different color.
 We are, at least, *using* the `bs-primary` variable: we set it up here, and can
 reference it in as many spots as we want. So, pretty basic CSS overriding, but
 with less repetition.
+
+[[[ code('490908f914') ]]]
 
 And when we try it... it *does* change the color. Sweet! *So* CSS variables are
 *one* way to customize Bootstrap, but Sass is still an even more powerful option.
