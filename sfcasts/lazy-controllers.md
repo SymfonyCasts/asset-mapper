@@ -1,11 +1,36 @@
 # Lazy Stimulus Controllers
 
-Okay, let me close a couple files.... and let's open up `/assets/controllers/goodbye-controller.js`. Pretend, for a moment, that this controller is really big and complex. Or, even more likely, let's say it imports some big third party package like `d3` for charts. But we're only using this on *some* pages.
+It's getting messy in here: let me close a few files... then open up
+`assets/controllers/goodbye-controller.js`. Pretend, for a moment, that this
+controller is really *big*. Or, more likely, it imports a big third-party package
+like `d3` for charts. *But*, we're only using this controller on *some* pages.
 
-Here's the deal. In order to register your controllers with Stimulus, all of these files are downloaded at runtime. So the page loads, Stimulus starts up, all of these files are downloaded, and anything they import is *also* downloaded. It's kind of wasteful if you're only going to be using this on a few pages. To fix that, above this, you can add a very special syntax - `/* stimulusFetch: 'lazy' */`. This is a very special thing we do in StimulusBundle, which instructs Stimulus to *not* download this JavaScript file or anything it imports until an element that matches this is on the page.
+Here's the deal. In order to register your controllers with Stimulus, all of these
+files are downloaded immediately. So the page loads, Stimulus starts up, all of these
+files are downloaded, and any files they import are *also* downloaded. That's often
+ok, but if you're importing something *big*, that can be wasteful.
 
-A moment ago, if I searched for "goodbye", this was being loaded on the page load. But *now*, if I refresh and search for "goodbye, it's *not* there. But check this out! Inspect this element on our `data-controller="hello"`. We're going to change that to `goodbye` and... boom! It works! You can see that it activated (that's what our `Goodbye controller!` does), and if we look at the Network tab, *now* it downloaded. I *love* this feature.
+To fix that, above the class, you can add a very special syntax -
+`/* stimulusFetch: 'lazy' */`.
 
-This can also be done for third party packages. If you look in `/assets/controllers.json`... Turbo isn't a very good example of this, but if we had said `"fetch": "lazy"` on any of these, they would have the *same* behavior as our own controllers. And that's it! Easiest chapter *ever*. You can use that to keep your initial page lightweight in the event you have some Stimulus controllers that are only used in certain places.
+This works thanks to StimulusBundle. When it sees this, it instructs Stimulus to
+*not* download this JavaScript file or anything it imports *until* an element that
+matches this is on the page.
 
-Next: Let's go through some tips for debugging when things *don't* work.
+Watch. Before making that change, if we searched for "goodbye", that controller *was*
+being loaded, even though it's not used. But *now*, refresh and search for "goodbye".
+It's *not* there! But check this out! Inspect element on the
+`data-controller="hello"` element. Change that to `goodbye` and... boom! It works!
+You can see that it activated (that's what our `Goodbye controller!` does), and if
+we look at the Network tab, *now* it downloaded. I *love* this feature.
+
+This can also be done for third-party packages. If you look in
+`assets/controllers.json`... Turbo isn't a very good example of this, but if we
+said `"fetch": "lazy"` on any of these, they would have the *same* behavior that
+we just saw.
+
+That's it! Easiest chapter *ever*! Use this to keep your initial page lightweight
+if you have some heavy Stimulus controllers that are only used on certain page.
+
+Next: sometimes, deep sigh, things don't work. Let's learn a few tips to help
+identify what's wrong and how to fix it.
