@@ -124,6 +124,6 @@ Then go refresh. *Now* I see that this has a different file name, and the conten
 
 So that's the deep dive into how Stimulus works with AssetMapper. The important
 thing is that `bootstrap.js` loads a file that starts Stimulus... and that
-automatically loads everything inside of the `assets/controllers/` directory...
+automatically loads everything inside the `assets/controllers/` directory...
 as well as any 3rd party UX packages in `assets/controllers.json`. Let's talk
 about *that* part of Stimulus next.

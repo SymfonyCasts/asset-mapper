@@ -1,19 +1,65 @@
-# UX JS Packages
+# Symfony UX Stimulus Packages
 
-We can now create custom Stimulus controllers with ease. The *other* half of StimulusBundle is the ability to get more Stimulus controllers from the UX packages, so let's install one and see how it works.
+We can now create custom Stimulus controllers with ease. The *other* half of
+StimulusBundle is the ability to get more *free* Stimulus controllers by installing
+a UX package. Let's add one and see how it works.
 
-Pretend that we want to get Turbo. at your terminal, say:
+## Installing Turbo
+
+Let's start by adding Turbo. At your terminal, say:
 
 ```terminal
 composer require symfony/ux-turbo
 ```
 
-Here's the great thing about this: Just like when we added Stimulus, when we refresh the page, it just *works*. Turbo is going to eliminate the need for those full page refreshes. Head over to your Network tools and click on "Fetch/XHR". Let's actually clear this out so we can see everything. Perfect. Then, if we click up here... you can see that this is actually coming from an AJAX call. And if we click around the page, those full page refreshes are *gone*. So Turbo *just works*. There's no build system to get in the way, and that's *beautiful*.
+Here's the great thing about this: just like when we added Stimulus, there's
+absolutely *nothing* else you need to do to set this up. Refresh and... it just
+works! Turbo eliminates the need for full page refreshes. Head over to your Network
+tools and click on "Fetch/XHR". Let's actually clear this out so we can see
+everything. Perfect. Then, if we click up here... you can see that this is coming
+from an AJAX call! Yup, those full page refreshes are *gone*. So Turbo *just works*.
+There's no build system to get in the way, and that's *beautiful*.
 
-In practice, is this is working because a new JavaScript file is being loaded called `turbo_controller`. I'll go to JavaScript and refresh, since I cleared it, and... there we go! You can see that this `turbo_controller` is being loaded, and *that* imports `@hotwired/turbo`, which is what *starts* Turbo. A second ago, when we installed the UX Turbo package, if we look at `importmap.php`... that *added* `@hotwired/turbo` here. This is a really common pattern when you install UX packages. If those UX packages depend on some third-party JavaScript, they're going to add that third-party JavaScript to your `importmap` *automatically* so that, when it's referenced, it just works. The question is: Who is loading this `turbo_controller`?
+## UX Packages Often add Importmap Entries
 
-It's coming from deep inside the Symfony UX Turbo package itself, and this is actually the same trick we learned a moment ago. Search for `controllers.js` and open a new tab. This is the dynamic file that StimulusBundle builds. As it turns out, it looks for packages in our `/assets/controllers` directory, which is these two, and it also reads the `/assets/controllers.json` file. When we installed UX Turbo, it added this new section here, which is where we can activate different controllers. We can see that it activated one called `turbo-core` `"enabled": true`, and another option that's `"enabled": false`. So when this file is being built, it parses our `/assets/controllers` directory, finds the controllers that we've enabled, and this basically says that we want to enable this *specific* controller in that bundle. The end result is that it imports that here and returns it so the other file can register it inside of Stimulus. The point is, any controllers in the `/assets/controllers` directory *or* this file will be made available and registered *automatically*.
+In practice, this works because a new JavaScript file is being loaded called
+`turbo_controller.js`. Filter the network calls to JavaScript and refresh, because
+I cleared it. And... there we go! Our page loads `turbo_controller.js` and
+*that* imports `@hotwired/turbo`, which *starts* Turbo.
 
-One little detail we didn't talk about with the UX packages is in `base.html.twig`. When we originally installed StimulusBundle, it added `ux_controller_link_tags()`. Right now, that's doing nothing. *However*, if you install certain UX packages, those packages will actually come with CSS files. You'll find them under a little key called `autoimport`. When you install the package, you'll get something that looks like this, but it will also have this `autoimport` here that points to some CSS file. This `ux_controller_link_tags()` finds all of those CSS files for all the controllers you have activated, and it outputs them. Most UX packages don't have this `autoimport`, but that's how it's going to be output.
+Open up `importmap.php`. When we installed the UX Turbo package, its recipe
+*added* this new `@hotwired/turbo` entry. This is a *really* common pattern with
+UX packages: if a UX package depends on a third-party package, its recipe will
+add that package to your `importmap` *automatically*. The result is that, when
+that package is referenced - like `import '@hotwired/turbo'` - it just works.
 
-Let's learn one more thing about Stimulus: How to make our controllers *lazy*. It's *super* easy. That's *next*.
+## How UX Controllers are Loaded
+
+The *real* question is: who's loading `turbo_controller.js`, which lives deep
+inside of the `symfony/ux-turbo` PHP package?
+
+The answer is: the same trick we learned a moment ago. Search for `controllers.js`
+and open it in a new tab. This is the dynamic file that StimulusBundle builds. As
+it turns out, it looks for packages in our `assets/controllers/` directory, which
+is these two, *and* it reads the `assets/controllers.json` file. When we installed
+UX Turbo, it added this new section here, which is where we activate different
+controllers. It activated one called `turbo-core` with `"enabled": true` and added
+another deactivated one with `"enabled": false`. So when this file is built, it parses
+the `assets/controllers.json` file, finds the controllers that we've enabled, and
+adds them here.
+
+The end result is that it imports that controller file here and exports it so that
+the `loader.js` file can register it in Stimulus. The point is, any controllers in
+`assets/controllers/` *or* in this file will automatically be registered.
+
+## autoimport & CSS Files
+
+Head back into `base.html.twig`. When we installed StimulusBundle, it added
+`ux_controller_link_tags()`. Right now, that does nothing. *However*, some UX
+packages come with CSS files. You'll find them under a key called `autoimport`,
+which the recipe will add under the controller. This `ux_controller_link_tags()`
+finds all the CSS files for all the controllers you have activated, and it outputs
+them. Nothing too fancy.
+
+Next: let's learn one more thing about Stimulus, which just happens to be one of
+my *favorite* things: how to make our controllers *lazy*.
