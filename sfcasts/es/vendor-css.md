@@ -1,4 +1,4 @@
-# cSS de terceros
+# CSS de terceros
 
 Hemos hablado de añadir CSS a nuestro sitio, pero ¿qué pasa con el CSS de terceros, como Bootstrap? Con un sistema de compilación como Encore, tenemos un archivo `package.json`, y podemos ejecutarlo:
 
