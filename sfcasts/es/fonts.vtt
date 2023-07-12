@@ -1,0 +1,149 @@
+WEBVTT
+
+00:00:01.106 --> 00:00:03.506 align:middle
+Otra necesidad común de CSS
+es una fuente personalizada.
+
+00:00:04.156 --> 00:00:08.556 align:middle
+Mi fuente favorita de fuentes es
+https://fontsource.org, donde puedes buscar
+
+00:00:08.556 --> 00:00:12.326 align:middle
+entre un enorme número de fuentes que
+tienen diversas licencias de código abierto.
+
+00:00:12.416 --> 00:00:15.966 align:middle
+Por ejemplo, una fuente popular es "Inter".
+
+00:00:16.536 --> 00:00:20.656 align:middle
+Aquí, puedes descargar el archivo, y
+da unas instrucciones de instalación,
+
+00:00:20.656 --> 00:00:26.096 align:middle
+que son interesantes: utiliza
+la fuente como un paquete npm.
+
+00:00:26.686 --> 00:00:33.016 align:middle
+Nosotros no usamos npm, pero podemos
+usar paquetes npm: y sabemos cómo.
+
+00:00:33.646 --> 00:00:37.416 align:middle
+Dirígete a jsDelivr para encontrarlo.
+
+00:00:37.466 --> 00:00:41.236 align:middle
+Observa que el paquete se llama
+@fontsource-variable/inter.
+
+00:00:41.516 --> 00:00:44.496 align:middle
+Voy a buscar @fontsource/inter.
+
+00:00:45.536 --> 00:00:49.636 align:middle
+Y... al igual que con Bootstrap,
+¡ahí está el archivo CSS!
+
+00:00:49.636 --> 00:00:54.536 align:middle
+Para los frikis de las fuentes,
+si miraras dentro de este archivo,
+
+00:00:54.796 --> 00:01:00.476 align:middle
+verías que se trata del peso 400, y es
+el archivo que utilizarías normalmente
+
+00:01:00.476 --> 00:01:03.546 align:middle
+si lo instalaras a través
+de npm y lo importaras.
+
+00:01:04.326 --> 00:01:07.906 align:middle
+Copia esa URL y pégala en el
+navegador para ver qué aspecto tiene.
+
+00:01:08.716 --> 00:01:12.916 align:middle
+Fíjate en que, en FontSource, recomiendan
+utilizar un paquete que empiece
+
+00:01:12.916 --> 00:01:15.296 align:middle
+por @fontsource-variable. Las fuentes
+
+00:01:15.916 --> 00:01:21.656 align:middle
+variables son geniales: en lugar de necesitar un
+archivo de fuente diferente para cada peso de fuente
+
+00:01:21.836 --> 00:01:28.146 align:middle
+, como 400 frente a 800, una sola fuente
+variable puede contener todos los pesos,
+
+00:01:28.326 --> 00:01:31.046 align:middle
+manteniendo un tamaño de
+archivo razonablemente pequeño.
+
+00:01:31.146 --> 00:01:34.836 align:middle
+FontSource empezó a ofrecer
+fuentes variables hace poco.
+
+00:01:35.396 --> 00:01:38.676 align:middle
+Cambia la URL para utilizar
+@fontsource-variable.
+
+00:01:39.456 --> 00:01:41.206 align:middle
+Esto es lo que realmente queremos.
+
+00:01:41.736 --> 00:01:49.716 align:middle
+Cópialo, vuelve a base.html.twig, añade
+<link rel="stylesheet">, y pégalo.
+
+00:01:49.806 --> 00:01:57.216 align:middle
+Gracias a esto, podemos ir a app.css, dentro
+de la etiqueta body, y decir font-family:
+
+00:01:57.296 --> 00:02:00.996 align:middle
+'Inter Variable', añadiendo
+sans-serif como respaldo.
+
+00:02:02.376 --> 00:02:02.956 align:middle
+¡Vamos a comprobarlo!
+
+00:02:04.416 --> 00:02:06.436 align:middle
+Fíjate bien en este texto.
+
+00:02:07.576 --> 00:02:10.856 align:middle
+¡Pum! Se ha actualizado
+gracias a esa nueva fuente.
+
+00:02:11.516 --> 00:02:15.926 align:middle
+Si te estás preguntando por qué no
+busqué el paquete @fontsource-variable
+
+00:02:15.926 --> 00:02:21.276 align:middle
+en jsDelivr en un principio, es una pregunta
+justa: eso es lo que haría normalmente.
+
+00:02:21.916 --> 00:02:26.246 align:middle
+jsDelivr es un espejo de
+todos los paquetes NPM.
+
+00:02:26.686 --> 00:02:33.086 align:middle
+Sin embargo, debido a un error en
+la API de npmjs. com, ahora mismo,
+
+00:02:33.396 --> 00:02:37.546 align:middle
+estos nuevos paquetes "variables" no
+se pueden encontrar en la búsqueda.
+
+00:02:37.956 --> 00:02:42.486 align:middle
+Al parecer, el error se ha solucionado, así que
+esperemos que el problema desaparezca pronto.
+
+00:02:43.016 --> 00:02:48.446 align:middle
+La cuestión es que jsDelivr sí tiene el paquete que necesitamos,
+sólo que no podemos encontrarlo a través de la búsqueda.
+
+00:02:48.816 --> 00:02:50.926 align:middle
+Es un poco molesto, pero debería ser temporal.
+
+00:02:51.626 --> 00:02:56.076 align:middle
+A continuación: Hagamos nuestro CSS un
+poco más elegante introduciendo Tailwind.
+
+00:02:56.456 --> 00:03:01.376 align:middle
+Esto va a ser especialmente interesante porque
+Tailwind requiere un paso de compilación.
