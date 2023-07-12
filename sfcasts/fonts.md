@@ -29,8 +29,12 @@ starting offering variable fonts quite recently.
 Change the URL to use `@fontsource-variable`. *This* is what we actually want. Copy
 it, head back over to `base.html.twig`, add `<link rel="stylesheet">`, and paste.
 
+[[[ code('5972b1a2f1') ]]]
+
 Thanks to this, we can go over to `app.css`, inside of the `body` tag, and say
 `font-family: 'Inter Variable'`, adding `sans-serif` as a backup.
+
+[[[ code('2106a43c03') ]]]
 
 Let's check it! Watch this text closely. Boom! It updated thanks to that new font.
 
