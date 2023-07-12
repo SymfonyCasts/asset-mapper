@@ -2,7 +2,7 @@
 
 Hemos hablado de añadir CSS a nuestro sitio, pero ¿qué pasa con el CSS de terceros, como Bootstrap? Con un sistema de compilación como Encore, tenemos un archivo `package.json`, y podemos ejecutarlo:
 
-```terminal
+```terminal skip-ci
 npm install bootstrap
 ```
 
@@ -36,7 +36,7 @@ Además, en un momento, vamos a añadir Tailwind CSS a nuestro sitio, que no req
 
 Y, si quieres utilizar Sass con Bootstrap, una forma sencilla de obtener el código fuente de Bootstrap es a través del paquete oficial de Composer para Bootstrap:
 
-```terminal
+```terminal skip-ci
 composer require twbs/bootstrap
 ```
 
