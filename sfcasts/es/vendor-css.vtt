@@ -1,0 +1,331 @@
+WEBVTT
+
+00:00:01.096 --> 00:00:06.086 align:middle
+Hemos hablado de añadir CSS a nuestro sitio, pero
+¿qué pasa con el CSS de terceros, como Bootstrap?
+
+00:00:06.476 --> 00:00:11.366 align:middle
+Con un sistema de compilación como Encore, tenemos
+un archivo package.json, y podemos ejecutarlo:
+
+00:00:11.366 --> 00:00:15.946 align:middle
+npm install bootstrap En
+AssetMapper, como no hay Node, no
+
+00:00:16.116 --> 00:00:20.776 align:middle
+tenemos un sistema tan fácil
+para coger paquetes CSS.
+
+00:00:20.836 --> 00:00:22.506 align:middle
+Pero aún podemos obtenerlos.
+
+00:00:23.216 --> 00:00:28.436 align:middle
+Me gusta usar jsDelivr para esto:
+un CDN para todos los paquetes NPM.
+
+00:00:28.816 --> 00:00:31.386 align:middle
+Aunque al final no lo utilices como CDN, es
+
+00:00:31.506 --> 00:00:33.826 align:middle
+una buena forma de encontrar
+y descargar lo que necesitas.
+
+00:00:35.166 --> 00:00:37.166 align:middle
+Busca "Bootstrap" y...
+
+00:00:37.296 --> 00:00:38.086 align:middle
+ahí lo tienes.
+
+00:00:38.086 --> 00:00:42.696 align:middle
+Muchas veces, encontrarás el archivo CSS
+que necesitas justo aquí arriba, así.
+
+00:00:43.206 --> 00:00:45.246 align:middle
+Le daré a "Copiar HTML + ISR".
+
+00:00:46.626 --> 00:00:48.976 align:middle
+Si no ves el archivo CSS aquí...
+
+00:00:49.316 --> 00:00:54.076 align:middle
+o necesitas otro diferente, puedes hacer clic en la
+pestaña "Archivos" para examinar todo el paquete.
+
+00:00:54.646 --> 00:00:58.276 align:middle
+Por ejemplo - dist/css/
+y luego lo que necesites.
+
+00:00:59.176 --> 00:01:03.766 align:middle
+Vale, sabemos que el CSS con AssetMapper
+es deliciosamente aburrido...
+
+00:01:04.046 --> 00:01:11.186 align:middle
+así que vuelve al bloque stylesheets y, encima
+de styles/app.css, pega la nueva etiqueta link.
+
+00:01:11.186 --> 00:01:17.516 align:middle
+Si quieres evitar usar el CDN, puedes descargar
+este archivo directamente en tu proyecto.
+
+00:01:17.976 --> 00:01:20.096 align:middle
+Como no hay un sistema de paquetes como NPM,
+
+00:01:20.096 --> 00:01:25.456 align:middle
+yo probablemente crearía un directorio
+assets/vendor/ y pondría el archivo dentro de él.
+
+00:01:25.756 --> 00:01:29.956 align:middle
+Luego confirmaría ese
+directorio assets/vendor/ en Git
+
+00:01:29.956 --> 00:01:32.386 align:middle
+para mantenerlo en tu
+proyecto y versionado. Cometer
+
+00:01:32.866 --> 00:01:37.836 align:middle
+archivos de proveedor en tu proyecto no
+es asombroso, pero no es un gran problema
+
+00:01:38.066 --> 00:01:42.116 align:middle
+y es tu mejor opción ahora
+mismo si quieres evitar un CDN.
+
+00:01:42.736 --> 00:01:44.896 align:middle
+Me verás hacer esto más adelante
+para un archivo JavaScript.
+
+00:01:44.896 --> 00:01:47.796 align:middle
+archivo. Vale, ¡vamos a ver si esto funciona!
+
+00:01:48.176 --> 00:01:54.906 align:middle
+Desplázate hasta la mitad de la página
+y añade un button con btn btn-primary
+
+00:01:55.046 --> 00:01:57.056 align:middle
+para utilizar algunos
+estilos comunes de Bootstrap.
+
+00:01:58.416 --> 00:02:00.656 align:middle
+Cuando vayamos a la página
+y la actualicemos...
+
+00:02:01.216 --> 00:02:03.186 align:middle
+¡funciona! ¡Estupendo!
+
+00:02:03.676 --> 00:02:06.476 align:middle
+Vale, pero ¿y si quiero modificar Bootstrap?
+
+00:02:07.066 --> 00:02:09.146 align:middle
+El propio Bootstrap está construido con Sass.
+
+00:02:09.666 --> 00:02:15.286 align:middle
+Así que, si quieres, puedes crear archivos
+Sass que anulen las variables de Bootstrap,
+
+00:02:15.646 --> 00:02:17.756 align:middle
+por ejemplo para cambiar
+los colores por defecto.
+
+00:02:18.666 --> 00:02:20.416 align:middle
+Hay dos cosas importantes al respecto.
+
+00:02:20.776 --> 00:02:25.236 align:middle
+En primer lugar, puedes
+utilizar Sass con AssetMapper.
+
+00:02:25.736 --> 00:02:28.746 align:middle
+Hay detalles en la documentación
+sobre cómo hacerlo...
+
+00:02:29.046 --> 00:02:32.596 align:middle
+y esperamos añadir pronto un bundle
+para hacerlo aún más fácil.
+
+00:02:33.366 --> 00:02:38.876 align:middle
+Además, en un momento, vamos a añadir Tailwind
+CSS a nuestro sitio, que no requiere Sass,
+
+00:02:39.126 --> 00:02:43.496 align:middle
+pero tiene un flujo de trabajo muy similar
+porque Tailwind necesita ser "construido".
+
+00:02:43.896 --> 00:02:46.776 align:middle
+Y, si quieres utilizar Sass con Bootstrap,
+
+00:02:46.966 --> 00:02:52.216 align:middle
+una forma sencilla de obtener el código fuente
+de Bootstrap es a través del paquete oficial
+
+00:02:52.216 --> 00:02:56.906 align:middle
+de Composer para Bootstrap:
+composer require twbs/bootstrap
+
+00:02:57.616 --> 00:03:00.856 align:middle
+Si esto es algo que quieres, consulta
+la documentación de AssetMapper.
+
+00:03:01.546 --> 00:03:05.796 align:middle
+La segunda cosa importante es que,
+dependiendo de lo que quieras hacer,
+
+00:03:05.796 --> 00:03:09.226 align:middle
+puede que no necesites utilizar
+Sass para personalizar Bootstrap.
+
+00:03:09.566 --> 00:03:15.486 align:middle
+Esto se debe a que Bootstrap también expone
+variables CSS, aunque no son tan potentes.
+
+00:03:16.156 --> 00:03:19.716 align:middle
+Podemos ver esto más abajo en la sección
+"Personalizar" "Variables CSS". Las variables CSS
+
+00:03:20.336 --> 00:03:23.176 align:middle
+son una función del navegador que te
+
+00:03:23.176 --> 00:03:27.026 align:middle
+permite establecer variables dentro del
+CSS y luego hacer referencia a ellas.
+
+00:03:27.656 --> 00:03:29.926 align:middle
+No es necesario usar Sass.
+
+00:03:30.456 --> 00:03:32.896 align:middle
+Por ejemplo, en app.css... en la
+
+00:03:33.206 --> 00:03:38.856 align:middle
+parte superior... añade un pseudo
+selector :root, que es un lugar habitual
+
+00:03:38.856 --> 00:03:41.586 align:middle
+para inicializar variables que
+se utilizarán más adelante.
+
+00:03:42.166 --> 00:03:49.946 align:middle
+Aquí, anula una variable CSS que Bootstrap
+proporciona y utiliza: --bs-border-radius.
+
+00:03:50.766 --> 00:03:52.566 align:middle
+Establécela en 1rem.
+
+00:03:53.186 --> 00:03:55.826 align:middle
+Esto debería hacer que los bordes
+sean notablemente más grandes.
+
+00:03:56.706 --> 00:03:57.786 align:middle
+De vuelta al navegador...
+
+00:03:58.516 --> 00:04:03.006 align:middle
+¡funciona! El radio del borde
+es ahora mayor en todo el sitio.
+
+00:04:03.556 --> 00:04:07.146 align:middle
+Esta es una de las variables que encontrarás
+en la documentación de Bootstrap.
+
+00:04:07.876 --> 00:04:11.026 align:middle
+Sin embargo, no siempre es tan sencillo.
+
+00:04:11.526 --> 00:04:14.156 align:middle
+Digamos que queremos
+anular este color primario.
+
+00:04:14.756 --> 00:04:17.846 align:middle
+Podrías pensar que puedes
+hacerlo buscando "primario"...
+
+00:04:19.116 --> 00:04:19.646 align:middle
+aquí arriba...
+
+00:04:19.866 --> 00:04:23.146 align:middle
+y anulando algo como --bs-primary.
+
+00:04:23.706 --> 00:04:25.156 align:middle
+Eso es más o menos correcto.
+
+00:04:26.226 --> 00:04:31.316 align:middle
+Si inspeccionas nuestro botón, este
+color es el color de fondo real.
+
+00:04:31.316 --> 00:04:32.456 align:middle
+Pero fíjate.
+
+00:04:32.856 --> 00:04:36.506 align:middle
+Intenta anularlo cambiándolo a
+un color ligeramente más claro.
+
+00:04:38.946 --> 00:04:40.896 align:middle
+Luego vuelve y pruébalo.
+
+00:04:41.956 --> 00:04:43.906 align:middle
+No hará nada.
+
+00:04:45.196 --> 00:04:50.056 align:middle
+Copia la URL del CDN, ponla en tu navegador
+
+00:04:50.416 --> 00:04:53.326 align:middle
+y quita el .min para que podamos
+ver lo que está pasando.
+
+00:04:54.296 --> 00:04:58.046 align:middle
+Encima, está configurando todas
+esas bonitas variables CSS.
+
+00:04:58.676 --> 00:05:00.966 align:middle
+Busca btn-primary.
+
+00:05:02.246 --> 00:05:08.206 align:middle
+No voy a profundizar demasiado, pero dentro de
+.btn-primary , está configurando estas variables CSS
+
+00:05:08.256 --> 00:05:13.946 align:middle
+con estos colores codificados, en lugar de
+utilizar otras variables CSS que podemos controlar.
+
+00:05:14.776 --> 00:05:16.086 align:middle
+¿Y qué hacemos?
+
+00:05:16.676 --> 00:05:20.966 align:middle
+En este caso, volvemos a la
+estrategia básica de anular CSS...
+
+00:05:21.186 --> 00:05:24.986 align:middle
+aunque al menos podemos utilizar
+variables CSS cuando hacemos esto.
+
+00:05:25.786 --> 00:05:31.296 align:middle
+Vuelve a app.css y pegaré algo
+de estilo para .btn-primary.
+
+00:05:32.116 --> 00:05:36.206 align:middle
+Esto anula las variables establecidas
+por Bootstrap con un color diferente.
+
+00:05:36.686 --> 00:05:41.686 align:middle
+Al menos estamos utilizando la variable
+bs-primary: la configuramos aquí
+
+00:05:41.956 --> 00:05:44.496 align:middle
+y podemos hacer referencia a ella
+en tantos sitios como queramos.
+
+00:05:44.966 --> 00:05:49.446 align:middle
+Así pues, una anulación CSS bastante
+básica, pero con menos repeticiones.
+
+00:05:50.376 --> 00:05:51.646 align:middle
+Y cuando lo probamos...
+
+00:05:52.306 --> 00:05:54.006 align:middle
+cambia el color.
+
+00:05:54.276 --> 00:05:59.526 align:middle
+¡Genial! Así que las variables CSS
+son una forma de personalizar Bootstrap,
+
+00:05:59.956 --> 00:06:02.616 align:middle
+pero Sass sigue siendo una
+opción aún más potente.
+
+00:06:03.466 --> 00:06:08.796 align:middle
+A continuación: vamos a coger una cosa más de
+estilo externo: ¡una fuente de código abierto!
