@@ -1,5 +1,66 @@
 # Debugging
 
-Coming soon...
+There are a few ways that things can go wrong with Asset Mapper, but also some telltale signs when they do. I want to show you a few of the most common issues.
 
-There are a few ways that things can go wrong sometimes with Asset Mapper, but also some telltale signs when they do. So I want to show you kind of a few of the most common ways. So the simplest way to mess things up is, for example, in templates="vinyl-homepage.html-twig". If you use the asset() function and you mess up a path. So remember we have inside of the assets directory, we have an images/.png. So images/.png would be its asset path. So I'll say images/. But then I'll say duck.png. So obviously not the right path. And not surprisingly on the homepage, we are going to get a 404. Now the key thing about that 404 is if we look at our console, look at the path there. What's suspicious about that path is that there's no version in the file name. That tells me that this path was not found inside of any of the asset paths. In other words, I have some sort of typo. This is not a valid logical path. And if you remember, you can see all the valid logical paths by saying debug asset. So up here, this is everything that you're allowed to put into the asset function that will go through the asset mapper. And there's images/.penguin.png. So of course we put penguin.png there. Now it works. And most importantly, the thing I'm looking for here is you can see the version hash in the file name. That's how you kind of know it's going through the asset mapper system. All right. Another common thing to do is you mess up an import somewhere. So maybe in styles.app.css, you mess up this URL path. Or in app.js, you're importing vinyl and you forget the.js in the end, or some other typo. So this is actually the same thing. When I refresh, I'm going to get a 404. You can see it here. But again, the key thing is no version hash. So whenever you have no version hash, you have to be thinking wherever I'm using that up here in app.js, I have some sort of invalid path there. Now when we're inside of a template and using the asset function, we're using the logical path. If we're inside of app.js or app. css, we're not using the app, we're not using the logical path here. We're using just the relative path. This is actually really cool. We get to code inside of here as if there's no asset mapper system. So you don't have to think about logical paths. You just think about what's the path relative to this file and it's lib slash vinyl.js. So the point is the missing version hash here is a really good hint that that path ultimately wasn't found inside of the asset mapper system. There's also another way to see any problems that you have. That's to run over and run bin console cache colon clear. Now clear symphony's cache and actually even the assets inside of asset mapper are cached internally. So by clearing that, now when I run debug asset, it's going to build all the cache for those assets internally. And the important thing about that is it's going to parse those files. And if it finds any missing imports like this, it's actually going to report them. Check this out. Warning, unable to find asset dot slash lib slash vinyl imported from app.js. In this case, you even have the extra thing. Try adding dot JS to the end of the import, since it sees that that is missing. This is a really good thing to see what's going on. So now we have that dot JS back and of course things work again. And probably the last common way to mess things up is to use a bear import. So something that doesn't start with dot slash or dot dot slash, but that doesn't exist in your import map. So clearly here, my intention is for me to use the bootstrap library, but I don't have it in my import map. So the error I'm going to get is this. The exact error is going to look a little bit different depending on your browser, but failed to resolve module specifier bootstrap relative references must start with slash dot slash or dot dot slash. So it's saying, hey, if you're trying to refer to a file with a relative path, it should start with dot slash or dot dot slash. And if you did mean to have a bear import, we can't figure out what that is because it's not inside the import map.  So solution usually here is to run import map require to install the library that you're using. All right. With those tools in hand, let's move on to deploying. I think I can't remember. We'll fix that later.
+One of the simplest ways to mess things up is in `/templates/vinyl/homepage.html.twig`, if you happen to use the `asset()` function and use a wrong `path`. Remember, inside the `/assets` directory, we have this `penguin.png`. If you're using this graphic, `images/penguin.png` would be its asset path, so we'll say `images/`, *but* then we'll say `duck.png`. This is obviously not the right path and, not surprisingly, on the homepage, we get a 404. The key thing about this 404, if we look at our Console, is this suspicious looking path. Why? If you look closely, you'll see there's no *version* in the file name. This tells me that this path wasn't found inside of any of the asset paths. In other words, we've got some sort of typo. This is not a valid, logical path. If you'll recall, you can see *all* of the valid paths by saying:
+
+```terminal
+./bin/console debug:asset
+```
+
+Up here, this is everything that you're allowed to put into the `asset()` function that will go through the AssetMapper. And *there's* `images/penguin.png`. And if we put `images/penguin.png` there instead... now it *works*. The thing you want to look for here is the version hash in the file name. That's how you'll know if it's going through the AssetMapper system.
+
+Okay, another common thing you might mess up is an import somewhere. Like... maybe in `/styles/app.css`, you mistype a part of this URL path. Or maybe, in `app.js`, you're importing `vinyl.js` and you forget the `.js` at the end. Accidents like this give us the same result. When we refresh, we're going to get a 404. You can see that here.
+
+Again, the key thing to notice here is *no version hash*. When that's missing, that's a sign you have an invalid path where this is being used. In this case, we have an invalid path in `app.js`. When we're inside of a *template* and using the `asset()` function, we're using the *logical* path. If we're inside of `app.js` or `app.css`, we're not using the *logical* path, just the *relative* path. This is pretty cool. We get to code inside of here as if we don't have an AssetMapper system, so we don't have to think about logical paths. We're just thinking about which path is relative to this file and, in this case, it's `./lib/vinyl.js`. The *point* is that a missing version hash here can be a really good hint that that path ultimately wasn't found inside of the AssetMapper system.
+
+Another way to see any problems you might have is to head over and run:
+
+```terminal
+./bin/console cache:clear
+```
+
+That clears Symfony's cache, as well as the assets inside of AssetMapper, which are cached internally. By clearing that, now when we run
+
+```terminal
+./bin/console debug:asset
+```
+
+it's going to build the cache for all of those assets internally. That's important because it's going to parse those files, and if it finds any missing imports like this, it will report them. Check it out:
+```
+WARNING [asset_mapper] Unable to find asset
+"./lib/vinyl" imported from "[...]/asset-mapper/
+assets/app.js.
+```
+
+And in this case, you even receive an extra message -
+
+```
+Try adding ".js" to the end of the import
+```
+
+since it sees that it's missing. This is really helpful to see what's going on. If we add that `.js` back... things work again.
+
+The last common way to mess things up is to use a bare import - something that doesn't start with `./` or `../`, but that doesn't exist in your `importmap`. Here, the intention is to use the Bootstrap library, but we don't have it in our `importmap`. This will give us an error, and the exact error will look a little different depending on your browser. I see:
+
+```
+Failed to resolve module specifier "bootstrap". Relative references must start with either "/", "./", or "../".
+```
+
+This is basically saying:
+
+`Hey, if you're trying to refer to a file with a
+relative path, it should start with "./" or "../". And
+if you did mean to have a bare import, we can't
+figure out what that is because it's not inside the
+importmap.`
+
+The usual solution for this is to run
+
+```terminal
+importmap:require
+```
+
+to install the library that you're using.
+
+Okay, with those tools in hand, let's move on to *deploying*. That's *next*.
