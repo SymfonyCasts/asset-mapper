@@ -1,0 +1,292 @@
+WEBVTT
+
+00:00:01.136 --> 00:00:05.076 align:middle
+El HTML de nuestro sitio ya
+está estilizado con Tailwind:
+
+00:00:05.536 --> 00:00:08.366 align:middle
+todas las clases que ves aquí proceden de él.
+
+00:00:08.366 --> 00:00:13.676 align:middle
+Así que si conseguimos instalar Tailwind,
+tendremos un sitio mucho menos feo.
+
+00:00:14.466 --> 00:00:21.036 align:middle
+Tailwind es interesante porque no es sólo un archivo
+CSS que incluyes: requiere un paso de compilación.
+
+00:00:21.296 --> 00:00:23.336 align:middle
+Y eso está muy bien
+
+00:00:23.816 --> 00:00:28.486 align:middle
+Que no tengamos un sistema de compilación
+para todo no significa que no podamos elegir
+
+00:00:28.486 --> 00:00:30.876 align:middle
+añadir uno para algunas cosas concretas.
+
+00:00:31.876 --> 00:00:32.686 align:middle
+Antes de entrar en materia...
+
+00:00:32.906 --> 00:00:39.076 align:middle
+más o menos una semana después de grabar esto, creamos un
+bundle que facilita enormemente la incorporación de Tailwind.
+
+00:00:39.626 --> 00:00:43.376 align:middle
+Se llama, creativamente, ¡TailwindBundle!
+
+00:00:43.986 --> 00:00:47.896 align:middle
+Ver cómo puedes configurar un pequeño sistema
+de compilación sigue siendo interesante,
+
+00:00:48.206 --> 00:00:51.136 align:middle
+pero si quieres saltarte
+este capítulo y dirigirte a
+
+00:00:51.136 --> 00:00:53.716 align:middle
+ese b undle en su lugar, no
+herirás mis sentimientos.
+
+00:00:53.986 --> 00:00:56.496 align:middle
+El bundle básicamente
+automatiza lo que vamos a hacer.
+
+00:00:57.346 --> 00:01:00.546 align:middle
+Para que todo esto funcione, necesitamos
+el archivo binario de Tailwind.
+
+00:01:00.956 --> 00:01:04.046 align:middle
+Como vemos aquí, podríamos
+instalarlo con Node...
+
+00:01:04.336 --> 00:01:06.046 align:middle
+y esa es una opción realmente flexible.
+
+00:01:06.426 --> 00:01:08.466 align:middle
+Tendrías un archivo package.json...
+
+00:01:08.886 --> 00:01:15.056 align:middle
+pero en lugar de contener WebpackEncore y un
+montón de cosas más, sólo tendría Tailwind.
+
+00:01:15.826 --> 00:01:22.586 align:middle
+La otra opción, que evita por completo la necesidad
+de Node, es utilizar el ejecutable independiente.
+
+00:01:23.446 --> 00:01:27.886 align:middle
+Haz clic en "Standalone CLI build" para ir
+a la página de lanzamiento de Tailwind.
+
+00:01:28.386 --> 00:01:33.116 align:middle
+Busca la versión que necesites: en
+mi caso, es "tailwind-macos-arm64".
+
+00:01:33.926 --> 00:01:37.246 align:middle
+Puedes descargarla aquí, pero voy
+a copiar la dirección del enlace...
+
+00:01:37.746 --> 00:01:45.236 align:middle
+para que pueda descargarla de forma elegante
+mediante curl: curl -slO y luego ¡pega!
+
+00:01:45.926 --> 00:01:49.026 align:middle
+No importa dónde lo pongas, pero voy a moverlo
+
+00:01:49.026 --> 00:01:52.846 align:middle
+al directorio bin/ y
+renombrarlo a tailwindcss...
+
+00:01:52.906 --> 00:01:54.506 align:middle
+en lugar de ese nombre tan largo.
+
+00:01:55.456 --> 00:02:01.496 align:middle
+Por último, como otras máquinas -como los ordenadores
+de nuestros compañeros de trabajo o la máquina
+
+00:02:01.496 --> 00:02:05.876 align:middle
+que despliega nuestro sitio- podrían necesitar una
+versión diferente de este archivo, vamos a ignorarlo.
+
+00:02:06.546 --> 00:02:11.766 align:middle
+Así que sí, esto significa que cada uno tendrá
+que descargar su propio binario de Tailwind.
+
+00:02:12.526 --> 00:02:15.126 align:middle
+El último paso es hacerlo ejecutable.
+
+00:02:15.476 --> 00:02:23.096 align:middle
+En un sistema basado en Linux, eso es: chmod +x
+bin/tailwindcss Ah, y hay un último paso extra
+
+00:02:23.096 --> 00:02:26.006 align:middle
+si estás en un Mac. Ejecuta:
+
+00:02:26.466 --> 00:02:32.016 align:middle
+open bin/tailwindcss Si es la
+primera vez que descargas el archivo,
+
+00:02:32.016 --> 00:02:36.996 align:middle
+te pedirá que verifiques que quieres abrirlo
+desde el punto de vista de la seguridad.
+
+00:02:37.786 --> 00:02:43.386 align:middle
+Muy bien Ya tenemos el ejecutable
+bin/tailwindcss, que no requiere Node.
+
+00:02:43.896 --> 00:02:47.096 align:middle
+A partir de aquí, podemos
+seguir la documentación normal.
+
+00:02:47.636 --> 00:02:50.776 align:middle
+Esto es algo que me gusta mucho de
+la nueva filosofía del frontend.
+
+00:02:51.426 --> 00:02:56.536 align:middle
+Si necesitas un sistema de compilación, puedes utilizar
+directamente el sistema de compilación de Tailwind
+
+00:02:56.596 --> 00:03:01.506 align:middle
+y seguir sus instrucciones: no necesitas
+una solución específica para Symfony.
+
+00:03:02.276 --> 00:03:08.036 align:middle
+Aquí dice que tenemos que Ejecutar:
+tailwindcss init Así que ¡hagámoslo!
+
+00:03:08.816 --> 00:03:15.396 align:middle
+./bin/tailwindcss init Esto crea un nuevo
+y brillante archivo tailwind.config.js.
+
+00:03:16.016 --> 00:03:17.116 align:middle
+¡Vamos a comprobarlo!
+
+00:03:18.316 --> 00:03:21.106 align:middle
+Lo más importante es
+configurar la clave content.
+
+00:03:21.576 --> 00:03:27.456 align:middle
+Esto le dice a Tailwind dónde debe buscar
+HTML que pueda contener clases Tailwind.
+
+00:03:28.386 --> 00:03:30.866 align:middle
+Busca su documentación
+específica para Symfony.
+
+00:03:31.916 --> 00:03:35.356 align:middle
+¡Aquí abajo tienen
+exactamente lo que queremos!
+
+00:03:36.036 --> 00:03:37.326 align:middle
+Copia la clave content...
+
+00:03:37.696 --> 00:03:38.836 align:middle
+¡y pégala!
+
+00:03:39.156 --> 00:03:42.236 align:middle
+Es decir... ¡pégala en el lugar correcto!
+
+00:03:43.296 --> 00:03:47.156 align:middle
+El último paso es copiar las tres líneas
+de la directiva base de Tailwind...
+
+00:03:47.386 --> 00:03:50.906 align:middle
+y ponerlas dentro de app.css.
+
+00:03:51.686 --> 00:03:53.426 align:middle
+Quitaré las cosas de Bootstrap...
+
+00:03:53.796 --> 00:03:56.296 align:middle
+pero mantendré un poco de nuestro
+código personalizado aquí abajo.
+
+00:03:57.226 --> 00:04:00.736 align:middle
+Muy bien Por fin, ¡estamos
+listos para construir!
+
+00:04:01.536 --> 00:04:04.616 align:middle
+En tu línea de comandos, ejecuta bin/tailwind,
+
+00:04:05.136 --> 00:04:10.156 align:middle
+utiliza -i para apuntar al archivo
+de entrada assets/styles/app.css
+
+00:04:10.496 --> 00:04:13.896 align:middle
+y, a continuación, -o para indicarle
+por dónde debe salir el código final.
+
+00:04:14.566 --> 00:04:22.926 align:middle
+Utiliza assets/styles/app.tailwind.css para que
+esté en el mismo directorio, lo cual es importante
+
+00:04:23.216 --> 00:04:26.466 align:middle
+para que las rutas relativas de
+las imágenes sigan funcionando.
+
+00:04:27.326 --> 00:04:33.736 align:middle
+Al final, añade -w para que siga ejecutándose
+y vigilando los cambios: ¡Y ya está!
+
+00:04:33.886 --> 00:04:41.416 align:middle
+¡Construido! Por aquí, tenemos un archivo
+app.tailwind.css que contiene todas las cosas buenas.
+
+00:04:41.806 --> 00:04:47.416 align:middle
+¡Fantástico! En base.html.twig,
+en lugar de apuntar a app.css
+
+00:04:47.826 --> 00:04:53.956 align:middle
+-que ahora es una especie de archivo fuente
+"interno"- apunta a app.tailwind.css.
+
+00:04:54.826 --> 00:04:56.696 align:middle
+Momento de la verdad.
+
+00:04:57.216 --> 00:04:58.196 align:middle
+¡Vuelve al navegador!
+
+00:04:58.676 --> 00:05:02.016 align:middle
+Actualiza. ¡Nuestro sitio tiene estilo!
+
+00:05:02.446 --> 00:05:07.906 align:middle
+Eso significa que podemos deshacernos de las cosas
+de Bootstrap: quita el enlace CDN de Bootstrap...
+
+00:05:08.176 --> 00:05:10.706 align:middle
+ya que estábamos demostrando cómo funciona...
+
+00:05:11.126 --> 00:05:12.926 align:middle
+y también el botón de aquí abajo.
+
+00:05:15.546 --> 00:05:16.956 align:middle
+¡Así queda bien!
+
+00:05:17.616 --> 00:05:21.336 align:middle
+¿Pero qué pasa con este archivo
+construido en app.tailwind.css?
+
+00:05:21.846 --> 00:05:23.976 align:middle
+¿Lo ignoramos de git?
+
+00:05:24.266 --> 00:05:25.466 align:middle
+¿Lo confirmamos?
+
+00:05:26.016 --> 00:05:26.606 align:middle
+Tú decides
+
+00:05:27.306 --> 00:05:31.066 align:middle
+Podemos confirmarlo,
+facilitaría el despliegue,
+
+00:05:31.466 --> 00:05:34.296 align:middle
+pero por lo general no queremos
+confirmar cosas ya creadas.
+
+00:05:34.936 --> 00:05:36.566 align:middle
+Yo lo ignoraré...
+
+00:05:36.686 --> 00:05:40.466 align:middle
+veremos cómo funciona en nuestro
+proceso de despliegue un poco más tarde.
+
+00:05:41.356 --> 00:05:45.836 align:middle
+Vale, ¡hecho! Siguiente: Pasemos a JavaScript.
