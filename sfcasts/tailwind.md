@@ -37,6 +37,8 @@ because other machines - like the computers of our co-workers or the machine
 that deploys our site - might need a different version of this file, let's ignore
 it.
 
+[[[ code('f768a8db80') ]]]
+
 So yes, this *does* mean that everyone will need to download their *own* Tailwind
 binary.
 
@@ -77,14 +79,20 @@ So let's do that!
 
 This creates a shiny new `tailwind.config.js` file. Let's go check it out!
 
+[[[ code('e5bbc32f38') ]]]
+
 The most important thing is to configure the `content` key. This tells Tailwind
 *where* it should look for HTML that may contain Tailwind classes. Search for their
 Symfony-specific  documentation. Down here, they have exactly what we want! Copy
 the `content` key... then paste! I mean... paste it in the correct spot!
 
+[[[ code('379f25cc80') ]]]
+
 The last step is to copy the three base directive lines for Tailwind... and put 
 those inside `app.css`. I'll remove the Bootstrap stuff... but keep a little bit
 of our custom code down here. Nice!
+
+[[[ code('c2d106de6f') ]]]
 
 ## Building the CSS File
 
@@ -104,6 +112,8 @@ And that's it! Built! Over here, we have an `app.tailwind.css` file containing
 In `base.html.twig`, instead of pointing at `app.css` - which is now kind of an
 "internal" source file - point this at `app.tailwind.css`.
 
+[[[ code('b5e761a82e') ]]]
+
 *Moment of truth*. Back to the browser! Refresh. Our site is styled! That means we
 can get rid of the Bootstrap stuff: remove the Bootstrap CDN link... since we were
 just demonstrating how that works... and also the button down here.
@@ -116,5 +126,7 @@ But what about this `app.tailwind.css` built file? Do we *ignore* that from git?
 Do we *commit* it?  It's up to you! We *can* commit it - it would make deploying
 easier, but we generally *don't* want to commit built stuff. I *will* ignore it...
 then we'll see how that works into our deployment process a bit later.
+
+[[[ code('5b07168255') ]]]
 
 Ok, done! Next: Let's turn to *JavaScript*.
