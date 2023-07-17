@@ -7,6 +7,8 @@ When we refresh the page, notice that we *do* have a `console.log()` message...
 which says it's coming from `assets/app.js`. If we head over to `assets/app.js`...
 yup! There it is!
 
+[[[ code('7e156a5fbe') ]]]
+
 ## How assets/app.js is Loaded
 
 We know that we *can* write modern ES6 code in here, as well as import
@@ -35,6 +37,8 @@ This section is generated from an `importmap.php` file inside our project. The
 file isn't super-interesting *yet*: it'll be more useful soon when we talk about
 third party JavaScript. But it *does* have this `app` key that points to
 our `assets/app.js` file using its logical path.
+
+[[[ code('1d5eea403c') ]]]
 
 Thanks to that, this `<script type="importmap">` dumps onto the page. When
 you import something that doesn't start with a ".", "/", or "../", that's called
@@ -71,6 +75,10 @@ import that: `import Vinyl` and I can hit "tab" to autocomplete the
 `from './lib/vinyl'` part. Instantiate this using the same code as before... and
 then `console.log(mix.describe())`.
 
+[[[ code('3c4a6ec1d5') ]]]
+
+[[[ code('a84807bda2') ]]]
+
 ## Using .js when Importing
 
 I love it! We're coding like normal and using `./` to import. But when we go over
@@ -85,6 +93,8 @@ should check for typos.
 *Our* problem is that we need to add the `.js`. It turns out that leaving the `.js`
 off is a Node thing... and it works if you're programming in Node. But in true
 JavaScript environments, like in your browser, you *do* need to include it.
+
+[[[ code('6ea8840f69') ]]]
 
 If we refresh now... that was it! It was really my editor's fault that the `.js`
 was missing when it autocompleted it. Fortunately, we can fix that! Go into your
