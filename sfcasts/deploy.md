@@ -1,5 +1,166 @@
 # Deploying to Platform.sh
 
-Coming soon...
+I have a *wild* idea. Let's deploy this site *for real*. You can deploy your code however you want using any service or web server you want. It doesn't matter with AssetMapper. The only requirement is that your web server supports HTTP/2. We need that so our assets - our JavaScript and CSS files - can be downloaded in parallel super fast. That's why it's not terribly important that our files are being combined. All web servers are able to use HTTP/2, *or* you could just use Cloudflare in front of your site which gives you this for *free*, along with some other benefits. We're going to deploy with Platform.sh, and this first section is *all about* getting our project set up. In the next chapter, we'll talk about some specifics to deploying with AssetMapper.
 
-So I have a wild idea. Let's deploy this site for real. You can deploy your code however you want using any service you want, any web server you want. It doesn't matter with AssetMapper. The only requirement is that your web server supports HTTP 2.0. That's needed so that our assets, our JavaScript and CSS files can be downloaded in parallel really quickly. It's what makes it not important that our files are being combined together. And all web servers have a way to use HTTP 2.0 or you could just use Cloudflare in front of your site which gives you this for free and has some other benefits. Anyways, we're going to deploy with platform.sh. And this first section is going to be all about getting a project set up with platform.sh and in the next chapter we'll talk about some specifics to deploying with AssetMapper. So here's how this works. It's actually going to happen all at the command line via our symphony binary. So we'll start with symphony project init. This is going to bootstrap a couple of files as you can see right here that kind of ... This one contains the instructions for how to deploy. This contains the services we need like what databases we need. The routes is a little bit less important and this is any custom php.ini configuration. So I am actually going to... I've been committing along the way. So you can see I just have those couple of new files there. There we go. Perfect. Now we have those local files created in order to actually create a project up on platform.sh itself. We're going to say cloud project create. ... Cool. For me I already have some projects set up under platform.sh. I already have an organization. It already has my credit card. So in your case if you're doing this you might have a couple of extra steps along the way. I'll get my project title. You can select a region. I use EU. And then the branch that's going to be our production environment. I'm using the main branch so I'm going to keep main. It says you want to set the mix vinyl as the remote for this repository. So the way platform.sh works is you're technically when you deploy you're pushing to a remote, a git remote.  This is not actually needed. I'm going to say no to this. We'll deploy with the symphony deploy command. And then it finally asked me to confirm the pricing. So $12 a month is the kind of like dev cheap rate you can pay for just playing around with stuff. It is a little bit more expensive when you actually want to deploy your site on production for real. And then it'll take a minute or two here to kind of get everything set up behind the scenes. When it does finish it'll just kind of print out some information like your project ID. We do need this. By the way you can also just log on using this URL to platform.sh. You can see lots of details about your project there. So not everything needs to be done via the command line. But I'm going to copy this project ID. So we have our local project file set up. That was the kind of.platform.app.yaml type files. We have our project set up in the cloud and now we're going to link those two together with symphony project set remote and then paste that. And actually now that I think of it that may have been what it was that remote question was asking about earlier. Finally we can say symphony deploy. I'm on the main branch so it's pushing to our production branch right now. And you can see I'm using symphony deploy but you can't even see this is the same stuff you see when you do a git push. Behind the scenes it's pushing to that platform.sh remote and then it starts doing our commits. Cool so you can see that out of the box you get a lot of the deploy stuff here. We can't see a warning up here about using an old version of Composer. We're going to fix that in a second. But it's down here you can see it's running composer install. It's doing a couple other optimizations. You know all the basic stuff that you need for your application for a symphony application. At the bottom it actually gives us an SSL certificate. And then we do see an error here about a database error. We're going to talk about that in a second as well.  That shouldn't be surprising we haven't done any customizations on our deploy script at all. Finally when it finishes it actually gives us a URL. So before we're on since we're not actually on our production yet it gives us this cool temporary URL. So we can copy that, spin over and our site is alive. It doesn't have any styling yet because we haven't talked about the asset mapper but we can actually go to it. Super cool. So let's fix a few things. As I mentioned on top, and I don't actually know why this is the case, it uses by default an old version of Composer. We can add a little bit of configuration to have it use a new version of Composer. So I'm actually going to copy this dependencies thing here. It's giving us a hint on what to do. And then open.platform.app.yaml. So there's lots of documentation on this file but this is your build file. There's two main steps. There's the build step where it's building your code and then there's the deploy step which is after it's been built and once it's on the kind of final container some last commands to run. This symphony build script and symphony deploy script, those are kind of pre-made scripts that contain most of what you're going to need. Then you can add some custom stuff on top of that. It also has some mounts for some directories that you want to keep persistent between deploys. And some PHP extensions, your PHP version, all that kind of stuff. So anywhere inside of here, I'm going to paste this dependencies thing, make sure it's not indented. And just like that we'll use Composer version 2. The second error that we had down here to the bottom, let's see, was could not find driver. This is coming from when it runs our migrations because it does run our migrations automatically. So we're using Postgres. You can actually see that in our docker-compose.yaml file. This is what I've been using locally while I've been developing. Do we have a database up on platform.sh yet? The answer is actually yes. In the.platform directory, so we have a.platform.app.yaml, that's our main deploy script. And then we have this.platform directory with a few other configuration files. The most important one is services. yaml. This is where we define services like database, Redis, other services. And when we initialize the project, it noticed we're using Postgres and so it added one database for us. Now the error we're getting is actually because we are missing the PDO-PGSQL driver. And that, thanks to.platform.app.yaml, is super easy to add. Let's see, we have a little extension spot for it. So PDO underscore PGSQL. And that's it. All right, to redeploy, we actually need to commit these files. Here we go. That's fine. I'll say, very descriptive message there. And then we can say, symphony deploy. And we'll push it back to our main branch. And this, like, last time is going to build our script. It takes about a minute or so. This time it's a little bit faster because it doesn't need to reprovision the SSL certificate. And you can still see at the very end, the migration still failed with a different error. Cannot connect to the database. We're going to talk about that in a second. In fact, if you go back over to the site and refresh, the homepage still works, but that's actually because the homepage doesn't use the database. If you hit browse mixes, 500 error. Now I bet that 500 errors do the database problem that we saw when we deployed. But let's pretend that we don't know that. How can we figure that out? This is where the symphony logs command comes in handy. That's going to connect to our active environment. I can go to the access log here. Actually, no, that's not what I meant to do. There's a bunch of different logs. The one we want is the app log. That's the one actually coming from our application. And beautiful, you can see a bunch of connection to server refused. Let's think about this. We know that we have a database up there on Postgres, but we've never configured our app to talk to it. Remember, in our.env file, we have a database underscore URL that's supposed to point to wherever that database is. We have never configured any database underscore URL environment variable yet on our production site. So it's just using this default value, which isn't working. So how do we configure database URL to point at wherever this database server is?  And the answer to that is we sort of don't. It's kind of cool. So in platform.sh has this idea of relationships. So you can have a number of services inside of your code, and then to actually link them to your project, you're going to do that via relationships. Let's search in the file for relationships. No, it's not in here yet. Let's add a new section for relationships. So it looks like this. Relationships. And then below here, you're going to make any key you want. I'm going to talk about the significance of this in a second. It's just an internal name. And then you're going to set that to the word database, because that's the key we have here. And then colon, and then the type of this service, which is Postgres. This syntax has always looked really weird to me. But the important thing is that this key can be anything. But this database here is referring to this database here, and this Postgres SQL here is referring to this Postgres SQL there. Now, this first key here is going to be important, because Symfony does a really nice thing when it deploys a platform.sh. It's going to notice that this is a database relationship. And so then it's going to take this name and expose environment variables that point to that database. So because we have this called database, it's going to automatically create a new environment variable called database underscore URL equal to whatever the connection parameters are to that database. In other words, it's going to set this environment variable for us. And I'll actually prove it to you. So one of the really cool things about platform.sh is you can actually SSH onto your container. So I'm going to say Symfony SSH. Here I am. And if you want to see all of the different environment variables, you can say print end, and it's going to print all of them out. Look at that. So inside of here, what you're not going to see is anything that starts with database. Not inside here. After we deploy this next change, we should see it. So I'm going to say git status. Git add.p. There we go. That's what we want. Adding database relation. And then Symfony deploy. The cool thing is deploying is way faster this time.  And notice that we didn't change any application code, so we didn't need to rebuild our application. See it says reusing existing build for this tree ID. We only changed platform.sh configuration. Hey, look at this time. You can see successfully migrated. So it actually ran our migration successfully with no problems. If we spin over and check the site, it works. It's totally missing all of our styling. But that's what we're going to fix next. The database is working. And as I mentioned, you can see this difference that made if you do Symfony SSH. Run print end. And then this time you can see there's several database underscore things inside of here. The most important thing for us is, if I keep looking, database underscore URL. So this is pointing at the database that we have. All right, next, let's get our assets working. And then do some performance checks to make sure we have everything that we need for our production deploy.
+*So*, let's get started! We're actually going to do most of this in the command line via our Symfony binary. Start by running:
+
+```terminal
+symfony project:init
+```
+
+This is going to Bootstrap a couple of files, which you can see right here. This one contains the instructions for how to deploy, this contains the services we need (like databases), the routes is a little less important, and *this* is a custom `php.ini` configuration. I've been committing along the way, so if I run
+
+```terminal
+git status
+```
+
+you can see that I just have a couple of new files there. I'll go ahead and commit those. *Perfect*.
+
+Now that we have those local files created, in order to actually create a project on Platform.sh, we're going to say:
+
+```terminal
+symfony cloud:project:create
+```
+
+In my case, I already have some projects set up under Platform.sh. I already have an organization and it already has my credit card. In *your* case, if you're doing this for the first time, you may have a few extra steps along the way.
+
+Let's give our project title, select your region (I'm using "eu-5"), and then this asks you which branch you'll be using as your production environment. I'm using the "main" branch, which is the default. Next, it asks us if we would like to set Mixed Vinyl as the *remote* for this repository. With Platform.sh, when you deploy, you're pushing to a git remote. This isn't really necessary, so we're going to say "no" to this. We'll deploy with the Symfony deploy command. Finally, it asks us to confirm the pricing. This $12 USD per month is the cheap developer rate you can pay for just playing around with stuff. It will be a little more expensive when you decide to deploy your site on production for real. This will take a minute or two to set everything up behind the scenes. When it finishes, it will print out some information like your Project ID. We're going to need this.
+
+Side Note: You can also log on using this URL to Platform.sh. You can see details about your project there, so not *everything* needs to be done via the command line.
+
+Go ahead and copy this Project ID. We have our local project file set up - that's the `.platform.app.yaml` type files - and we have our project set up in the cloud. Now we're going to link those two together with
+
+```terminal
+symfony project:set-remote
+```
+
+and then paste our Project ID. Finally, we can say:
+
+```terminal
+symfony deploy
+```
+
+We're on the "main" branch, so it's pushing to our production branch right now. And even though we used
+
+```terminal
+symfony deploy
+```
+
+you can see that this is the same stuff we get when we run
+
+```terminal
+git push
+```
+
+Behind the scenes, it's pushing to that Platform.sh remote, and then it starts doing our commits. Cool!
+
+Right out of the box, we're getting a lot of the deploy details here. We *do* have a warning up here about using an old version of Composer, and we'll fix that in a second. But, down here, you can see it's running
+
+```terminal
+symfony composer install
+```
+
+and it's doing a few other optimizations - all the basic stuff you need for a Symfony application. At the bottom, it actually gives us a SSL certificate, and if we keep scrolling... oooh, we do have a message here about a database error. We'll talk about that in a minute as well. That isn't really surprising since we haven't done any customizations on our deploy script at all. When it finishes, it also gives us a URL. Since we're not actually on production yet, it gives us this cool *temporary* URL. Copy that, spin over and... our site is *alive*! It doesn't have any styling yet since we haven't talked about the AssetMapper, but we can at least *see* it. Super cool!
+
+Now let's fix a few things. As I mentioned, on top, it uses an old version of Composer by default. I don't really know *why* it does that, but we can easily add a little configuration to have it use a *new* version of Composer. And it actually hints at how to do that! Copy this `dependencies` line here. Then, open `.platform.app.yaml`. There's a ton of documentation on this file, but this is your *build* file, and there are two main steps. There's the `build` step where it's *building* your code, and then there's the `deploy` step, which runs some final commands *after* it's been built and once it's on the final container. These `symfony-build` and `symfony-deploy` scripts are pre-made scripts that contain most of what you're going to need. You can then add some custom stuff on top of that. It also has some `mounts` for directories that you want to keep persistent between deploys, some PHP extensions, your PHP version, and so on. Anywhere inside of here, paste the `dependencies` line, make sure it's not indented, and just like that, we're using Composer version 2. Easy!
+
+The second error that we had, down here near the bottom, was:
+
+`could not find driver`
+
+This is coming from when it runs our migrations, since it runs those automatically. We're using Postgres, and you can see that in our `docker-compose.yml` file. This is what I've been using locally while I've been developing. Do we have a database up on Platform.sh yet? The answer is actually *yes8. We have `.platform.app.yaml`, which is our main deploy script, and then we have this `/.platform` directory with a few other configuration files inside. The most important one is `services.yaml`. This is where we define services like database, Redis, and others. When we initialized the project, it noticed that we're using Postgres and added one database for us. The error we're getting is because we're missing the PDO-PGSQL driver and, thanks to `.platform.app.yaml`, is *super* easy to add. We have a little extension spot for it, so say `pdo_pgsql`. And that's it!
+
+To redeploy, we actually need to commit these files. Say
+
+```terminal
+git comit -m
+```
+
+with a very descriptive message
+
+```terminal
+"tweaking deploy script"
+```
+
+and then we can say
+
+```terminal
+symfony deploy
+```
+
+and push that back to our main branch. This, like last time, is going to build our script. It takes a minute or so, but this time it should move a little faster because it doesn't need to reprovision the SSL certificate. At the very end, you can see that the migration *still* failed with a *different* error:
+
+`Connection refused`
+
+We'll talk about that in a moment. In fact, if you go back over to the site and refresh... the homepage still works, but that's because the homepage *doesn't* use the database. If you hit "Browse Mixes", we get a 500 error. That 500 error is probably due to the database problem that we saw when we deployed, but let's pretend that we have no idea where that came from. How could we figure that out? This is where the
+
+```terminal
+symfony logs
+```
+
+command comes in handy. That's going to connect to our active environment. There's a bunch of different logs here, and we'll say `2` to go to the "app" log. This one that actually comes from our application. And... *beautiful*! We can see several instances of
+
+`connection to server at [..] failed: Connection
+refused`
+
+Let's think about this. We know that we have a database up there on Postgres, but we've never configured our app to talk to it. Remember, in our `.env` file, we have a `database_URL` that's supposed to point to wherever that database is. We haven't configured a `DATABASE_URL` environment variable on our production site yet, so it's just using this default value, which isn't working. So how do we configure `DATABASE_URL` to point to wherever this database server is? The answer to that is... we... uh... don't. It's kind of cool.
+
+In Platform.sh has this idea of *relationships*. You can have a number of services in your code, and to link them to your project, you'll use relationships. If we search the file for "relationships"... it's not in here yet, so let's add a new section for that with `relationships`... and below that, we can make any key we want, so we'll just say `database`. I'll cover the significance of that in a moment. It's just an internal name. Then,  we're going to set that to the word `database`, because that's the key we have here, with `:` and then the *type* of service, which is `postgresql`. This syntax has always looked really weird to me, but the *important* thing is that this key could be anything, like `banana`, but this `database` here is referring to this `database` over here, and this `postgresql` *here* is referring to *this* `postgresql` here.
+
+This first key is going to be important, because Symfony does a really nice thing when it deploys a Platform.sh. It will notice that this is a database relationship, so it will take this name and expose environment variables that point to that database. Since we called this "database", it will *automatically* create a new environment variable called `DATABASE_URL` that is *equal to* whatever the connection parameters are to that database. In other words, it's going to set this environment variable *for* us. I'll prove it!
+
+One of the really cool things about Platform.sh is you can actually SSH onto your container. Let's say:
+
+```terminal
+symfony ssh
+```
+
+There we go. And if you want to see all of the different environment variables, you can say
+
+```terminal
+printenv
+```
+
+and it will print all of them out. Look at that! Inside of here, what you *won't* see is anything that starts with "database". But we *should* see it after we deploy this next change. Say
+
+```terminal
+git status
+```
+
+and then
+
+```terminal
+git add -p
+```
+
+That's what we want. Then say
+
+```terminal
+git commit -m "adding database relation"
+```
+
+and finally
+
+```terminal
+symfony deploy
+```
+
+You'll probably notice that deploying is *way* faster this time. Since we didn't change any application code, we didn't need to rebuild our application. Here, it says:
+
+`Reusing existing build for this tree ID`
+
+We *only* changed Platform.sh configuration. And hey! This time, we can see that it `Successfully migrated`, meaning that it ran our migration successfully with *no* problems. If we spin over and check the site... it *works*. It's still missing all of our styling, but we'll fix that next. The point is that the *database* is working. And, as I mentioned, you can see the difference that made if you run
+
+```terminal
+symfony ssh
+```
+
+and
+
+```terminal
+printenv
+```
+
+This time, you can see that there are several `DATABASE_` things inside of here, but the most important thing, for us, is `DATABASE_URL`. *This* is pointing at our database.
+
+Next: Let's get our assets working, followed by some performance checks to make sure we have everything we need for our production deploy.
