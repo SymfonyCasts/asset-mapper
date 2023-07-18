@@ -8,6 +8,8 @@ As we saw earlier, we *could* import things via a full URL, like `import _ from`
 and I'll paste in the CDN URL that we used earlier. With that done, the rest
 is normal: add `_.camelCase()` to the log.
 
+[[[ code('74a43597cd') ]]]
+
 If we refresh and check the console... that *works*. But I don't like it!
 I don't want to have to include this crazy URL everywhere I use `lodash`. And what
 happens if we upgrade lodash... and I need to change the URL in 10 different files?
@@ -39,6 +41,8 @@ php bin/console importmap:require lodash
 Done! It added `lodash` to `importmap.php` and tells us we can use the package as
 usual. This means we can say `import _ from 'lodash'`... and everything will work
 *fine*.
+
+[[[ code('eae2dcf77e') ]]]
 
 How? When we ran the command, it made one *tiny* change: it added this
 section to `importmap.php`. And as cool as this is, it's not magic. Behind the
@@ -80,6 +84,8 @@ run the `update` command... it moves back up to `.21`. The command *could* be
 more flexible - like by allowing you to update just one package, or by having some
 version constraints - and those things may be added in the future.
 
+[[[ code('119893197f') ]]]
+
 ## Downloading Packages Locally
 
 Finally, if you don't want to rely on the CDN, you don't *have* to. To avoid it,
@@ -92,6 +98,8 @@ php bin/console importmap:require lodash --download
 In `importmap.php`, this *still* shows the source URL to the CDN, but it
 downloaded that file into an `assets/vendor/` directory. This `downloaded_to` points
 to the logical path for that file.
+
+[[[ code('157bb3da90') ]]]
 
 The result? When we go over and refresh.... and "View Page Source"... the `importmap`
 now points to the *local* file! We're no longer relying on the CDN.
