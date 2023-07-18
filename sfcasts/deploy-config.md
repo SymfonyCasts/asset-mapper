@@ -68,7 +68,7 @@ git commit -m "tweaking deploy script"
 
 Now run:
 
-```terminal
+```terminal skip-ci
 symfony deploy
 ```
 
@@ -88,7 +88,7 @@ If you hit "Browse Mixes"... 500 error! That 500 error is *probably* due to a
 database connection problem. But let's pretend that we have *no* idea what's
 causing this. How could we figure that out? This is where the
 
-```terminal
+```terminal skip-ci
 symfony logs
 ```
 
@@ -139,7 +139,7 @@ variable *for* us. I'll prove it!
 One of my favorite things about Platform.sh is that you can SSH onto your container.
 Watch:
 
-```terminal
+```terminal skip-ci
 symfony ssh
 ```
 
@@ -175,7 +175,7 @@ git commit -m "adding database relation"
 
 And
 
-```terminal
+```terminal skip-ci
 symfony deploy
 ```
 
@@ -192,7 +192,7 @@ is that the database *is* working.
 
 You can see the difference that made if you run
 
-```terminal
+```terminal skip-ci
 symfony ssh
 ```
 

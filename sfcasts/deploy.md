@@ -24,7 +24,7 @@ about some specifics of deploying with AssetMapper.
 *So*, let's get started! We're going to do most of this in the command line via our
 Symfony binary. Start by running:
 
-```terminal
+```terminal skip-ci
 symfony project:init
 ```
 
@@ -48,7 +48,7 @@ it just shows these new files. Let's commit these and... great!
 Now that we have those local files, we need to tell the platform.sh service *itself*
 that we want to create a new project. Do that with:
 
-```terminal
+```terminal skip-ci
 symfony cloud:project:create
 ```
 
@@ -88,7 +88,7 @@ to this project up on platform.sh.
 
 To link them, run
 
-```terminal
+```terminal skip-ci
 symfony project:set-remote
 ```
 
@@ -98,7 +98,7 @@ and paste the Project ID.
 
 Done! Ready to deploy? Do it with:
 
-```terminal
+```terminal skip-ci
 symfony deploy
 ```
 
