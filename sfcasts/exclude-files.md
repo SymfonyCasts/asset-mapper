@@ -1,23 +1,83 @@
 # Excluding Files
 
-We now have CSS, which we're building with Tailwind, we have JavaScript, we're bringing in third-party JavaScript, *and* we're using *modern* JavaScript syntax. Our app has *everything* that a real app has! Sure, it's kind of small, but we're *almost* ready to deploy it. Before we do, let's do a quick audit on the assets that are inside of our AssetMapper. Find your terminal and run:
+We now have CSS, which we're building with Tailwind, we have JavaScript, we're
+bringing in third-party JavaScript, *and* we're using *modern* JavaScript syntax.
+Our app has *everything* that a real app has! Sure, it's kind of small, but we're
+*almost* ready to deploy it.
+
+## Checking your Exposed Files
+
+Before we do, let's do a quick audit on the assets that are inside of AssetMapper.
+Find your terminal and run:
 
 ```terminal
-./bin/console debug:asset
+php bin/console debug:asset
 ```
 
-We know that this lists all of our asset paths, which includes our *main* asset path, plus a couple of bundles that have exposed a few of their own directories. Down here is a list of all of the files that are going to be exposed publicly. We're running this command to double-check and make sure there's nothing in here that we don't expect. In this case, we *do* actually have a minor thing that we don't really want in here, and I'll show you how you can hide it. It's this `/assets/styles/app.css` file. This is really a *source* file, so it's not meant for the user to download directly. We're using Tailwind to build that into the `app.tailwind.css` file, and *that's* what the user will download. It's not a *huge* deal that this is available publicly, but it's a good example of how we can hide source files that we don't want to expose. Let's start by running:
+We know that this lists all of our asset paths, which includes our *main* asset
+path - `assets/` - plus a few bundles that have exposed their own directories. Below
+is a list of *every* file that will be exposed publicly.
+
+We're running this command to see if there's anything in this list that we do *not*
+wan to publicly expose. For example, this `assets/styles/app.css` file. This is really
+a *source* file: it's not meant for the user to download directly. We're using
+Tailwind to build that *into* `app.tailwind.css` file, and *that's* what the user
+will download. It's not a *huge* deal that this is available publicly, but it's a
+good example of how we can hide "source" files that we *don't* want to expose.
+
+## Asset Mapper Config
+
+Start by running
+
 
 ```terminal
-./bin/console config:dump framework asset_mapper
+php bin/console config:dump framework asset_mapper
 ```
 
-We're basically asking the system to give us an example configuration for everything that can be configured under `framework.assetmapper`. If you remember, when we first installed AssetMapper, we got a `/config/packages/asset_mapper.yaml` file. Here, we have `framework`, `asset_mapper`, and a key called `paths`. When we run this command... sure enough, up here on top, we have `paths`. Then, below that, we have some other interesting things. The first is `excluded_patterns`. This will be a way for us to hide certain files from the AssetMapper, and we'll talk more about that in a second. You can also control the `public_prefix`, which is where your files are written into the `/assets` directory. This `extensions` isn't *super* important, since it's mostly just for the dev environment... and there are a few other things like your `importmap_path`, and even some attributes you can put on your `<script>` tags dumped by the `importmap`. There's some good stuff in here, but you won't need to need to worry about most of it, aside from `excluded_patterns`, which looks like it could be helpful for our example. Copy that... spin over to `asset_mapper.yaml`, and on the same level of `paths`, say `excluded_patterns`. We want to exclude `assets/styles/app.css`. That's not *quite* correct, and to prove it, after you add it, run
+We're asking the system to give us example configuration for everything that can
+be configured under `framework`, `asset_mapper`. When we first installed AssetMapper,
+its recipe gave us a `config/packages/asset_mapper.yaml` file. Here, we have
+`framework`, `asset_mapper`, and a key called `paths`. When we run this command...
+sure enough, up here on top, it shows `paths`. Below that, we have some other
+interesting things.
+
+The first is `excluded_patterns`. *This* is how we're going to hide certain files
+or paths - and we'll talk more about that in a minute. You can also control the
+`public_prefix`, which is where your files are output to in the `public/` directory.
+
+This `extensions` isn't *super* important... it's mostly just for the `dev`
+environment... and there are a few other things like your `importmap_path`, and even
+some attributes you can put on the `<script>` tag that's dumped by the `importmap()`
+function.
+
+## Excluding Files / Patterns
+
+So there's some good stuff in here... but you won't need to need to worry about most
+of it, aside from `excluded_patterns`.
+
+Copy that key, spin over to `asset_mapper.yaml`, and on the same level as `paths`,
+paste. We want to exclude `assets/styles/app.css`.
+
+But this isn't *quite* correct. To prove it, run
 
 ```terminal
-./bin/console debug:asset
+php bin/console debug:asset
 ```
 
-again. If you look up here... `assets/styles/app.css` is still there. That's because this `exclude_pattern` is a file system pattern *and* a glob pattern. That's a fancy way of saying that what you *want* here is to have `*/assets/styles/app.css`, and we'll actually surround this in quotes. This basically says any `"file system path"/assets/styles/app.css` will be ignored. If we try this again... *awesome*. This is what we want to see, because remember, all of the files we see in here will be dumped into our public `/assets` directory. Now our nice source `app.css` file, which doesn't need to be there, *won't* be there when we deploy.
+again. If you look up... `assets/styles/app.css` is still there! That's because
+`excluded_pattern` is meant to be a *glob*. In other words, change this to
+`*/assets/styles/app.css`... and surround it by quotes.
 
-Next: Let's learn how to deploy with "platform.sh".
+This says that any "filesystem path" that ends with `/assets/styles/app.css` will
+be ignored. And when we try the command again...
+
+```terminal-silent
+php bin/console debug:asset
+```
+
+*Awesome*. *This* is what we want to see. Because remember, every file we see
+here will be dumped into the `/public/assets` directory. In other words our nice
+"source" `app.css` file - which does *not* need to be shareed publicly - *won't*
+be.
+
+I think it's time to deploy our site! Let's get a deploy setup next on platform.sh.

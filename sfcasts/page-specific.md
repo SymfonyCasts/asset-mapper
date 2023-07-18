@@ -69,5 +69,7 @@ And remember, the original is just `import 'app'`... and then we rely on the
 necessary. Putting the path right here works fine too. That's what we're doing
 for simplicity.
 
-Next: Let's talk *deployment*! Yup, we're going to setup our project up to deploy
-with "platform.sh".
+One of the things we've seen - and talked about in this chapter - is that *everything*
+in the `assets/` directory is exposed publicly... which is the whole point of
+AssetMapper! But sometimes you may have a few files that you want to put in that
+directory, but keep private. Let's check into AssetMapper's exclude feature.
