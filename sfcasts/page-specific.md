@@ -1,17 +1,73 @@
 # Page-Specific CSS & JS
 
-Let's head over to `/admin`. Surprise! We *do* have an admin section on our site. Well... *sort of*. Right now, it's just a big rectangle, but this *represents* an admin section. Why do we have this? We're *pretending* we have a page or a section like this so we can add some extra custom CSS and JavaScript on *only* this page and section, instead of including it everywhere on our frontend, in the event our JavaScript and CSS is really heavy.
+Head over to `/admin`. Surprise! We *do* have an admin section on our site. Well...
+*sort of*. It's just a big rectangle, but it represents a make-believe admin are.
+Why? Well, suppose we have some CSS and JS that are *only* needed here. If we write
+that in the normal way and in the normal files, that code is going to be downloaded
+everywhere, including when someone goes to the frontend of your site. That, at the
+very least, is wasteful. A better way is to *only* download the admin CSS and JS
+when you visit the admin area!
 
-I typically try to *avoid* doing this, in favor of lazy Stimulus controllers that only load when I need them to. But *sometimes*, like in an admin area, you'll have a situation where you want an extra set of CSS and JavaScript. I'm going to show you how to do that with AssetMapper.
+My favorite way to do this is with lazy Stimulus controllers and we've already
+talked about those. But another option is to create an extra set of CSS and JavaScript
+that are explicitly loaded *only* on these pages. Let's see how to do that with
+AssetMapper.
 
-If we were using Encore, we'd open the `webpack.config.js` file and add a second entry file, which would result in a new CSS and JavaScript file. In AssetMapper, we can do something really similar.
+If we were using Webpack Encore, we'd open the `webpack.config.js` file and add a
+second *entry*. That would result in a new CSS and JavaScript file. In AssetMapper,
+we can do something really similar.
 
-Let's start with CSS. In the `/styles` directory, create an `admin.css` file and, inside, just to see if things are working, add an `.admin-wrapper` div with some XY padding. That's going to add a little space right here. *Then*, go into the template of this page - `/templates/admin/dashboard.html.twig` - and, right here, we're going to add `class=admin-wrapper"`. Now, this isn't going to work *yet*. Technically, that new `admin.css` file is available publicly because it's in the `/assets` directory. But to do that, we need a link tag. Let's add that!
+## Creating a new CSS File
 
-There's nothing particularly special about this. We're going to say `{% block stylesheets %}` and `{% endblock %}` to override the `block` inside of our parent template. Inside, we'll call `{{ parent() }}` to include the normal stuff and, down here, add `<link rel="stylesheet" href="{{ asset('styles/admin.css') }}">`. *And* let me fix my typo up here. Okay, *that's* what we want. And now you can see that the CSS *is* being applied because it's adding the padding to this area here. *Awesome*.
+Let's start with CSS, which is pretty darn simple. In the `assets/styles` directory,
+create an `admin.css` file and, to see if things are working, add an `.admin-wrapper`
+div with some XY padding. That's going to add a little space right here. *Then*,
+go into the template for this page - `templates/admin/dashboard.html.twig` - and,
+right here, add that class: `class="admin-wrapper"`.
 
-So... what about JavaScript? Once again, we'll start a lot like Encore. We'll create another file... maybe next to `app.js` called `admin.js`. And we'll add `console.log('admin.js file')` here so we can see that it's loading. Just like our CSS file, *this* file is publicly available, but nothing's actually loading it. If you remember from viewing the page source, the `app.js` file was being imported thanks to this `<script type="module">` line down here that imports `app`. We *automatically* get this, over in `base.html.twig`, from our `importmap` function.
+At this point, that new `admin.css` file *is* technically available publicly because
+it's in the `assets/` directory. But, we're not *using* it yet. To do that, we need
+a link tag.
 
-You might think there would be an option you could pass here that would allow you to load `app.js` *and* `admin.js`, but surprisingly, there isn't. Why? Well, that's, in part, because it's not really necessary when we can easily add our *own* script tag. Inside `dashboard.html.twig`, we're going to do something pretty similar to what we did before. We're going to say `{% block javascripts %}`, `{% endblock %}`, and then `{{ parent }}`. Below that, we'll add a `<script>` tag with `type="module"`. And then, we're just going to code as if we were in a JavaScript file. Say `import` and then the path to our JavaScript file. Effectively, we want something like this - `/assets/admin.js` - but we're going to use the `asset()` function to point to it. Its logical path is literally `admin.js`. And that *should* be everything. if we head over, refresh... and check the console... got it! Our `admin.js` file *is* being loaded! If you check out the page source down here... *yep*. You can see `<script type="module">` from the `importmap` where it says `import 'app'`. Then, down here, we're importing the path. Notice that, in the original one, we say `import 'app'` and then we rely on the `importmap` to actually *map* that to its URL. That's *nice*, but it's not actually necessary. Putting the path right there works just fine, and that's what we're doing down here for ours. And *that's* page-specific JavaScript. *Super* easy.
+There's nothing special about this. Say `{% block stylesheets %}` and `{% endblock
+%}` to override the block from the parent template. Then call `{{ parent() }}` to
+include the normal stuff and, down here, add `<link rel="stylesheet"` pointing to
+`asset('styles/admin.css')`. And... let me fix my typo up here. *That's* what
+we want.
 
-Next: Let's talk *deployment* by setting our project up to deploy with "platform.sh".
+Back on the site... yup! The CSS *is* being applied: we've got extra padding.
+Refreshingly simple.
+
+## Creating a Page-Specific JavaScript File
+
+But... what about JavaScript? Once again, we'll start a lot like Encore. Create
+a new file... maybe next to `app.js` called `admin.js`. Add
+`console.log('admin.js file')` so we can see if it's loading.
+
+Like with the CSS file, this file *is* now publicly available... but nothing is
+actually *loading* it. Remember: the `app.js` file was is loaded thanks to this
+`<script type="module">` line down here that imports `app`. We *automatically* get
+this, over in `base.html.twig`, via the `importmap()` Twig function.
+
+So... is there a way to tell this function to *also* import our `admin.js` file?
+Actually, no! Why? Mostly because... it's just so easy to add ourselves!
+
+Watch: back in `dashboard.html.twig`, say `{% block javascripts %}`, `{% endblock%}`,
+then `{{ parent() }}`. Below that, add a `<script>` tag with `type="module"`. Now
+we're going to code as if we're in a JavaScript file. Say `import` and then the *path*
+to the JavaScript file. Effectively, we want something like - `/assets/admin.js`.
+But, of course, to get the real path we use the `asset()` function passing in the
+logical path `admin.js`.
+
+That's it! Let's try this thing! Refresh and check the console. Got it! Our `admin.js`
+file *is* being loaded! If you check out the page source... down here... *yep*. You
+can see `<script type="module">` from the `importmap()` function where it says
+`import 'app'`. Then, down here, we import `admin.js` via its path.
+
+And remember, the original is just `import 'app'`... and then we rely on the
+`importmap` to *map* that to its URL. That's *nice*... but it's not actually
+necessary. Putting the path right here works fine too. That's what we're doing
+for simplicity.
+
+Next: Let's talk *deployment*! Yup, we're going to setup our project up to deploy
+with "platform.sh".
