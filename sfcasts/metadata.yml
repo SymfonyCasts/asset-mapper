@@ -17,5 +17,6 @@ chapters:
     - page-specific
     - exclude-files
     - deploy
+    - deploy-config
     - deploy-assets
     - optimization
