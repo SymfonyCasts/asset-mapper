@@ -1,0 +1,252 @@
+WEBVTT
+
+00:00:00.036 --> 00:00:04.206 align:middle
+A veces, en lugar de
+importar un paquete en sí,
+
+00:00:04.476 --> 00:00:08.266 align:middle
+puedes querer importar sólo una parte
+de él: como un archivo concreto.
+
+00:00:08.696 --> 00:00:10.576 align:middle
+Lodash es un buen ejemplo de ello.
+
+00:00:11.026 --> 00:00:16.006 align:middle
+Pero antes de llegar ahí, en lugar de
+importar todo de lodash, deberías poder
+
+00:00:16.006 --> 00:00:19.936 align:middle
+decir import { camelCase } from 'lodash'.
+
+00:00:20.546 --> 00:00:23.976 align:middle
+Entonces, aquí abajo, utilizarías
+directamente camelCase.
+
+00:00:24.496 --> 00:00:27.606 align:middle
+Sin embargo, cuando nos
+desplazamos e intentamos esto...
+
+00:00:28.416 --> 00:00:33.986 align:middle
+¡error! El módulo solicitado lodash no
+proporciona una exportación llamada camelCase.
+
+00:00:34.606 --> 00:00:36.526 align:middle
+Esto debería funcionar...
+
+00:00:36.526 --> 00:00:39.006 align:middle
+y la razón por la que
+no lo hace es complicada.
+
+00:00:39.406 --> 00:00:44.466 align:middle
+Básicamente, debido a la forma en que esta
+biblioteca específica empaqueta su módulo, no
+
+00:00:44.826 --> 00:00:47.636 align:middle
+puedes importar funciones
+específicas como ésta.
+
+00:00:48.286 --> 00:00:51.576 align:middle
+Sin embargo, funcionará con la
+mayoría de los demás paquetes.
+
+00:00:51.576 --> 00:00:54.766 align:middle
+Por ejemplo, si dices import { Modal }
+
+00:00:54.766 --> 00:00:58.636 align:middle
+from 'bootstrap' (si utilizas
+Bootstrap), funcionará.
+
+00:00:59.186 --> 00:01:01.596 align:middle
+Bootstrap empaqueta sus archivos correctamente.
+
+00:01:02.036 --> 00:01:07.506 align:middle
+Sin embargo, utilizar esta sintaxis no
+siempre es lo ideal con AssetMapper.
+
+00:01:08.116 --> 00:01:08.856 align:middle
+El problema es el siguiente.
+
+00:01:09.216 --> 00:01:14.236 align:middle
+Si pasáramos este código por Encore, Encore
+haría algo llamado "sacudir el árbol".
+
+00:01:14.816 --> 00:01:19.366 align:middle
+Vería que sólo estamos
+importando camelCase desde lodash.
+
+00:01:19.756 --> 00:01:24.136 align:middle
+Y así, en el JavaScript final,
+sólo nos daría el código
+
+00:01:24.196 --> 00:01:28.036 align:middle
+de camelCase, no todo el paquete lodash.
+
+00:01:28.076 --> 00:01:33.986 align:middle
+En un entorno de navegador, si importas
+import desde lodash, obtendrás todo lodash...
+
+00:01:34.286 --> 00:01:36.676 align:middle
+aunque sólo importes una parte.
+
+00:01:37.326 --> 00:01:39.396 align:middle
+Ahora bien, puede que no sea para tanto.
+
+00:01:39.856 --> 00:01:44.506 align:middle
+La compilación completa de lodash
+sigue siendo de sólo 24 kilobytes.
+
+00:01:44.856 --> 00:01:47.276 align:middle
+Pero ¿y si estamos utilizando
+un paquete grande...
+
+00:01:47.496 --> 00:01:50.396 align:middle
+pero sólo necesitamos
+importar una cosa concreta?
+
+00:01:51.186 --> 00:01:56.636 align:middle
+Muchas veces, hay un archivo específico
+que podemos importar, como /camelCase.
+
+00:01:57.186 --> 00:02:00.436 align:middle
+Normalmente encontrarás detalles sobre
+estos archivos en la documentación...
+
+00:02:00.506 --> 00:02:02.586 align:middle
+aunque también puedes ir a buscarlos.
+
+00:02:03.126 --> 00:02:04.706 align:middle
+Vuelve a JSDelivr...
+
+00:02:05.226 --> 00:02:08.246 align:middle
+y aquí abajo, busca "lodash".
+
+00:02:10.546 --> 00:02:14.966 align:middle
+A continuación, haz clic en "Archivos" para ver
+todos los archivos que forman parte de este paquete.
+
+00:02:15.046 --> 00:02:18.546 align:middle
+Para lodash, es una lista enorme...
+
+00:02:18.656 --> 00:02:20.826 align:middle
+porque se trata de una biblioteca enorme.
+
+00:02:21.356 --> 00:02:22.906 align:middle
+Uno de ellos es camelCase.js.
+
+00:02:22.906 --> 00:02:29.306 align:middle
+¡Vale! Así que vamos a intentar
+importar lodash/camelCase.
+
+00:02:29.946 --> 00:02:31.186 align:middle
+No voy a incluir el .js...
+
+00:02:31.186 --> 00:02:33.606 align:middle
+pero de todas formas no va a funcionar.
+
+00:02:34.096 --> 00:02:35.826 align:middle
+Observa: cuando actualizamos...
+
+00:02:36.586 --> 00:02:41.686 align:middle
+¡error! No se ha podido resolver el
+especificador de módulo lodash/camelCase . Las
+
+00:02:41.946 --> 00:02:45.826 align:middle
+referencias relativas
+deben empezar por "/", "./"
+
+00:02:46.006 --> 00:02:46.146 align:middle
+o "../" Este
+
+00:02:46.976 --> 00:02:51.656 align:middle
+error significa que estamos importando
+algo mediante una importación "desnuda", y
+
+00:02:52.026 --> 00:02:55.016 align:middle
+no se encontró en el importmap . Si
+
+00:02:55.116 --> 00:03:03.436 align:middle
+"Vemos la fuente de la página", sí tenemos un
+importmap para lodash, pero no lodash/camelCase. Sí, esa
+
+00:03:04.036 --> 00:03:07.056 align:middle
+coincidencia se hace exactamente. Vale,
+
+00:03:07.666 --> 00:03:14.956 align:middle
+hay una forma de hacer una coincidencia, más o menos,
+"difusa" - lodash/* - pero yo no la uso. La cuestión
+
+00:03:15.576 --> 00:03:19.696 align:middle
+es: si quieres utilizar lodash/camelCase, debes
+
+00:03:19.986 --> 00:03:23.996 align:middle
+añadirlo a tu mapa de importación,
+no lodash. Ejecuta: busca
+
+00:03:24.626 --> 00:03:29.176 align:middle
+tu terminal y ejecuta: php bin/console
+importmap:remove lodash Eso
+
+00:03:29.856 --> 00:03:35.776 align:middle
+eliminará lodash de importmap.php y borrará el
+archivo de assets/vendor/. ¡Bien! Ahora ejecuta
+
+00:03:36.106 --> 00:03:40.136 align:middle
+./bin/console importmap:require con
+
+00:03:40.136 --> 00:03:44.856 align:middle
+el nombre del paquete / la ruta que quieras:
+
+00:03:44.856 --> 00:03:48.726 align:middle
+lodash/camelCase.js. camelCase.js es el nombre
+
+00:03:48.726 --> 00:03:54.526 align:middle
+del archivo en la CDN. Pero te darás cuenta de
+
+00:03:54.776 --> 00:03:57.576 align:middle
+que, muchas veces en los documentos,
+se hace referencia a lodash/camelCase
+
+00:03:57.786 --> 00:04:02.446 align:middle
+sin el .js. Y en este
+
+00:04:02.806 --> 00:04:07.256 align:middle
+caso, puedes omitir el .js: tú
+decides. Eso funciona porque
+
+00:04:08.036 --> 00:04:13.696 align:middle
+jsDelivr es amigable y hace que funcionen
+ambas versiones de la URL. ¿El resultado
+
+00:04:14.346 --> 00:04:15.766 align:middle
+del comando? El mismo que
+
+00:04:16.426 --> 00:04:18.256 align:middle
+antes Obtenemos una
+
+00:04:18.606 --> 00:04:25.146 align:middle
+nueva entrada en importmap.php que coincide con lo que
+queremos importar y establecer en una URL. Copia esa URL
+
+00:04:26.136 --> 00:04:27.956 align:middle
+para que podamos verla. ¡Ya está! Es
+
+00:04:30.416 --> 00:04:31.086 align:middle
+el código
+
+00:04:31.506 --> 00:04:33.706 align:middle
+de sólo camelCase.js. Y cuando
+
+00:04:33.706 --> 00:04:37.626 align:middle
+probamos la página... ¡funciona!
+Ésta es la conclusión
+
+00:04:38.286 --> 00:04:44.156 align:middle
+: si necesitas importar un archivo
+concreto de un paquete, puedes hacerlo
+
+00:04:44.336 --> 00:04:50.006 align:middle
+: sólo tienes que pasar el nombre del paquete + la ruta del
+archivo a importmap:require. A continuación, ¡vamos a añadir
+
+00:04:50.906 --> 00:04:53.556 align:middle
+Stimulus a nuestra aplicación!
