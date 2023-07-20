@@ -9,6 +9,8 @@ But before we get there, instead of importing *everything* from `lodash`, you sh
 be able to say `import { camelCase } from 'lodash'`. Then, down here, you would
 use `camelCase` directly.
 
+[[[ code('910a119d46') ]]]
+
 *However*, when we move over and try this... error!
 
 > The requested module `lodash` does not provide an export named `camelCase`.
@@ -45,6 +47,8 @@ is `camelCase.js`.
 
 Ok! So let's try importing `lodash/camelCase`.
 
+[[[ code('0b0f95b8ba') ]]]
+
 I'm not including the `.js`... but it's not going to work anyway. Watch: when
 we refresh... error!
 
@@ -67,8 +71,12 @@ php bin/console importmap:remove lodash
 ```
 
 That will remove `lodash` from `importmap.php` and delete the file from
-`assets/vendor/`. Nice! Now run `./bin/console importmap:require` with the package
-name / the path that you want: `lodash/camelCase.js`.
+`assets/vendor/`. 
+
+[[[ code('24d74b7889') ]]]
+
+Nice! Now run `./bin/console importmap:require` with the package name / the path
+that you want: `lodash/camelCase.js`.
 
 ```terminal-silent
 php bin/console importmap:require lodash/camelCase.js
@@ -80,8 +88,11 @@ And in this case, you *can* leave the `.js` off: it's up to you. That works beca
 jsDelivr is friendly and makes both versions of the URL work.
 
 The result of the command? The same as before! We get a new entry in
-`importmap.php` matching what we want to import and set to a URL. Copy that URL
-so we can see it. There we go! It's the code from *just* `camelCase.js`.
+`importmap.php` matching what we want to import and set to a URL. 
+
+[[[ code('39bbe655b2') ]]]
+
+Copy that URL so we can see it. There we go! It's the code from *just* `camelCase.js`.
 
 And when we try the page... it works!
 
