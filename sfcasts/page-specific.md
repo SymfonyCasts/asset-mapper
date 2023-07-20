@@ -1,14 +1,14 @@
 # Page-Specific CSS & JS
 
 Head over to `/admin`. Surprise! We *do* have an admin section on our site. Well...
-*sort of*. It's just a big rectangle, but it represents a make-believe admin are.
+*sort of*. It's only a big rectangle, but it represents a make-believe admin.
 Why? Well, suppose we have some CSS and JS that are *only* needed here. If we write
 that in the normal way and in the normal files, that code is going to be downloaded
-everywhere, including when someone goes to the frontend of your site. That, at the
+everywhere, including when someone goes to the frontend of our site. That, at the
 very least, is wasteful. A better way is to *only* download the admin CSS and JS
 when you visit the admin area!
 
-My favorite way to do this is with lazy Stimulus controllers and we've already
+My favorite way to do this is with lazy Stimulus controllers, and we've already
 talked about those. But another option is to create an extra set of CSS and JavaScript
 that are explicitly loaded *only* on these pages. Let's see how to do that with
 AssetMapper.
@@ -19,13 +19,13 @@ we can do something really similar.
 
 ## Creating a new CSS File
 
-Let's start with CSS, which is pretty darn simple. In the `assets/styles` directory,
-create an `admin.css` file and, to see if things are working, add an `.admin-wrapper`
-div with some XY padding. That's going to add a little space right here. *Then*,
+Let's start with CSS, which is pretty darn simple. In the `assets/styles/` directory,
+create an `admin.css` file and, to see if things are working, add `.admin-wrapper`
+with some X-Y padding. That'll add a little space right here. *Then*,
 go into the template for this page - `templates/admin/dashboard.html.twig` - and,
 right here, add that class: `class="admin-wrapper"`.
 
-At this point, that new `admin.css` file *is* technically available publicly because
+At this point, the new `admin.css` file *is* technically available publicly... because
 it's in the `assets/` directory. But, we're not *using* it yet. To do that, we need
 a link tag.
 
@@ -45,7 +45,7 @@ a new file... maybe next to `app.js` called `admin.js`. Add
 `console.log('admin.js file')` so we can see if it's loading.
 
 Like with the CSS file, this file *is* now publicly available... but nothing is
-actually *loading* it. Remember: the `app.js` file was is loaded thanks to this
+*loading* it. Remember: the `app.js` file is loaded thanks to this
 `<script type="module">` line down here that imports `app`. We *automatically* get
 this, over in `base.html.twig`, via the `importmap()` Twig function.
 
@@ -56,20 +56,21 @@ Watch: back in `dashboard.html.twig`, say `{% block javascripts %}`, `{% endbloc
 then `{{ parent() }}`. Below that, add a `<script>` tag with `type="module"`. Now
 we're going to code as if we're in a JavaScript file. Say `import` and then the *path*
 to the JavaScript file. Effectively, we want something like - `/assets/admin.js`.
-But, of course, to get the real path we use the `asset()` function passing in the
-logical path `admin.js`.
+But, of course, to get the real path we use the `asset()` function and pass the
+logical path: `admin.js`.
 
 That's it! Let's try this thing! Refresh and check the console. Got it! Our `admin.js`
 file *is* being loaded! If you check out the page source... down here... *yep*. You
 can see `<script type="module">` from the `importmap()` function where it says
-`import 'app'`. Then, down here, we import `admin.js` via its path.
+`import 'app'`. And, after, we import `admin.js` via its path.
 
-And remember, the original is just `import 'app'`... and then we rely on the
+The original is just `import 'app'`... because we rely on the
 `importmap` to *map* that to its URL. That's *nice*... but it's not actually
 necessary. Putting the path right here works fine too. That's what we're doing
 for simplicity.
 
-One of the things we've seen - and talked about in this chapter - is that *everything*
+One of the things we saw in this chapter is that *everything*
 in the `assets/` directory is exposed publicly... which is the whole point of
 AssetMapper! But sometimes you may have a few files that you want to put in that
-directory, but keep private. Let's check into AssetMapper's exclude feature.
+directory, but keep private. Let's check into AssetMapper's exclude feature and
+other config options next.
