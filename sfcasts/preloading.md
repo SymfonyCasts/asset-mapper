@@ -1,121 +1,147 @@
 # Preloading
 
-Coming soon...
+We just discovered a problem: our browser needs to download the page... *and*
+a CSS file before it even *realizes* that it need to download this font. This
+may not be a huge deal, but there's a cool solution: preloading.
 
-Go find the font URL - it's this "normal" one -
-and copy it. Next, open `base.html.twig` file and, up here, add a `<link>` tag.
-Unlike a normal `link rel="stylesheet"` that points to a CSS file, the purpose
-of *this* link tag will be to yell to the browser:
+## Manually Adding a link rel="preload"
 
-> Hey, you don't know why yet, but you need to download this file.
+Go find the font URL - it's this "normal" one - and copy it. Next, open
+`base.html.twig` file and, up here, add a `<link>` tag. Unlike a normal `link
+rel="stylesheet"` that points to a CSS file, the purpose of *this* link tag will
+be to yell to the browser:
 
-In here, say `rel="preload" href=""` and paste that long URL. Then, for fonts, we'll
-need to add `as="font"`, `type="font/woff2"`, and `crossorigin=""` at the end. That's
-*long*, but that's what's going to hint that it needs to preload that file. If we go
-over and run Lighthouse again... we *still* score 100, and under "Avoid chaining
-critical requests", you can see that file is now *gone*. That's fixed!
+> Hey, you don't know why yet, but you should download this file.
 
-But... what about `app.css`? You can't really load that any earlier, right? That's
-inside of our `base.html.twig` already. It downloads the page and as soon as it has
-the HTML, it *sees* this CSS tag. That's *fine*, but could we move this even
-*earlier*? Is there a way to *hint* to the browser that it needs to download this
-`app.tailwind.css` *before* it downloads the HTML? The answer, surprisingly, is
-*yes*.
+To do that, say `rel="preload"` then `href=""` and paste that long URL. And when
+preloading fonts, we need to add `as="font"`, `type="font/woff2"`, and
+`crossorigin=""` at the end.
 
-To do that, we need a Symfony component called "WebLink". At your terminal, say:
+Ok, let's see what Lighthouse thinks of this now! After... we *still* score 100 -
+yay! -  and under "Avoid chaining critical requests", that font file is *gone*.
+
+## Preloading via a Header
+
+But... what about `app.tailwind.css`? The browser downloads the HTML and then
+immediately sees the `link` tag for this. Is there a way to *hint* to the browser
+that it needs to download this `app.tailwind.css` even *before* it downloads the
+HTML? The answer, surprisingly, is *yes*.
+
+To do that, we need a Symfony component called "WebLink". At your terminal, run:
 
 ```terminal
 composer require symfony/web-link
 ```
 
-Once that's done, back in `base.html.twig`, we're going to add *another* preload down
-here that looks pretty similar: `<link rel="preload" href="">`. This time, we're
-going to use a function called `preload`. I'll talk about that in a second. So say
-`{{ preload() }}`, and then we're going to use our normal `asset()` function to point
+Once that's done, back in `base.html.twig`, we're going to add *another* preload
+down here that looks  similar: `<link rel="preload" href="">`. This time, we're
+use a Twig function called `preload()` passing the normal `asset()` function to point
 to `styles/app.tailwind.css`. In this case, this `preload` function needs another
-option here called `as: 'style'`. That's it! We don't need any more attributes. If we
-go refresh the page and "View page source", this, by itself, is going to output a
-`preload` tag, which is kind of pointless. When the browser is reading HTML and it
-sees this, this basically says:
+option called `as: 'style'`.
 
-`Hey, you should start downloading this CSS file.`
+That's it! Go refresh the page and "View page source". No surprise: this outputs
+a `preload` tag... and the `preload()` Twig function, so far, looks like it's just
+a small shortcut to help do that.
 
-*But* literally one line later, it would have found out anyway. So while this *is*
-pretty pointless, the fact that we call this `preload()` function *first* tells
-Symfony:
+What's interesting is that, for the `app.tailwind.css` file, this is pointless! This
+basically tells the browser:
 
-`Hey, when you return the response for this page, add a preload header.`
+> Hey, you should start downloading this CSS file.
 
-If we go over to the Network tools, select "All", find our main page, go to
-"Headers", and look under "Response Headers"... look! There's a new "Link" header
-here called "preload" that points to our CSS file. So as the response is being sent
-back to the user's browser, at the *very* top of the response in the header is that
-*hint* to start downloading that CSS file. So it actually *can* start downloading the
-CSS file before it even downloads the HTML file. If we go back over to Lighthouse and
-analyze the page load again... down here... beautiful! Look at that! That entire
-section is *gone*.
+*But*... one line later, it would have found out anyway! So why did we do this?
+It turns out that the `preload()` function does two things: it helps output the
+`link` tag contents but it *also* tells Symfony that it should add a `preload`
+*header* to the response.
 
-There are a couple of other things here like "Keep request counts low and transfer
-sizes small", but these aren't really warnings - just something we could work on
-improving if we wanted to. But on the topic of preloading, even though we don't have
-any more warnings here, there *is* another spot where preloading can improve
-performance, and it has to do with JavaScript.
+Go to the Network tools, select "All", find our main page, go to "Headers", and look
+under "Response Headers" There's a new "Link" header here called "preload"
+that points to our CSS file! So as the browser starts downloading the response,
+at the *very* top it sees a *hint* that it should start downloading that CSS file!
+
+If we go back over to Lighthouse and analyze the page load again... down
+here... beautiful! Look at that! That entire section is *gone*
+
+## preload JavaScript in importmap.php
+
+There are few other things here like "Keep request counts low and transfer sizes
+small", but these aren't really warnings: just something to keep in mind.
+
+But on the topic of preloading, even though we don't have any more warnings here,
+there *is* another spot where preloading can improve performance, and it has to do
+with JavaScript.
 
 Over in our `importmap.php` file, there's a key here called `preload` that we haven't
-talked about. You can see that it's set to `true` for `app`. We're going to set that
-to `false`. If we head over here and run another Lighthouse report... we still get a
-score of 100, but if we go down here, it says "Avoid chaining critical requests". And
-check this out! We have the HTML page, down to `app.js`, `bootstrap.js`, the Stimulus
-loader, Stimulus itself, controllers... *wow*. A *bunch* of stuff happened.
+talked about. It's set to `true` for `app`. Set that to `false`.
+
+Now, move over and run another Lighthouse report. We still get a score of 100, but
+if we go down here, ah: "Avoid chaining critical requests" is back! And check it
+out! We have the HTML page, down to `app.js`, `bootstrap.js`, the Stimulus loader,
+Stimulus itself, controllers... *wow*. A *bunch* of stuff happened.
 
 This is the same problem we saw with the CSS and font files earlier. First, our
 browser downloads the HTML page. *Then* it sees that it needs to download `app.js`.
-Once it downloads *that* file, it sees that it needs to download our `bootstrap.js`
-file. Then, when it sees that, it knows that it needs to download the
-`stimulus-bundle/loader`, and so on - one by one by one, instead of downloading *all*
-of those things as soon as the page loads. It has to *discover* them little by
-little, which *isn't* ideal. The `preload` is what's fixing that. I'll change this
-back to `true`, refresh the page, and "View page source".
+Once it downloads *that* file, it sees that it needs to download `bootstrap.js`.
+Then, it knows that it needs to download the `stimulus-bundle/loader`, and so on:
+one by one by one. Instead of downloading *all* of those things in parallel,
+it has to *discover* them little by little.
 
-One of the things here that we haven't talked about yet comes from the `importmap()`.
-We know that dumps the `importmap`, and we know it dumps our `<script type="module">`
-down here. But it *also* dumps these `modulepreload` things. This is pretty cool.
-Because we said `'preload' => true` for `app`, it adds a `<link rel="modulepreload">`
-here for `app.js`. That hints to the browser that it should start downloading
-`app.js` *immediately*. That's not super important because it would have figured that
-out down here anyway, but *then* AssetMapper sees that our `/assets/app.js` file
-imports *Bootstrap*. So since `app.js` is preloaded, it *also* preloads
-`bootstrap.js`. And since this imports `./lib/vinyl.js`, it *also* preloads
-`./lib/vinyl.js`. So it's going to start downloading all three of those files
-immediately.
+The `preload` is what fixes that. Change this back to `true`, refresh the page, and
+view page's source.
+
+We know that the `importmap()` Twig function dumps the `importmap` and the
+`<script type="module">`. But it *also* dumps these `modulepreload` things. These
+are cool. Because we said `'preload' => true` for `app`, it adds a
+`<link rel="modulepreload">` for `app.js`. That hints to the browser that it should
+start downloading `app.js` *immediately*. Though, that's not really important because
+it would have figured that out down here anyway.
+
+But, *then* AssetMapper sees that our `assets/app.js` imports `bootstrap.js`.
+And because `app.js` is preloaded, it *also* preloads `bootstrap.js`. And since this
+imports `./lib/vinyl.js`, it *also* preloads `./lib/vinyl.js`. So it's will download
+all three of these files immediately.
 
 At this point, if we ran Lighthouse again, it wouldn't complain about any of these
-chain requests. But we *still* have room for improvement. You can see that if you
-look over the JavaScript and check out this waterfall column. We see that a couple of
-files *start* downloading, and then a few more... and a few more. So we still have
-this chaining problem.
+chain requests. But we *still* have room for improvement. On the network tools,
+for JavaScript, check out the waterfall column. We see that a few files *start*
+downloading, and then a few more... and a few more. So we still have this chaining
+problem, though it's apparently not a big enough deal for Lighthouse to report on.
 
-We know, for example, that the `bootstrap.js` is being preloaded, but this
-`@symfony/stimulus-bundle` file *isn't*. It downloads `bootstrap.js`, and *then* it
-discovers it needs this file, and *then* it discovers the things inside of it. This
-happens because we're preloading `app`, and so anything that `app` imports with a
-*relative* import will automatically be preloaded as well. But anything we're
-importing with a *bare* import, like `lodash/camelCase` or
-`@symfony/stimulus-bundle`, *won't* be preloaded automatically. That's because they
-have their own entries inside of here, so you control the preloading for those by
-themselves.
+We know that the `bootstrap.js` is being preloaded, but this
+`@symfony/stimulus-bundle` file *isn't*. It downloads `bootstrap.js`, and *then*
+it discovers it needs this file, and *then* it discovers the things inside of it.
+The key thing to understand is that, because we're preloading `app`, anything that
+`app` imports with a *relative* import will automatically be preloaded as well. But
+anything we're importing with a *bare* import, like `lodash/camelCase` or
+`@symfony/stimulus-bundle`, *won't* be preloaded automatically. Perhaps they should,
+but they have their own entries inside of `importmaph.php`, so you control the
+preloading for those independently.
 
-This is a bit of an optimization on performance, but if you wanted to, we could add
-`preload` to the items we *know* will be critical to our page rendering - `stimulus`
-is going to be critical, `stimulus-bundle` because that's what loads our controllers,
-and also `turbo`. When we refresh... nothing changes. We'll just see more of those
-`modulepreloads` down here. If we run Lighthouse one more time, we're *still* scoring
-100, and you can see that there are no major problems down here. *Fantastic*.
+At this point, we're *really* optimizing performance - maybe over-optimizing. But
+if you want to avoid this chaining problem, you could add `preload` to the items
+we *know* will be critical to the page rendering. For example, `@hotwired/stimulus`
+is critical, `stimulus-bundle`is critical because that's what loads our controllers,
+and `turbo` is also critical.
 
-All right, friends! Thanks so much for joining us! AssetMapper is *cool*. There are
-some things it *doesn't* do, like tree shaking or handling TypeScript, but for a
-large number of projects, it's going to work *great*. And the cool thing is, you're
-still running normal JavaScript, so if you ever did need to move to a build system
-later, you could do that *super* easily. Let us know what you think, and hopefully we
-can keep the improvements going for Symfony 6.4. Thanks again and I'll see you all
-*next time*!
+When we refresh... nothing changes. We'll just see more `modulepreloads` in the
+HTML. If we run Lighthouse one more time, we're *still* scoring 100, and you can
+see that there are no major problems down here. *Fantastic*.
+
+## Preload Everything
+
+By the way, if you're now thinking:
+
+> Why don't we just preload everything?
+
+That's a good thought! But, don't! your browser is smart, and without any preloads,
+it has a highly-intelligent algorithm to determine the order it will download files
+so that everything loads as fast as possible. If you preloaded everything, the
+loading order *probably* wouldn't be as good. Just use preloads for *critical*
+assets.
+
+Ok! We made it! I think AssetMapper is a breath of fresh air - and I hope you
+feel the same! There are some things it *doesn't* do, like tree shaking or handling
+TypeScript. But for a large number of projects, it's going to work *great*. And the
+cool thing is, you're still running normal JavaScript. So if you ever did need to
+move to a build system later, you could do that. Let us know what you think, and
+hopefully we can make more improvements for Symfony 6.4. Alright friends, see 
+you next time!
