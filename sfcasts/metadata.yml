@@ -21,3 +21,4 @@ chapters:
     - deploy-assets
     - deploy-performance
     - optimization
+    - preloading
