@@ -1,0 +1,393 @@
+WEBVTT
+
+00:00:01.096 --> 00:00:05.376 align:middle
+Podemos escribir JavaScript moderno en este
+archivo, podemos importar paquetes de terceros:
+
+00:00:05.556 --> 00:00:07.876 align:middle
+somos libres de idear el código que queramos.
+
+00:00:08.316 --> 00:00:11.906 align:middle
+Pero, si eres como yo, probablemente
+quieras utilizar Stimulus.
+
+00:00:12.146 --> 00:00:13.626 align:middle
+Así que vamos a instalarlo. Stimulus
+
+00:00:14.286 --> 00:00:16.926 align:middle
+no es más que una biblioteca de JavaScript,
+
+00:00:17.046 --> 00:00:24.096 align:middle
+así que podríamos decir php bin/console
+importmap:require '@hotwired/stimulus' . A continuación,
+
+00:00:24.096 --> 00:00:26.376 align:middle
+sigue su documentación sobre
+cómo configurar las cosas.
+
+00:00:27.256 --> 00:00:30.156 align:middle
+Pero Symfony tiene una
+integración especial con Stimulus.
+
+00:00:30.616 --> 00:00:38.086 align:middle
+Así que, en lugar de eso, Ejecuta: composer
+require symfony/stimulus-bundle StimulusBundle es un
+
+00:00:38.086 --> 00:00:41.406 align:middle
+paquete relativamente nuevo que
+alberga algunos atajos de Tw ig
+
+00:00:41.406 --> 00:00:44.526 align:middle
+que utilizaremos, como stimulus_controller().
+
+00:00:44.816 --> 00:00:49.426 align:middle
+Pero, lo que es más delicioso, tiene una
+receta que configurará nuestra aplicación
+
+00:00:49.426 --> 00:00:52.816 align:middle
+para cargar controladores Stimulus
+sin esfuerzo. Compruébalo
+
+00:00:54.076 --> 00:00:58.996 align:middle
+: gracias a la receta, ahora tenemos
+un directorio assets/controllers/
+
+00:00:59.196 --> 00:01:02.266 align:middle
+con hello_controller.js dentro.
+
+00:01:03.136 --> 00:01:09.416 align:middle
+Sin tocar nada más, abre
+templates/vinyl/homepage.html.twig y,
+
+00:01:09.586 --> 00:01:12.216 align:middle
+justo después de <h1>,
+añade un nuevo <div>.
+
+00:01:13.446 --> 00:01:16.606 align:middle
+Vamos a adjuntar el nuevo
+controlador hello a este elemento.
+
+00:01:17.216 --> 00:01:21.946 align:middle
+Hazlo con stimulus_controller() - que
+es una de las nuevas funciones que
+
+00:01:21.946 --> 00:01:24.436 align:middle
+vienen de StimulusBundle - pasando hello.
+
+00:01:25.346 --> 00:01:27.576 align:middle
+Es imposible que eso ya funcione...
+
+00:01:27.646 --> 00:01:29.866 align:middle
+¿verdad? Actualiza.
+
+00:01:30.476 --> 00:01:33.006 align:middle
+Y funciona. ¡Qué maravilla!
+
+00:01:33.476 --> 00:01:37.456 align:middle
+Y abajo, en la consola, vemos registros
+sobre la inicialización de Stimulus
+
+00:01:37.586 --> 00:01:39.956 align:middle
+y la conexión de nuestro controlador hello.
+
+00:01:40.416 --> 00:01:44.736 align:middle
+Con sólo una línea composer
+require, ¡Stimulus está vivo!
+
+00:01:45.676 --> 00:01:50.346 align:middle
+Pongámonos nuestros sombreros de detective y
+profundicemos un poco más en cómo funciona esto
+
+00:01:50.456 --> 00:01:52.346 align:middle
+y qué hizo realmente la receta.
+
+00:01:53.276 --> 00:01:58.076 align:middle
+En templates/base.html.twig, éste es
+probablemente el cambio menos importante:
+
+00:01:58.376 --> 00:02:01.446 align:middle
+se añadió ux_controller_link_tags().
+
+00:02:01.956 --> 00:02:06.646 align:middle
+Hablaremos de ello en el próximo capítulo,
+cuando exploremos los paquetes UX.
+
+00:02:07.186 --> 00:02:13.176 align:middle
+Pero, en resumen, si un paquete UX viene
+con su propio CSS, esto lo produce.
+
+00:02:13.676 --> 00:02:15.506 align:middle
+En este momento, no hace nada.
+
+00:02:16.136 --> 00:02:22.416 align:middle
+Y lo que es más importante, la receta
+añadió un nuevo archivo assets/bootstrap.js.
+
+00:02:22.846 --> 00:02:29.376 align:middle
+Y, en assets/app.js, espolvoreó algo
+de código para importar ese archivo.
+
+00:02:29.376 --> 00:02:40.096 align:middle
+Así, app.js se carga, eso importa bootstrap.js,
+y luego eso importa @symfony/stimulus-bundle.
+
+00:02:40.266 --> 00:02:42.336 align:middle
+Ooh, ¡eso es una importación desnuda!
+
+00:02:42.736 --> 00:02:45.206 align:middle
+No empieza por "../"
+
+00:02:45.566 --> 00:02:45.696 align:middle
+¡ni "./"! Eso
+
+00:02:46.376 --> 00:02:52.496 align:middle
+significa que nuestro navegador lo buscará en importmap
+para averiguar qué archivo debe cargar. ¡De acuerdo!
+
+00:02:53.586 --> 00:02:56.776 align:middle
+Ve a abrir importmap.php. ¡Sorpresa!
+
+00:02:56.776 --> 00:03:04.646 align:middle
+La receta ha añadido dos entradas nuevas: Una
+para la propia biblioteca @hotwired/stimulus y
+
+00:03:05.006 --> 00:03:13.016 align:middle
+otra para @symfony/stimulus-bundle, que
+apunta a este path de aspecto extraño.
+
+00:03:13.236 --> 00:03:18.536 align:middle
+Aquí arriba, cuando se utilice una CDN, la
+entrada tendrá una clave url. Cuando apunte
+
+00:03:19.086 --> 00:03:23.216 align:middle
+a un archivo local, la entrada
+tendrá una clave path, que
+
+00:03:23.386 --> 00:03:27.116 align:middle
+será la ruta lógica a un
+archivo en AssetMapper. Pero,
+
+00:03:27.636 --> 00:03:30.226 align:middle
+¿a qué apunta esta extraña ruta? Gira
+
+00:03:30.826 --> 00:03:34.416 align:middle
+hasta tu terminal y ejecuta:
+php bin/console debug:asset Si
+
+00:03:35.506 --> 00:03:37.476 align:middle
+coges un ascensor hasta arriba... ¡voilà!
+
+00:03:38.466 --> 00:03:44.796 align:middle
+Cuando instalamos StimulusBundle, añadió una
+nueva "ruta de activos" a nuestro sistema, que
+
+00:03:45.106 --> 00:03:45.666 align:middle
+apunta a
+
+00:03:45.666 --> 00:03:52.206 align:middle
+vendor/symfony/stimulus-bundle/assets/dist y
+tiene un "prefijo de espacio de nombres". Esto
+
+00:03:52.666 --> 00:03:55.886 align:middle
+significa que, para apuntar a un
+archivo de este directorio, la
+
+00:03:56.146 --> 00:04:01.466 align:middle
+ruta lógica empezará por
+@symfony/stimulus-bundle. Así que
+
+00:04:01.466 --> 00:04:08.216 align:middle
+aquí, cuando decimos
+@symfony/stimulus-bundle/loader.js , nos estamos
+
+00:04:08.426 --> 00:04:10.926 align:middle
+refiriendo a este archivo de aquí:
+vendor/symfony/stimulus-bundle/assets/dist/loader.js. Es
+
+00:04:11.286 --> 00:04:15.316 align:middle
+una forma
+
+00:04:15.476 --> 00:04:21.536 align:middle
+larga de decir que cuando importamos
+@symfony/stimulus-bundle, en realidad estamos
+
+00:04:21.766 --> 00:04:26.326 align:middle
+importando este archivo
+vendor/symfony/stimulus-bundle/assets/dist/loader.js. El bundle
+
+00:04:26.326 --> 00:04:27.956 align:middle
+expone
+
+00:04:28.906 --> 00:04:33.746 align:middle
+ese archivo añadiendo la "ruta de activos"
+de AssetMapper, que permite a la receta
+
+00:04:33.746 --> 00:04:39.006 align:middle
+añadir una entrada a importmap.php
+que apunte a él. Bien, estamos
+
+00:04:39.706 --> 00:04:44.376 align:middle
+cargando este archivo loader.js, y
+podemos verlo aquí. En tu navegador,
+
+00:04:45.356 --> 00:04:47.226 align:middle
+actualiza... ve a tus
+
+00:04:47.596 --> 00:04:50.516 align:middle
+herramientas de Red, y busca
+"cargador". Ahí lo tienes
+
+00:04:51.526 --> 00:04:52.476 align:middle
+Ábrelo
+
+00:04:52.836 --> 00:04:54.506 align:middle
+en una pestaña nueva. Este código tiene
+
+00:04:56.226 --> 00:05:01.096 align:middle
+funciones para iniciar la aplicación Stimulus y
+registrar los controladores de nuestra aplicación
+
+00:05:01.096 --> 00:05:04.506 align:middle
+, como hello_controller.js.
+Pero... espera. Esto
+
+00:05:05.266 --> 00:05:06.516 align:middle
+es sólo
+
+00:05:07.006 --> 00:05:08.816 align:middle
+un archivo codificado. ¿Cómo es
+
+00:05:09.206 --> 00:05:12.836 align:middle
+capaz de encontrar y cargar dinámicamente
+los archivos que viven dentro de
+
+00:05:12.836 --> 00:05:16.566 align:middle
+nuestro directorio
+assets/controllers/? La clave está
+
+00:05:17.446 --> 00:05:24.906 align:middle
+arriba: import, isApplicationDebug, eagerControllers,
+lazyControllers de ./controllers.js. Esto... es un
+
+00:05:25.306 --> 00:05:26.906 align:middle
+poco
+
+00:05:26.906 --> 00:05:30.296 align:middle
+de magia. Vuelve a las
+
+00:05:31.066 --> 00:05:33.896 align:middle
+herramientas de Red y busca
+"controladores"... ahí está -
+
+00:05:34.456 --> 00:05:35.856 align:middle
+controllers.js. Abre esta nueva pestaña.
+
+00:05:36.736 --> 00:05:38.266 align:middle
+¡Woh! Tiene import
+
+00:05:38.826 --> 00:05:42.136 align:middle
+controller_0 de ../../controllers/hello_controller.js,
+que luego exporta
+
+00:05:42.136 --> 00:05:45.096 align:middle
+a una variable llamada eagerControllers.
+
+00:05:45.096 --> 00:05:51.406 align:middle
+Este archivo es creado dinámicamente
+
+00:05:51.476 --> 00:05:56.666 align:middle
+por el b undle. Si miramos en el
+
+00:05:57.366 --> 00:06:02.906 align:middle
+directorio vendor/, loader.js es un bonito
+archivo estático. Pero si nos fijamos en
+
+00:06:03.606 --> 00:06:07.926 align:middle
+controllers.js, ¡no se parece
+en nada a lo que tenemos en
+
+00:06:07.926 --> 00:06:09.416 align:middle
+el navegador! Cuando se sirve este archivo,
+
+00:06:10.476 --> 00:06:14.416 align:middle
+AssetMapper lo intercepta, mira dentro
+de nuestro directorio assets/controllers/
+
+00:06:14.796 --> 00:06:20.356 align:middle
+, encuentra allí todos los controladores
+y devuelve contenidos dinámicos
+
+00:06:20.836 --> 00:06:24.236 align:middle
+basados en ellos. Observa.
+Crea otro archivo llamado
+
+00:06:25.556 --> 00:06:31.796 align:middle
+goodbye-controller.js (puedes utilizar
+guiones o guiones bajos). Cambia el texto
+
+00:06:31.796 --> 00:06:32.746 align:middle
+a ¡Adiós
+
+00:06:36.226 --> 00:06:38.606 align:middle
+controlador!. Es de esperar que, al
+
+00:06:39.736 --> 00:06:45.706 align:middle
+actualizar el archivo, veamos aparecer aquí el
+nuevo controlador. Y casi tienes razón. Lo que
+
+00:06:46.236 --> 00:06:48.096 align:middle
+realmente ocurre es... ¡nada!
+
+00:06:48.886 --> 00:06:50.436 align:middle
+¡Ningún cambio! O
+
+00:06:50.796 --> 00:06:53.086 align:middle
+incluso puede que aparez ca
+
+00:06:53.566 --> 00:06:56.056 align:middle
+un error 404. Eso es porque el contenido de
+
+00:06:56.666 --> 00:07:02.556 align:middle
+este archivo acaba de cambiar y, por tanto, el hash también
+cambiará. ¡Estamos ante una versión desactualizada
+
+00:07:03.096 --> 00:07:06.326 align:middle
+del archivo! De vuelta al sitio, si
+
+00:07:07.326 --> 00:07:13.556 align:middle
+actualizamos, deberíamos ver un nuevo archivo
+con un nuevo hash. No lo vemos... debido a un
+
+00:07:14.376 --> 00:07:15.696 align:middle
+error de almacenamiento en caché
+
+00:07:15.696 --> 00:07:19.156 align:middle
+que ya se ha solucionado.
+Para solucionarlo, voy a
+
+00:07:19.756 --> 00:07:26.236 align:middle
+ejecutar: php bin/console cache:clear
+Y luego actualizar. ¡ Ahora veo que
+
+00:07:28.036 --> 00:07:34.026 align:middle
+tiene un nombre de archivo diferente, y que el contenido ha cambiado
+dinámicamente para incluir goodbye-controller.js ! Así que ahí lo tienes,
+
+00:07:37.456 --> 00:07:41.596 align:middle
+el emocionante viaje al corazón de cómo
+Stimulus y AssetMapper se hicieron mejores amigos.
+
+00:07:41.596 --> 00:07:43.796 align:middle
+bootstrap.js carga un archivo que
+
+00:07:44.466 --> 00:07:47.396 align:middle
+inicia S timulus... y que carga
+automáticamente todo lo que
+
+00:07:47.676 --> 00:07:52.826 align:middle
+hay dentro del directorio
+assets/controllers/... así como cualquier
+
+00:07:53.086 --> 00:07:59.336 align:middle
+paquete UX de terceros en assets/controllers.json. A
+continuación hablaremos de esos paquetes de terceros.
