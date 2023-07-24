@@ -25,11 +25,16 @@ that we'll use, like `stimulus_controller()`. But, more deliciously, it has a re
 that will set our app up to load Stimulus controllers *effortlessly*.
 
 Check it out: thanks to the recipe, we now have an `assets/controllers/`
-directory with `hello_controller.js` inside. Without touching *anything* else,
-open up `templates/vinyl/homepage.html.twig` and, right after the `<h1>`, add a
-new `<div>`. Let's *attach* the new `hello` controller to this element. Do that
-with: `stimulus_controller()` - that's one of the new functions that comes
-from StimulusBundle - passing `hello`.
+directory with `hello_controller.js` inside. 
+
+[[[ code('3f98852833') ]]]
+
+Without touching *anything* else, open up `templates/vinyl/homepage.html.twig` and, 
+right after the `<h1>`, add a new `<div>`. Let's *attach* the new `hello` controller 
+to this element. Do that with: `stimulus_controller()` - that's one of the new functions 
+that comes from StimulusBundle - passing `hello`.
+
+[[[ code('2f00c2c241') ]]]
 
 That can't *possibly* work already... right? Refresh. It *does*. That's bananas!
 And down in the console, we see logs about Stimulus initializing and our
@@ -45,9 +50,13 @@ about that in the next chapter when we explore UX packages. But, in short, if a
 UX package come with their own CSS, this outputs that. Right now, it's not
 doing anything.
 
+[[[ code('66246447cd') ]]]
+
 More importantly, the recipe added a new `assets/bootstrap.js` file. And, in
 `assets/app.js`, it sprinkled in some code to *import* that file. So, `app.js`
 loads, that imports `bootstrap.js`, and then *that* imports `@symfony/stimulus-bundle`.
+
+[[[ code('2b34113a1b') ]]]
 
 Ooh, that's a bare import! It doesn't start with "../" or "./"! That means our browser
 will look for it in the `importmap` to figure out which file to load.
@@ -55,6 +64,8 @@ will look for it in the `importmap` to figure out which file to load.
 Ok! Go open `importmap.php`. Surprise! The recipe added two new entries: One for
 the `@hotwired/stimulus` library itself and *another* for `@symfony/stimulus-bundle`,
 which points to this weird looking `path`.
+
+[[[ code('068db5a3ec') ]]]
 
 Up here, when using a CDN, the entry will have a `url` key. When pointing to a *local*
 file, the entry will have a `path` key, which will be the *logical* path to a file
@@ -106,6 +117,8 @@ based on these.
 
 Watch. Create another file called `goodbye-controller.js` (you can use dashes or
 underscores). Change the text to `Goodbye controller!`.
+
+[[[ code('3008b7ae80') ]]]
 
 You might expect that, when we refresh the file, we'll see the new controller pop
 in here. And you're *almost* right. What really happens is... *nothing*! No change!
