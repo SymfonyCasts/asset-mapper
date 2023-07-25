@@ -1,0 +1,208 @@
+WEBVTT
+
+00:00:01.086 --> 00:00:04.176 align:middle
+Ahora podemos crear controladores
+Stimulus personalizados con facilidad. La
+
+00:00:04.526 --> 00:00:07.296 align:middle
+otra mitad de StimulusBundle es la posibilidad
+
+00:00:07.296 --> 00:00:11.596 align:middle
+de obtener más controladores Stimulus
+gratuitos instalando un paquete UX.
+
+00:00:12.096 --> 00:00:14.106 align:middle
+¡Añadamos uno y veamos cómo funciona!
+
+00:00:14.606 --> 00:00:15.996 align:middle
+Empecemos por añadir Turbo.
+
+00:00:16.566 --> 00:00:23.046 align:middle
+En tu terminal, di composer require
+symfony/ux-turbo Ésta es la parte más jugosa
+
+00:00:23.456 --> 00:00:25.266 align:middle
+igual que cuando añadimos Stimulus,
+
+00:00:25.506 --> 00:00:29.756 align:middle
+no tienes que hacer absolutamente
+nada más para configurarlo.
+
+00:00:30.836 --> 00:00:32.106 align:middle
+Actualiza y...
+
+00:00:32.366 --> 00:00:33.776 align:middle
+¡simplemente funciona!
+
+00:00:34.226 --> 00:00:37.226 align:middle
+Turbo elimina la necesidad de
+actualizar toda la página.
+
+00:00:37.826 --> 00:00:41.446 align:middle
+Ve a tus herramientas de Red
+y haz clic en "Fetch/XHR".
+
+00:00:41.936 --> 00:00:44.906 align:middle
+Despejemos esto para poder verlo todo.
+
+00:00:45.566 --> 00:00:48.196 align:middle
+Perfecto. Entonces, si
+hacemos clic aquí arriba...
+
+00:00:48.416 --> 00:00:51.056 align:middle
+¡podrás ver que esto
+procede de una llamada AJAX!
+
+00:00:51.836 --> 00:00:54.876 align:middle
+Sí, ya no se actualiza la página.
+
+00:00:55.306 --> 00:00:57.536 align:middle
+Así que Turbo simplemente funciona.
+
+00:00:57.696 --> 00:01:01.056 align:middle
+No hay ningún sistema de compilación
+que se interponga, y eso es hermoso.
+
+00:01:01.706 --> 00:01:07.966 align:middle
+En la práctica, esto funciona porque se está cargando
+un nuevo archivo JavaScript llamado turbo_controller.js.
+
+00:01:08.276 --> 00:01:10.926 align:middle
+Filtra las llamadas de red a JavaScript...
+
+00:01:11.846 --> 00:01:13.966 align:middle
+y actualízalas, porque las he borrado.
+
+00:01:14.516 --> 00:01:15.056 align:middle
+¡Ya está!
+
+00:01:15.516 --> 00:01:23.856 align:middle
+Nuestra página carga turbo_controller.js y
+eso importa @hotwired/turbo, que inicia Turbo.
+
+00:01:24.726 --> 00:01:26.056 align:middle
+Abre importmap.php.
+
+00:01:26.056 --> 00:01:34.866 align:middle
+Cuando instalamos el paquete UX Turbo, su receta
+añadió esta nueva entrada @hotwired/turbo.
+
+00:01:35.416 --> 00:01:41.656 align:middle
+Este es un patrón muy común con
+los paquetes UX: si un paquete U X
+
+00:01:41.656 --> 00:01:47.956 align:middle
+depende de un paquete de terceros, su receta añadirá
+ese paquete a tu importmap automáticamente. El
+
+00:01:48.786 --> 00:01:51.856 align:middle
+resultado es que, cuando se
+hace referencia a ese paquete
+
+00:01:52.146 --> 00:01:56.646 align:middle
+-como import '@hotwired/turbo'
+-, simplemente funciona.
+
+00:01:57.156 --> 00:02:01.706 align:middle
+La verdadera pregunta es: ¿quién
+carga turbo_controller.js,
+
+00:02:02.526 --> 00:02:07.536 align:middle
+que vive en las profundidades
+del paquete PHP symfony/ux-turbo?
+
+00:02:08.116 --> 00:02:11.796 align:middle
+La respuesta es: el mismo truco
+que aprendimos hace un momento.
+
+00:02:12.426 --> 00:02:15.916 align:middle
+Busca controllers y abre ese
+archivo en una pestaña nueva.
+
+00:02:18.096 --> 00:02:21.096 align:middle
+Éste es el archivo dinámico que
+construye StimulusBundle. Resulta
+
+00:02:21.616 --> 00:02:26.736 align:middle
+que busca paquetes en nuestro
+directorio assets/controllers/,
+
+00:02:27.176 --> 00:02:32.596 align:middle
+que son estos dos, y lee el
+archivo assets/controllers.json.
+
+00:02:33.466 --> 00:02:37.516 align:middle
+Cuando instalamos UX Turbo,
+añadió esta nueva sección aquí,
+
+00:02:37.876 --> 00:02:40.126 align:middle
+que es donde activamos los
+distintos controladores.
+
+00:02:40.466 --> 00:02:44.036 align:middle
+Activó uno llamado turbo-core con "activado":
+
+00:02:44.036 --> 00:02:48.496 align:middle
+true y añadió otro desactivado
+con "enabled": false.
+
+00:02:48.816 --> 00:02:53.836 align:middle
+Así que cuando se construye este archivo,
+analiza el archivo assets/controllers.json,
+
+00:02:54.046 --> 00:02:57.676 align:middle
+encuentra los controladores que
+hemos activado y los añade aquí. El
+
+00:02:58.316 --> 00:03:02.936 align:middle
+resultado final es que importa ese archivo
+de controladores aquí y lo exporta para que
+
+00:03:03.206 --> 00:03:07.046 align:middle
+el archivo loader.js pueda
+registrarlo en Stimulus.
+
+00:03:07.726 --> 00:03:14.086 align:middle
+Así, cualquier controlador que haya en assets/controllers/
+o en este archivo se registrará automáticamente.
+
+00:03:14.886 --> 00:03:17.186 align:middle
+Vuelve a base.html.twig.
+
+00:03:18.256 --> 00:03:22.466 align:middle
+Cuando instalamos StimulusBundle,
+su receta venía con regalos,
+
+00:03:22.656 --> 00:03:25.566 align:middle
+uno de los cuales era este
+ux_controller_link_tags().
+
+00:03:26.096 --> 00:03:28.296 align:middle
+En este momento, eso no hace nada.
+
+00:03:28.826 --> 00:03:33.436 align:middle
+Sin embargo, algunos paquetes
+UX vienen con archivos CSS.
+
+00:03:34.066 --> 00:03:39.416 align:middle
+Los encontrarás bajo una clave llamada autoimport,
+que la receta añadirá bajo el controlador.
+
+00:03:40.056 --> 00:03:44.126 align:middle
+Este ux_controller_link_tags()
+encuentra todos los archivos CSS
+
+00:03:44.126 --> 00:03:48.016 align:middle
+de todos los controladores que
+tengas activados, y los emite.
+
+00:03:48.516 --> 00:03:49.676 align:middle
+Nada demasiado sofisticado.
+
+00:03:50.606 --> 00:03:55.606 align:middle
+A continuación: vamos a aprender una cosa
+más sobre Stimulus, que resulta ser una
+
+00:03:55.606 --> 00:03:59.506 align:middle
+de mis cosas favoritas: cómo hacer que
+nuestros controladores sean perezosos.
