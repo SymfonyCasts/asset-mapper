@@ -28,10 +28,14 @@ I cleared them. There we go! Our page loads `turbo_controller.js` and
 *that* imports `@hotwired/turbo`, which *starts* Turbo.
 
 Open up `importmap.php`. When we installed the UX Turbo package, its recipe
-*added* this new `@hotwired/turbo` entry. This is a *really* common pattern with
-UX packages: if a UX package depends on a third-party package, its recipe will
-add that package to your `importmap` *automatically*. The result is that, when
-that package is referenced - like `import '@hotwired/turbo'` - it just works.
+*added* this new `@hotwired/turbo` entry. 
+
+[[[ code('377be8f49c') ]]]
+
+This is a *really* common pattern with UX packages: if a UX package depends on 
+a third-party package, its recipe will add that package to your `importmap` *automatically*. 
+The result is that, when that package is referenced - like `import '@hotwired/turbo'` - it 
+just works.
 
 ## How UX Controllers are Loaded
 
@@ -47,6 +51,8 @@ controllers. It activated one called `turbo-core` with `"enabled": true` and add
 another deactivated one with `"enabled": false`. So when this file is built, it parses
 the `assets/controllers.json` file, finds the controllers that we've enabled, and
 adds them here.
+
+[[[ code('5c4957130d') ]]]
 
 The final result is that it imports that controller file here and exports it so that
 the `loader.js` file can register it in Stimulus. So any controllers in
