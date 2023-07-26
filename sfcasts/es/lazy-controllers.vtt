@@ -1,0 +1,128 @@
+WEBVTT
+
+00:00:01.056 --> 00:00:04.376 align:middle
+Esto se está liando: déjame
+cerrar unos cuantos archivos...
+
+00:00:04.756 --> 00:00:09.036 align:middle
+y luego abrir
+assets/controllers/goodbye-controller.js.
+
+00:00:10.136 --> 00:00:14.846 align:middle
+Imagina, por un momento, que
+este controlador es enorme.
+
+00:00:15.236 --> 00:00:21.346 align:middle
+O, más probablemente, que importa un gran
+paquete de terceros como d3 para gráficos.
+
+00:00:21.616 --> 00:00:25.856 align:middle
+Pero, sólo vamos a utilizar este
+controlador en algunas páginas.
+
+00:00:26.386 --> 00:00:27.216 align:middle
+Esto es lo que pasa. Para
+
+00:00:27.676 --> 00:00:30.496 align:middle
+registrar tus controladores con Stimulus,
+
+00:00:30.716 --> 00:00:33.306 align:middle
+todos estos archivos se
+descargan inmediatamente.
+
+00:00:34.016 --> 00:00:39.006 align:middle
+Así que se carga la página, se inicia
+Stimulus , se descargan todos estos archivos
+
+00:00:39.356 --> 00:00:42.666 align:middle
+y también se descargan todos
+los archivos que importan.
+
+00:00:43.296 --> 00:00:49.266 align:middle
+Eso suele estar bien, pero si estás importando
+algo grande, puede ser un desperdicio.
+
+00:00:50.026 --> 00:00:56.376 align:middle
+Para solucionarlo, encima de la clase, puedes añadir
+una sintaxis muy especial: /* stimulusFetch: 'lazy' */.
+
+00:00:57.156 --> 00:00:59.346 align:middle
+Esto funciona gracias a StimulusBundle.
+
+00:00:59.776 --> 00:01:06.556 align:middle
+Cuando detecta esto, le dice a Stimulus que se
+contenga y no descargue este archivo JavaScript
+
+00:01:06.806 --> 00:01:12.536 align:middle
+ni nada de lo que importe hasta que haya un
+elemento que coincida con esto en la página.
+
+00:01:12.976 --> 00:01:20.276 align:middle
+Observa. Antes de hacer ese cambio, si
+buscábamos "adiós", se cargaba ese controlador,
+
+00:01:20.456 --> 00:01:22.326 align:middle
+aunque no se utilizara en esta página.
+
+00:01:22.886 --> 00:01:26.836 align:middle
+Pero ahora, actualiza y busca "adiós".
+
+00:01:27.596 --> 00:01:29.276 align:middle
+¡No está ahí!
+
+00:01:30.076 --> 00:01:33.096 align:middle
+Inspecciona el elemento
+data-controller="hello".
+
+00:01:33.856 --> 00:01:36.976 align:middle
+Cámbialo por goodbye y...
+
+00:01:37.586 --> 00:01:39.626 align:middle
+¡boom! ¡Funciona!
+
+00:01:40.066 --> 00:01:43.626 align:middle
+Puedes ver que se ha activado ( eso es
+lo que hace nuestro Goodbye controller!
+
+00:01:43.626 --> 00:01:48.026 align:middle
+), y si miramos en la pestaña
+Red, ahora se ha descargado.
+
+00:01:48.416 --> 00:01:49.796 align:middle
+Me encanta esta función.
+
+00:01:50.496 --> 00:01:53.156 align:middle
+Esto también se puede hacer
+para paquetes de terceros.
+
+00:01:53.476 --> 00:01:55.936 align:middle
+Si miras en assets/controllers.json...
+
+00:01:56.156 --> 00:02:01.896 align:middle
+Turbo no es un buen ejemplo de esto, pero si
+dijéramos "fetch": "lazy" en cualquiera de ellos,
+
+00:02:02.286 --> 00:02:04.896 align:middle
+tendrían el mismo comportamiento
+que acabamos de ver.
+
+00:02:05.696 --> 00:02:06.166 align:middle
+¡Ya está!
+
+00:02:06.466 --> 00:02:08.076 align:middle
+¡El capítulo más fácil!
+
+00:02:08.516 --> 00:02:13.576 align:middle
+Utilízalo para aligerar tu página inicial si
+tienes algunos controladores Stimulus pesados
+
+00:02:13.676 --> 00:02:15.476 align:middle
+que sólo se utilizan en determinadas páginas.
+
+00:02:16.506 --> 00:02:23.546 align:middle
+Siguiente: a veces, suspiro profundo, los dioses de la
+tecnología nos fruncen el ceño y las cosas no funcionan.
+
+00:02:24.346 --> 00:02:27.686 align:middle
+Aprendamos algunos consejos para
+ayudar a depurar cuando eso ocurra.
