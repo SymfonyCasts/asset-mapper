@@ -13,6 +13,8 @@ ok, but if you're importing something *big*, that can be wasteful.
 To fix that, above the class, you can add a very special syntax -
 `/* stimulusFetch: 'lazy' */`.
 
+[[[ code('3b03f096b8') ]]]
+
 This works thanks to StimulusBundle. When it spots this, it tells Stimulus to
 hold its horses and *not* download this JavaScript file or anything it imports
 *until* an element that matches this is on the page.
@@ -28,6 +30,8 @@ This can also be done for third-party packages. If you look in
 `assets/controllers.json`... Turbo isn't a very good example of this, but if we
 said `"fetch": "lazy"` on any of these, they would have the *same* behavior that
 we just saw.
+
+[[[ code('b292bac1cf') ]]]
 
 That's it! Easiest chapter *ever*! Use this to keep your initial page lightweight
 if you have some heavy Stimulus controllers that are only used on certain page.
