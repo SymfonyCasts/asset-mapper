@@ -1,0 +1,275 @@
+WEBVTT
+
+00:00:01.086 --> 00:00:02.836 align:middle
+A veces las cosas no funcionan.
+
+00:00:03.186 --> 00:00:07.696 align:middle
+Pero, con AssetMapper, hay algunos signos
+reveladores cuando las cosas van mal.
+
+00:00:08.136 --> 00:00:10.796 align:middle
+Veamos algunas de las formas más
+comunes en que las cosas pueden...
+
+00:00:10.986 --> 00:00:11.526 align:middle
+ponerse raras.
+
+00:00:12.146 --> 00:00:17.136 align:middle
+Una de las formas más rápidas de estropear las
+cosas es en /templates/vinyl/homepage.html.twig:
+
+00:00:17.786 --> 00:00:20.936 align:middle
+utilizar la función asset()
+y pasar una ruta no válida.
+
+00:00:21.896 --> 00:00:25.496 align:middle
+Recuerda que en assets/images/,
+tenemos penguin.png.
+
+00:00:25.886 --> 00:00:31.566 align:middle
+Por tanto, images/penguin.png es
+su "ruta lógica" en AssetMapper.
+
+00:00:32.246 --> 00:00:35.726 align:middle
+Digamos images/, pero luego duck.png.
+
+00:00:36.456 --> 00:00:38.746 align:middle
+Obviamente, ésta no es la ruta correcta...
+
+00:00:38.746 --> 00:00:39.906 align:middle
+ni siquiera el correcto.
+
+00:00:40.286 --> 00:00:44.066 align:middle
+Así que no es de extrañar que, en la
+página de inicio, obtengamos un 404.
+
+00:00:44.756 --> 00:00:50.816 align:middle
+La clave de este 404, si nos fijamos en la
+consola, es su ruta de aspecto sospechoso.
+
+00:00:51.916 --> 00:00:55.626 align:middle
+Fíjate bien: ¡no hay versión
+en el nombre del archivo!
+
+00:00:56.186 --> 00:00:59.596 align:middle
+Esto nos dice que esta ruta
+no se encontró en ninguno
+
+00:00:59.596 --> 00:01:04.166 align:middle
+de los directorios de AssetMapper:
+es una ruta lógica no válida.
+
+00:01:04.686 --> 00:01:09.626 align:middle
+Por tanto, AssetMapper la ignoró y
+devolvió el nombre de archivo sin versionar.
+
+00:01:10.356 --> 00:01:14.546 align:middle
+Para ayudarte a visualizar las rutas lógicas
+válidas, recuerda que puedes ejecutar:
+
+00:01:14.546 --> 00:01:20.086 align:middle
+php bin/console debug:asset
+Aquí arriba, esto es todo lo
+
+00:01:20.086 --> 00:01:22.526 align:middle
+que puedes pasar a la función asset().
+
+00:01:23.086 --> 00:01:25.796 align:middle
+Y aquí está images/penguin.png.
+
+00:01:26.486 --> 00:01:29.876 align:middle
+Si ponemos aquí
+images/penguin.png en su lugar...
+
+00:01:30.896 --> 00:01:32.116 align:middle
+ahora funciona.
+
+00:01:32.686 --> 00:01:35.896 align:middle
+La clave que hay que buscar es el hash
+de la versión en el nombre del archivo.
+
+00:01:36.276 --> 00:01:39.566 align:middle
+Si no está ahí, AssetMapper
+no ha podido encontrar tu ruta.
+
+00:01:40.406 --> 00:01:43.246 align:middle
+Otro error común es
+estropear una importación.
+
+00:01:43.666 --> 00:01:49.486 align:middle
+Como... quizás en styles/app.css, escribimos
+mal una parte de esta imagen url().
+
+00:01:49.976 --> 00:01:56.436 align:middle
+O, en app.js, al importar vinyl.js,
+olvidamos el .js al final.
+
+00:01:57.046 --> 00:02:00.766 align:middle
+¡Accidentes como éste nos dan el
+mismo resultado que el primer error!
+
+00:02:01.186 --> 00:02:03.936 align:middle
+Cuando actualizamos, obtenemos un 404.
+
+00:02:04.546 --> 00:02:05.736 align:middle
+Puedes verlo aquí.
+
+00:02:06.346 --> 00:02:10.666 align:middle
+Pero de nuevo, la clave es que
+falta el hash de la versión.
+
+00:02:11.186 --> 00:02:16.476 align:middle
+Eso es señal de que no se pudo encontrar la ruta,
+por lo que no pudo ser manejada por AssetMapper.
+
+00:02:17.216 --> 00:02:20.076 align:middle
+En este caso, la ruta no
+válida se encuentra en app.js.
+
+00:02:20.076 --> 00:02:26.896 align:middle
+Cuando estamos dentro de una plantilla y utilizamos la
+función asset(), pasamos la ruta lógica a un archivo.
+
+00:02:27.646 --> 00:02:31.086 align:middle
+Pero si estamos dentro de app.js o app.css,
+
+00:02:31.306 --> 00:02:35.036 align:middle
+en lugar de la ruta lógica,
+utilizamos la ruta relativa.
+
+00:02:35.546 --> 00:02:37.096 align:middle
+Esto es por diseño.
+
+00:02:37.696 --> 00:02:42.066 align:middle
+Conseguimos codificar dentro de estos
+archivos como si AssetMapper no existiera.
+
+00:02:42.686 --> 00:02:48.356 align:middle
+No necesitamos pensar en rutas lógicas, sólo
+pensamos: ¿Qué ruta relativa utilizaría
+
+00:02:48.646 --> 00:02:52.766 align:middle
+si todos estos archivos se sirvieran
+directamente a mi navegador?
+
+00:02:53.636 --> 00:02:58.536 align:middle
+En cualquier caso, si falta el hash de
+la versión, tenemos una ruta no válida,
+
+00:02:59.226 --> 00:03:02.486 align:middle
+que podría ser una ruta lógica
+no válida en una plantilla
+
+00:03:02.906 --> 00:03:06.896 align:middle
+o una ruta relativa no válida en
+alguna importación en algún lugar. Por
+
+00:03:07.716 --> 00:03:11.326 align:middle
+cierto, hay una forma casi oculta de ver
+
+00:03:11.326 --> 00:03:14.776 align:middle
+si aparece alguna importación no
+válida en algún lugar de tu código.
+
+00:03:15.516 --> 00:03:21.016 align:middle
+Primero, Ejecuta: php bin/console cache:clear
+Eso limpia la caché de Symfony, por supuesto,
+
+00:03:21.356 --> 00:03:25.166 align:middle
+pero también limpia una
+caché interna en AssetMapper.
+
+00:03:25.896 --> 00:03:31.186 align:middle
+Ahora, cuando ejecutemos php bin/console
+debug:asset , reconstruirá internamente la caché
+
+00:03:31.236 --> 00:03:33.666 align:middle
+de todos esos activos.
+
+00:03:34.386 --> 00:03:39.866 align:middle
+Cuando lo hace, analiza nuestros archivos e
+informa de cualquier importación que falte.
+
+00:03:40.336 --> 00:03:43.826 align:middle
+¿Lo ves? ADVERTENCIA No se puede
+encontrar el activo ./lib/vinyl
+
+00:03:43.826 --> 00:03:47.016 align:middle
+importado de assets/app.js. Y
+
+00:03:47.016 --> 00:03:50.886 align:middle
+en este caso, incluso recibimos
+un mensaje adicional: Prueba a
+
+00:03:51.326 --> 00:03:55.166 align:middle
+añadir ".js" al final de la
+importación Buena idea. Si
+
+00:03:55.866 --> 00:03:57.686 align:middle
+volvemos a añadir ese .js... las cosas
+
+00:03:59.386 --> 00:04:00.756 align:middle
+vuelven a funcionar. La
+
+00:04:01.636 --> 00:04:05.606 align:middle
+última forma habitual de liar las cosas
+es utilizar una importación desnuda -una
+
+00:04:06.076 --> 00:04:09.326 align:middle
+importación que no empiece por ./ o
+
+00:04:09.326 --> 00:04:13.086 align:middle
+../ - para algo que no aparezca
+en tu importmap. Aquí, la
+
+00:04:13.876 --> 00:04:17.666 align:middle
+intención es utilizar la
+biblioteca bootstrap... pero no
+
+00:04:18.166 --> 00:04:20.376 align:middle
+la tenemos en nuestro
+importmap. El error exacto
+
+00:04:21.146 --> 00:04:25.156 align:middle
+variará en función de tu navegador,
+pero en mi caso dice Fallo al
+
+00:04:25.486 --> 00:04:28.386 align:middle
+resolver el especificador de módulo
+"bootstrap". Las referencias relativas
+
+00:04:28.736 --> 00:04:33.086 align:middle
+deben empezar por "/", "./" o "../".
+
+00:04:33.176 --> 00:04:33.316 align:middle
+Traducción: Si
+
+00:04:34.386 --> 00:04:36.286 align:middle
+estás intentando hacer referencia
+
+00:04:36.686 --> 00:04:40.706 align:middle
+a una ruta relativa, te has
+olvidado de la parte ./ o ../,
+
+00:04:40.856 --> 00:04:43.296 align:middle
+¡gilipollas! Pero si estás intentando
+
+00:04:44.126 --> 00:04:48.646 align:middle
+importar un paquete, ¡te has olvidado de añadirlo a tu
+mapa de importación! La solución suele ser ejecutar:
+
+00:04:49.356 --> 00:04:55.126 align:middle
+php bin/console importmap:require para añadir
+ese paquete. Lo siguiente : ¿qué pasa si
+
+00:04:56.076 --> 00:05:01.166 align:middle
+tienes un montón de CSS o JavaScript que
+sólo quieres cargar en una única página o
+
+00:05:01.166 --> 00:05:05.666 align:middle
+sección de tu sitio, como una sección de administración?
+¿Cómo podemos organizar las cosas para no
+
+00:05:06.256 --> 00:05:11.126 align:middle
+tener que cargar todo ese
+código en cada página?
