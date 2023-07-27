@@ -12,6 +12,8 @@ an invalid path. Remember, in `assets/images/`, we have `penguin.png`. So,
 `images/penguin.png` is its "logical path" in AssetMapper. Let's say `images/`,
 but then `duck.png`.
 
+[[[ code('74046520d7') ]]]
+
 This is obviously not the right path... or even the right animal. So no surprise that,
 on the homepage, we get a 404. The key thing about this 404, if we look at the
 console, is its suspicious-looking path. Look closely: there's no *version* in the
@@ -29,6 +31,8 @@ Up here, this is *everything* that you're allowed to pass to the `asset()` funct
 And *there's* `images/penguin.png`. If we put `images/penguin.png` here
 instead... now it *works*.
 
+[[[ code('a73371eb3b') ]]]
+
 The key thing to look for is the version hash in the filename. If it's not there,
 AssetMapper couldn't find your path.
 
@@ -37,6 +41,8 @@ AssetMapper couldn't find your path.
 Another common mistake is to mess up an *import*. Like... maybe in
 `styles/app.css`, we mistype a part of this image `url()`. Or, in `app.js`,
 when importing `vinyl.js`, we forget the `.js` at the end.
+
+[[[ code('07d535518f') ]]]
 
 Accidents like this give us the same result as the first mistake! When we refresh,
 we get a 404. You can see that here. But again, the *key* thing
