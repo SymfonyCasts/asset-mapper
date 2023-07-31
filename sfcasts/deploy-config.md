@@ -14,8 +14,7 @@ Fortunately, it warns us *and* tells us how to fix it.
 ## .platform.app.yaml and How Deploying Works
 
 Copy this `dependencies` line. Then, open `.platform.app.yaml`. *This* is the
-main deploy file: almost every deploy tweak you'll make will be made here. And,
-it comes with quite a lot of documentation!
+main deploy file: almost every deploy tweak you'll make will be made here.
 
 There are two steps to the deploy process. The first is the `build` step where it's
 *building* your code: you can think of this as the step that prepares all the
