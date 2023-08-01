@@ -35,7 +35,7 @@ Here's how we can see it. Go to "Network" tools and select JavaScript. Select on
 of the files then go to "Headers". I'll make this a bit bigger. Okay,
 see this "Content-Encoding" response header? *That's* compression. This "br" stands
 for something called Brotli, which is more delicious than it sounds. Brotli is
-an advanced compression engine. The other common value is `gzip`. So all of our static
+an advanced compression format. The other common value is `gzip`. So all of our static
 files *are* already being compressed! We get that for *free* with Platform.sh,
 so we can check that item off our list. Check your deploy system or web server
 docs for details on how to do this in *your* situation.
