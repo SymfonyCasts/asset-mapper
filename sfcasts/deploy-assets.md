@@ -35,7 +35,7 @@ Or, another way to think about it is: if a command does *not* require a connecti
 to the database or any other running services, there's a good chance it's a "build"
 thing.
 
-***NOTE
+***TIP
 Keep your "deploy" step as fast as possible because the incoming requests are held until it finishes.
 You can find more information here: https://docs.platform.sh/overview/build-deploy.html#deploy-steps
 ***
