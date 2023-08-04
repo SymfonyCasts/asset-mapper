@@ -1,0 +1,264 @@
+WEBVTT
+
+00:00:01.066 --> 00:00:03.416 align:middle
+¿Cómo introducimos
+nuestros activos en el sitio?
+
+00:00:03.886 --> 00:00:07.796 align:middle
+Si "ves la fuente de la página",
+parece que las cosas funcionan.
+
+00:00:08.226 --> 00:00:10.216 align:middle
+Vemos el importmap y...
+
+00:00:10.216 --> 00:00:15.886 align:middle
+aquí abajo, estas rutas parecen correctas: incluso
+tienen la parte de la versión en sus nombres de archivo.
+
+00:00:15.886 --> 00:00:20.736 align:middle
+Por desgracia, todos estos
+archivos devuelven un 404.
+
+00:00:21.086 --> 00:00:28.836 align:middle
+Boo. En el entorno dev, cuando trabajamos
+localmente, estos archivos no existen físicamente.
+
+00:00:29.256 --> 00:00:36.196 align:middle
+Pero una escucha interna de Symfony intercepta
+la petición, encuentra el archivo y los sirve.
+
+00:00:37.026 --> 00:00:40.986 align:middle
+Pero en el entorno prod, ese
+sistema ni siquiera está activo.
+
+00:00:41.456 --> 00:00:43.426 align:middle
+Es demasiado lento para
+ejecutarse en producción...
+
+00:00:43.546 --> 00:00:45.166 align:middle
+así que todo se queda en 404.
+
+00:00:45.566 --> 00:00:46.136 align:middle
+¡Y no pasa nada!
+
+00:00:46.136 --> 00:00:50.386 align:middle
+Hace mucho tiempo, conocimos el
+comando para solucionar esto:
+
+00:00:50.386 --> 00:00:57.586 align:middle
+php bin/console asset-map:compile El trabajo de
+este comando es sencillo: coge todos los activos
+
+00:00:57.586 --> 00:01:02.476 align:middle
+que AssetMapper conoce y los mueve
+al directorio public/assets/.
+
+00:01:03.186 --> 00:01:08.146 align:middle
+No es un comando que necesites ejecutar localmente,
+pero es algo que necesitas ejecutar cuando despliegues.
+
+00:01:08.956 --> 00:01:14.246 align:middle
+Copia esto, dirígete a
+.platform.app.yaml, y baja al paso build.
+
+00:01:15.056 --> 00:01:16.176 align:middle
+¡Esto está muy bien!
+
+00:01:16.646 --> 00:01:22.976 align:middle
+Vamos a dejar que Symfony haga lo suyo en build,
+y después, añadiremos nuestras propias cosas.
+
+00:01:22.976 --> 00:01:26.866 align:middle
+Justo aquí, añade php
+bin/console asset-map:compile.
+
+00:01:27.646 --> 00:01:29.206 align:middle
+¡Con eso debería bastar!
+
+00:01:29.956 --> 00:01:33.126 align:middle
+¿Por qué ejecutamos esto durante
+build y no durante deploy ?
+
+00:01:33.906 --> 00:01:40.746 align:middle
+Como regla general, si el trabajo de un comando es
+"preparar" archivos, debería estar en el paso build.
+
+00:01:41.286 --> 00:01:46.576 align:middle
+O, otra forma de pensarlo es: si un
+comando no requiere una conexión
+
+00:01:46.576 --> 00:01:52.526 align:middle
+a la base de datos ni a ningún otro servicio en ejecución,
+hay muchas probabilidades de que sea algo de "construcción".
+
+00:01:53.386 --> 00:01:58.736 align:middle
+Vuelve aquí y ejecuta: git add -p
+Ese espacio en blanco me molesta...
+
+00:01:58.796 --> 00:02:01.636 align:middle
+así que lo arreglaré y
+preservaré mi cordura.
+
+00:02:02.416 --> 00:02:05.606 align:middle
+Luego ejecuta git commit -m
+con un mensaje ele gante.
+
+00:02:06.786 --> 00:02:07.776 align:middle
+Ya sabes lo que sigue.
+
+00:02:08.126 --> 00:02:10.756 align:middle
+¡Pégale un puñetazo! symfony deploy
+Adelantémonos a la parte buena.
+
+00:02:13.046 --> 00:02:13.876 align:middle
+¡Ya está aquí!
+
+00:02:13.986 --> 00:02:15.546 align:middle
+¡Lo vemos ejecutando el comando! Compilando
+
+00:02:15.906 --> 00:02:23.366 align:middle
+activos en /app/public/assets/ Compilando 16
+activos También escribe algunos otros archivos
+
+00:02:23.366 --> 00:02:28.666 align:middle
+dentro del directorio public/assets/:
+manifest.json y importmap.json.
+
+00:02:29.346 --> 00:02:34.566 align:middle
+Ayudan a Symfony a volcar el importmap y
+otras cosas en la página aún más rápido.
+
+00:02:35.776 --> 00:02:37.156 align:middle
+Y... ¡listo!
+
+00:02:37.776 --> 00:02:40.706 align:middle
+Vuelve a girar, actualiza y...
+
+00:02:41.336 --> 00:02:43.146 align:middle
+¿¡todavía se ve mal!?
+
+00:02:43.726 --> 00:02:46.676 align:middle
+Ah, ¡pero las cosas no
+están tan mal como crees!
+
+00:02:47.166 --> 00:02:49.206 align:middle
+Dirígete a la página de
+inicio y abre tu Consola.
+
+00:02:51.046 --> 00:02:53.626 align:middle
+¡Ejecuta nuestro JavaScript!
+
+00:02:54.016 --> 00:02:55.836 align:middle
+¡Vemos el console.log()!
+
+00:02:56.426 --> 00:02:58.406 align:middle
+Así que JavaScript, ¡comprobado!
+
+00:02:58.826 --> 00:03:01.176 align:middle
+CSS... no tanto.
+
+00:03:01.666 --> 00:03:05.116 align:middle
+Todavía tenemos un 404 en app.tailwind.css.
+
+00:03:05.956 --> 00:03:12.616 align:middle
+Recuerda: cuando veas un 404 a un nombre de archivo
+que no incluye una parte de versión, como aquí,
+
+00:03:13.096 --> 00:03:15.566 align:middle
+significa que AssetMapper no
+puede encontrar ese archivo.
+
+00:03:16.216 --> 00:03:17.726 align:middle
+¿Puedes detectar el problema?
+
+00:03:18.446 --> 00:03:22.756 align:middle
+Este app.tailwind.css es un
+archivo que estamos construyendo...
+
+00:03:23.166 --> 00:03:25.926 align:middle
+¡y no está confirmado en el repositorio!
+
+00:03:26.986 --> 00:03:30.566 align:middle
+Detendré este comando y lo volveré a
+ejecutar para que podamos ver los detalles.
+
+00:03:31.386 --> 00:03:37.016 align:middle
+Sí, estamos construyendo el archivo
+app.tailwind.css, ignor ándolo de
+
+00:03:37.416 --> 00:03:44.496 align:middle
+Git, y como Platform.sh se despliega utilizando
+nuestros archivos de Git, ese archivo simplemente falta.
+
+00:03:45.256 --> 00:03:46.486 align:middle
+No pasa nada.
+
+00:03:46.886 --> 00:03:50.086 align:middle
+Esto es sólo otra cosa que tenemos
+que añadir a nuestro paso build...
+
+00:03:50.446 --> 00:03:54.666 align:middle
+antes de ejecutar asset-map:compile
+para que el archivo esté disponible.
+
+00:03:55.416 --> 00:03:56.756 align:middle
+Voy a pegar el código correspondiente.
+
+00:03:57.316 --> 00:04:00.866 align:middle
+Se trata básicamente del mismo código que
+ejecutamos antes para configurar las cosas localmente,
+
+00:04:01.186 --> 00:04:04.346 align:middle
+salvo que estamos utilizando
+la compilación de linux-x64.
+
+00:04:05.086 --> 00:04:09.736 align:middle
+La descargaremos, la moveremos al
+directorio /bin (en realidad no importa
+
+00:04:09.736 --> 00:04:14.476 align:middle
+dónde vaya), la haremos ejecutable
+y ejecutaremos el mismo comando
+
+00:04:14.696 --> 00:04:19.476 align:middle
+para que el archivo de salida esté allí
+cuando se ejecute asset-map:compile.
+
+00:04:20.286 --> 00:04:24.256 align:middle
+Ah, y no te olvides del TailwindBundle,
+que facilita un poco el uso de Tailwind,
+
+00:04:24.546 --> 00:04:27.496 align:middle
+incluido este paso de despliegue.
+
+00:04:28.226 --> 00:04:30.716 align:middle
+De vuelta aquí, confirmemos el
+nuevo cambio de configuración ....
+
+00:04:32.716 --> 00:04:39.666 align:middle
+y despleguemos de nuevo: Incluso mientras
+se despliega, podemos ver que esto funciona.
+
+00:04:40.456 --> 00:04:44.066 align:middle
+La última vez había 16
+archivos, ahora hay 17.
+
+00:04:45.386 --> 00:04:49.366 align:middle
+Cuando termine, gira, actualiza y...
+
+00:04:49.786 --> 00:04:51.306 align:middle
+¡está vivo!
+
+00:04:52.066 --> 00:04:53.746 align:middle
+Todas las páginas tienen CSS.
+
+00:04:53.746 --> 00:04:55.146 align:middle
+¡Me encanta!
+
+00:04:56.086 --> 00:04:59.906 align:middle
+Ahora que estamos en producción, hablemos
+de las cosas que tenemos que comprobar
+
+00:04:59.986 --> 00:05:03.256 align:middle
+para asegurarnos de que nuestros
+activos se sirven rapidísimamente.
