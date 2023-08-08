@@ -15,9 +15,13 @@ If we scroll down, we can see where our problem areas are. The first
 is "Eliminate render-blocking resources", which points to our font file.
 A lot of what we're going to talk about has nothing to do with AssetMapper: it's
 just frontend performance in general. If you open `templates/base.html.twig`, we
-have a `<link>` tag that points to this font file. When your site sees a
-`<link rel="stylesheet"> tag, it downloads it before it renders the page. So it
-basically *freezes* the rendering of the page until the download finishes.
+have a `<link>` tag that points to this font file. 
+
+[[[ code('0ed18657ba') ]]]
+
+When your site sees a `<link rel="stylesheet"> tag, it downloads it before it 
+renders the page. So it basically *freezes* the rendering of the page until 
+the download finishes.
 
 But this is interesting. Open that file... and let's get a non-minified version.
 It has a bunch of potential font faces. Here's how this works: our browser
@@ -52,6 +56,8 @@ Then delete this CSS file entirely, go to `assets/styles/app.css`, and paste.
 These aren't real URLs... so go copy the URL... paste, take off the `index.css`...
 and that should be fine. Copy the URL again... and do the same thing down here.
 
+[[[ code('55741db20b') ]]]
+
 *Perfect*. This *is* adding some complexity to our code for only a small gain, so I'd
 say this is a lower priority. We have basically the same amount of CSS as before,
 but we've eliminated a small, unnecessary blocking resource.
@@ -62,6 +68,8 @@ have `defer` or `async` on it, this will *also* block the rendering of the page.
 If we want, we can add `defer` to this, which says:
 
 > Start download this immediately, but don't block the page while it's finishing.
+
+[[[ code('4bd1fba315') ]]]
 
 Because this is for FontAwesome fonts, the worst-case scenario is that the page loads
 and then our font icons show up just a moment later.
