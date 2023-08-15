@@ -1,0 +1,198 @@
+WEBVTT
+
+00:00:01.056 --> 00:00:05.456 align:middle
+Ahora tenemos CSS -que estamos construyendo
+con Tailwind-, tenemos JavaScript,
+
+00:00:05.756 --> 00:00:10.976 align:middle
+estamos incorporando JavaScript de terceros y
+estamos utilizando sintaxis JavaScript moderna.
+
+00:00:11.596 --> 00:00:14.226 align:middle
+Nuestra aplicación tiene todo
+lo que tiene una aplicación real
+
+00:00:14.746 --> 00:00:19.776 align:middle
+Claro, es un poco pequeña, pero
+estamos casi listos para desplegarla.
+
+00:00:19.776 --> 00:00:25.266 align:middle
+Antes de hacerlo, hagamos una rápida auditoría
+de los activos que están dentro de AssetMapper.
+
+00:00:25.856 --> 00:00:32.406 align:middle
+Busca tu terminal y ejecuta: php bin/console debug:asset
+Esto enumera todas nuestras rutas de activos,
+
+00:00:32.556 --> 00:00:37.896 align:middle
+que incluyen nuestra ruta principal de
+activos - assets/ - más algunas de bundles
+
+00:00:38.056 --> 00:00:40.306 align:middle
+que han expuesto sus propios directorios.
+
+00:00:40.956 --> 00:00:45.096 align:middle
+A continuación se muestra una lista de todos
+los archivos que se expondrán públicamente.
+
+00:00:45.756 --> 00:00:48.466 align:middle
+Ejecutamos este comando para
+ver si hay algo en esta lista
+
+00:00:48.556 --> 00:00:50.926 align:middle
+que no queramos exponer públicamente.
+
+00:00:51.586 --> 00:00:55.766 align:middle
+Por ejemplo, este archivo
+assets/styles/app.css.
+
+00:00:56.486 --> 00:01:01.766 align:middle
+Esto es realmente un archivo fuente: no está pensado
+para que el usuario lo descargue directamente.
+
+00:01:02.416 --> 00:01:06.436 align:middle
+Estamos utilizando Tailwind para
+incorporarlo a app.tailwind.css,
+
+00:01:06.436 --> 00:01:09.166 align:middle
+y eso es lo que el usuario descargará.
+
+00:01:09.956 --> 00:01:14.196 align:middle
+No es gran cosa que esto esté disponible
+públicamente, pero es un buen ejemplo
+
+00:01:14.196 --> 00:01:17.886 align:middle
+de cómo podemos ocultar archivos
+"fuente" que no queremos exponer.
+
+00:01:18.726 --> 00:01:25.476 align:middle
+Empieza ejecutando php bin/console config:dump
+framework asset_mapper Estamos pidiendo al sistema
+
+00:01:25.476 --> 00:01:28.656 align:middle
+que nos dé una configuración
+de ejemplo para todo lo
+
+00:01:28.656 --> 00:01:31.766 align:middle
+que se puede configurar en
+framework, asset_mapper.
+
+00:01:32.586 --> 00:01:34.576 align:middle
+Cuando instalamos AssetMapper por primera vez,
+
+00:01:34.916 --> 00:01:39.526 align:middle
+su receta nos dio un archivo
+config/packages/asset_mapper.yaml.
+
+00:01:40.186 --> 00:01:45.166 align:middle
+Aquí tenemos framework, asset_mapper,
+y una clave llamada paths.
+
+00:01:45.866 --> 00:01:47.456 align:middle
+Cuando ejecutamos este comando...
+
+00:01:48.086 --> 00:01:51.926 align:middle
+efectivamente, aquí arriba aparece paths.
+
+00:01:52.816 --> 00:01:56.196 align:middle
+Debajo, tenemos otras cosas interesantes.
+
+00:01:56.816 --> 00:01:59.446 align:middle
+La primera es excluded_patterns.
+
+00:01:59.896 --> 00:02:03.976 align:middle
+Así es como vamos a ocultar
+determinados archivos o rutas,
+
+00:02:04.426 --> 00:02:06.276 align:middle
+y hablaremos más de ello en un minuto.
+
+00:02:07.116 --> 00:02:09.666 align:middle
+También puedes controlar el public_prefix,
+
+00:02:09.936 --> 00:02:13.696 align:middle
+que es a donde salen tus archivos
+en el directorio public/.
+
+00:02:14.556 --> 00:02:17.376 align:middle
+Este extensions no es súper importante...
+
+00:02:17.736 --> 00:02:19.876 align:middle
+es sobre todo para el entorno dev...
+
+00:02:20.226 --> 00:02:24.316 align:middle
+y hay algunas otras cosas
+como tu importmap_path,
+
+00:02:24.316 --> 00:02:26.176 align:middle
+e incluso algunos atributos que puedes poner
+
+00:02:26.176 --> 00:02:29.666 align:middle
+en la etiqueta <script> que es
+volcada por la función importmap().
+
+00:02:30.616 --> 00:02:32.476 align:middle
+Así que hay algunas cosas buenas aquí...
+
+00:02:32.626 --> 00:02:37.396 align:middle
+pero no tendrás que preocuparte de la
+mayoría de ellas, aparte de excluded_patterns.
+
+00:02:38.156 --> 00:02:44.906 align:middle
+Copia esa clave, gira hasta asset_mapper.yaml,
+y en el mismo nivel que paths, pega.
+
+00:02:45.626 --> 00:02:49.046 align:middle
+Queremos excluir assets/styles/app.css.
+
+00:02:49.716 --> 00:02:51.936 align:middle
+Pero esto no es del todo correcto.
+
+00:02:52.526 --> 00:02:55.856 align:middle
+Para comprobarlo, vuelve a ejecutar
+php bin/console debug:asset .
+
+00:02:56.446 --> 00:02:57.616 align:middle
+Si miras hacia arriba...
+
+00:02:58.376 --> 00:03:02.396 align:middle
+assets/styles/app.css ¡todavía está ahí!
+
+00:03:03.186 --> 00:03:07.146 align:middle
+Eso es porque excluded_patterns
+debe ser un glob.
+
+00:03:07.146 --> 00:03:13.586 align:middle
+En otras palabras, cámbialo
+por */assets/styles/app.css...
+
+00:03:14.276 --> 00:03:15.956 align:middle
+y rodéalo de comillas.
+
+00:03:16.726 --> 00:03:25.126 align:middle
+Esto significa que se ignorará cualquier "ruta del
+sistema de archivos" que termine en /assets/styles/app.css.
+
+00:03:25.806 --> 00:03:27.466 align:middle
+Y cuando volvamos a probar el comando...
+
+00:03:28.456 --> 00:03:30.826 align:middle
+Impresionante. Esto es lo que queremos ver.
+
+00:03:31.256 --> 00:03:35.616 align:middle
+Todos los archivos de aquí se volcarán
+en el directorio /public/assets. El
+
+00:03:36.446 --> 00:03:42.426 align:middle
+hecho de que assets/styles/app.css
+no esté aquí significa
+
+00:03:42.426 --> 00:03:45.296 align:middle
+que no se volcará en el directorio public/.
+
+00:03:46.156 --> 00:03:48.326 align:middle
+¡Creo que es hora de desplegar nuestro sitio!
+
+00:03:48.956 --> 00:03:52.946 align:middle
+Vamos a configurar un despliegue
+a continuación en plataforma.sh.
