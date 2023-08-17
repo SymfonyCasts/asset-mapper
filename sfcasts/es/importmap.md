@@ -61,7 +61,7 @@ Esta vez... si decimos `import Vinyl` y pulsamos "tabulador", ¡bien! Obtenemos 
 
 Pero la diversión no termina: hay algo interesante que ocurre entre bastidores. Haz clic en este `console.log()`... como una forma fácil de ver el origen del archivo final `app.js`.
 
-Sí, su contenido es exactamente igual al del archivo original, incluido el`import from './lib/vinyl.js'`. Sólo hay un problema: ¡ese no es el nombre de archivo final de `vinyl.js`!
+Sí, su contenido es exactamente igual al del archivo original, incluido el`import from './lib/vinyl.js'`. Sólo hay un problema: ¡ese no es el nombre final del archivo `vinyl.js`!
 
 Ve a las herramientas de red, selecciona "JS" y busca "vinyl". Todos los archivos servidos por AssetMapper tienen una parte versionada en su nombre de archivo, y lo vemos para `vinyl.js`. Pero entonces... ¿cómo demonios lee nuestro navegador `./lib/vinyl.js` y sabe que debe descargar este nombre de archivo tan largo?
 
