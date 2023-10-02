@@ -1,0 +1,327 @@
+WEBVTT
+
+00:00:01.076 --> 00:00:03.586 align:middle
+Tengo una idea descabellada.
+
+00:00:04.056 --> 00:00:06.896 align:middle
+Despleguemos este sitio de verdad.
+
+00:00:07.526 --> 00:00:09.846 align:middle
+Puedes desplegar tu código como quieras...
+
+00:00:09.986 --> 00:00:11.866 align:middle
+utilizando cualquier servicio o servidor web.
+
+00:00:12.276 --> 00:00:14.226 align:middle
+No importa con AssetMapper.
+
+00:00:14.816 --> 00:00:20.546 align:middle
+El único requisito es que tu servidor web
+soporte HTTP/2 para que nuestros activos
+
+00:00:20.726 --> 00:00:26.076 align:middle
+-los archivos JavaScript y CSS- puedan
+descargarse en paralelo superrápido.
+
+00:00:26.746 --> 00:00:30.426 align:middle
+HTTP/2 es la razón por la
+que no es tan importante
+
+00:00:30.426 --> 00:00:34.786 align:middle
+que nuestros archivos no se combinen
+para minimizar las peticiones.
+
+00:00:34.786 --> 00:00:39.876 align:middle
+Todos los servidores web - nginx,
+Caddy, lo que sea - soportan HTTP/2.
+
+00:00:40.356 --> 00:00:43.876 align:middle
+O podrías añadir Cloudflare
+o un servicio similar delante
+
+00:00:43.876 --> 00:00:46.506 align:middle
+de tu sitio que te proporciona esto gratis...
+
+00:00:46.826 --> 00:00:48.946 align:middle
+junto con otras ventajas.
+
+00:00:48.946 --> 00:00:54.446 align:middle
+De todos modos, vamos a desplegar con Platform.sh,
+que es una "Plataforma como Servicio".
+
+00:00:54.946 --> 00:00:58.736 align:middle
+Eso significa que podemos desplegarla simplemente
+creando unos cuantos archivos de configuración.
+
+00:00:59.246 --> 00:01:02.816 align:middle
+Y esta primera sección trata
+sobre cómo configurarlo.
+
+00:01:03.316 --> 00:01:07.736 align:middle
+Una vez que hayamos terminado, hablaremos de algunos
+aspectos específicos del despliegue con AssetMapper.
+
+00:01:07.736 --> 00:01:10.946 align:middle
+Así que, ¡empecemos!
+
+00:01:11.426 --> 00:01:15.166 align:middle
+Vamos a hacer la mayor parte de esto en la
+línea de comandos con el binario Symfony.
+
+00:01:15.846 --> 00:01:22.276 align:middle
+Empieza ejecutando: symfony project:init Esto
+arranca unos cuantos archivos platform.sh,
+
+00:01:22.276 --> 00:01:23.696 align:middle
+que puedes ver aquí.
+
+00:01:24.346 --> 00:01:30.736 align:middle
+.platform.app.yaml contiene instrucciones sobre
+cómo desplegar - como qué comandos ejecutar,
+
+00:01:30.786 --> 00:01:34.666 align:middle
+qué versión de PHP utilizar, la
+configuración del servidor web y más.
+
+00:01:34.666 --> 00:01:40.706 align:middle
+services.yaml es donde configuras los servicios
+que necesitas -como bases de datos, colas, etc.-
+
+00:01:41.306 --> 00:01:46.276 align:middle
+y routes.yaml configura tus dominios,
+y es un poco menos importante.
+
+00:01:46.856 --> 00:01:51.436 align:middle
+Ah, y también puedes añadir cualquier configuración
+personalizada de php.ini con este archivo.
+
+00:01:52.266 --> 00:01:54.236 align:middle
+He ido confirmando mis progresos
+a lo largo del proceso.
+
+00:01:54.566 --> 00:01:58.506 align:middle
+Así que cuando ejecuto git status
+sólo muestra estos nuevos archivos.
+
+00:01:59.126 --> 00:02:03.736 align:middle
+Vamos a confirmarlos y...
+
+00:02:04.116 --> 00:02:10.476 align:middle
+¡genial! Ahora que tenemos esos archivos locales,
+tenemos que llamar a la gente de platform. sh
+
+00:02:10.756 --> 00:02:13.686 align:middle
+y decirles que queremos
+crear un nuevo proyecto.
+
+00:02:14.156 --> 00:02:20.146 align:middle
+Lo haremos con: symfony cloud:project:create
+Ya tengo algunos proyectos
+
+00:02:20.146 --> 00:02:21.756 align:middle
+en Plataforma.sh....
+
+00:02:21.816 --> 00:02:24.696 align:middle
+lo que significa que ya
+tengo una organización...
+
+00:02:25.016 --> 00:02:27.946 align:middle
+y ya tiene mi tarjeta de crédito.
+
+00:02:27.946 --> 00:02:33.106 align:middle
+¡Ladrones! Si es la primera vez que haces esto,
+tendrás que seguir unos pasos adicionales.
+
+00:02:33.726 --> 00:02:38.216 align:middle
+Dale un título a tu proyecto, selecciona
+una región -yo estoy utilizando "eu-5"-
+
+00:02:38.216 --> 00:02:42.606 align:middle
+y luego te pregunta qué rama
+será tu entorno de producción.
+
+00:02:43.046 --> 00:02:45.316 align:middle
+Yo estoy utilizando la rama por defecto main.
+
+00:02:46.016 --> 00:02:51.236 align:middle
+A continuación, nos pregunta si queremos establecer
+"Mixed Vinyl" como remoto para este repositorio.
+
+00:02:51.816 --> 00:02:56.376 align:middle
+Esto es bastante guay porque
+expone cómo funciona platform.sh.
+
+00:02:56.906 --> 00:03:01.216 align:middle
+Para desplegar con platform.sh, en
+realidad empujamos nuestro repositorio git
+
+00:03:01.216 --> 00:03:04.526 align:middle
+a un repositorio remoto en sus servicios.
+
+00:03:04.986 --> 00:03:08.606 align:middle
+Ellos lo ven, cogen el código y lo despliegan
+
+00:03:09.386 --> 00:03:12.446 align:middle
+De todos modos, voy a decir "no", pero tú
+puedes decir "sí". Como voy a decir "no"
+
+00:03:13.046 --> 00:03:16.166 align:middle
+, me verás hacerlo manualmente
+
+00:03:16.166 --> 00:03:18.546 align:middle
+en un minuto - y te explicaré más sobre ello.
+
+00:03:18.546 --> 00:03:21.726 align:middle
+Por último, te pide que confirmes el precio.
+
+00:03:22.186 --> 00:03:27.646 align:middle
+Estos 12 USD al mes son la tarifa de desarrollador
+que puedes pagar para jugar con las cosas.
+
+00:03:27.646 --> 00:03:32.536 align:middle
+Será más cara cuando decidas poner
+tu sitio en producción de verdad.
+
+00:03:33.306 --> 00:03:39.376 align:middle
+Me encanta platform.sh por lo fácil que me
+hace la vida, pero hay opciones más baratas.
+
+00:03:40.056 --> 00:03:43.206 align:middle
+Tardarás uno o dos minutos en
+configurarlo todo entre bastidores.
+
+00:03:43.716 --> 00:03:45.206 align:middle
+Cuando termine...
+
+00:03:45.616 --> 00:03:50.236 align:middle
+¡ding! Obtenemos algo de información,
+incluido el nuevo ID del Proyecto.
+
+00:03:50.236 --> 00:03:56.006 align:middle
+Nota al margen: También hay
+una interfaz web en Platform.sh,
+
+00:03:56.356 --> 00:03:59.836 align:middle
+así que no todo tiene que hacerse
+a través de la línea de comandos.
+
+00:04:00.286 --> 00:04:03.366 align:middle
+Pero, ya sabes, los empollones como
+yo preferimos la línea de comandos.
+
+00:04:04.126 --> 00:04:05.376 align:middle
+Copia el ID del Proyecto. Llegados
+
+00:04:06.036 --> 00:04:10.636 align:middle
+a este punto, tenemos algunos archivos de
+configuración locales -como .platform.app.yaml -
+
+00:04:11.116 --> 00:04:14.946 align:middle
+y hemos creado un nuevo
+"proyecto" en plataforma.sh.
+
+00:04:15.586 --> 00:04:21.166 align:middle
+Pero los dos no están vinculados todavía:
+nuestro código local no sabe que "pertenece"
+
+00:04:21.166 --> 00:04:23.646 align:middle
+a este proyecto en plataforma.sh.
+
+00:04:24.426 --> 00:04:29.716 align:middle
+Para vincularlos, ejecuta symfony
+project:set-remote y pega el ID del proyecto.
+
+00:04:31.346 --> 00:04:34.096 align:middle
+¡Listo! ¿Listo para desplegar?
+
+00:04:34.456 --> 00:04:41.156 align:middle
+Hazlo con: symfony deploy Actualmente estamos en la
+rama "principal", por lo que se está desplegando en,
+
+00:04:41.356 --> 00:04:45.876 align:middle
+básicamente, nuestra máquina de
+"producción", lo que se llama un entorno.
+
+00:04:46.486 --> 00:04:51.376 align:middle
+Una de las partes más interesantes de platform.sh es que
+desplegarás tu rama main en el entorno de "producción"
+
+00:04:51.376 --> 00:04:55.666 align:middle
+, pero también puedes
+desplegar otras ramas git
+
+00:04:55.666 --> 00:05:01.736 align:middle
+en otros entornos platform.sh, en los que puedes
+pensar como otros servidores platform.sh. De
+
+00:05:02.466 --> 00:05:07.716 align:middle
+todos modos, como he mencionado, entre
+bastidores, este comando es sólo un atajo
+
+00:05:07.716 --> 00:05:13.606 align:middle
+para git push nuestra rama a un remoto
+git en los servidores platform.sh.
+
+00:05:14.236 --> 00:05:16.946 align:middle
+Y al hacerlo, ¡se inicia el despliegue!
+
+00:05:16.946 --> 00:05:20.566 align:middle
+Oooh, esto parece elegante y friki.
+
+00:05:20.926 --> 00:05:25.436 align:middle
+Aquí hay un montón de detalles, incluida una advertencia
+sobre el uso de una versión antigua de Composer.
+
+00:05:25.916 --> 00:05:27.186 align:middle
+Lo arreglaremos en un minuto.
+
+00:05:29.216 --> 00:05:35.206 align:middle
+Aquí abajo, vemos que se está ejecutando symfony
+composer install y realizando algunos otros pasos:
+
+00:05:35.586 --> 00:05:38.816 align:middle
+todas las cosas básicas que necesitas para
+desplegar cualquier aplicación Symfony.
+
+00:05:39.556 --> 00:05:44.436 align:middle
+En la parte inferior, nos da un certificado
+SSL, y si seguimos desplazándonos...
+
+00:05:45.126 --> 00:05:48.456 align:middle
+oooh, ¡tenemos un mensaje sobre
+un error en la base de datos!
+
+00:05:48.806 --> 00:05:51.286 align:middle
+Ignóralo por ahora porque...
+
+00:05:51.286 --> 00:05:54.796 align:middle
+cuando termina, ¡nos da una URL!
+
+00:05:55.526 --> 00:06:00.596 align:middle
+Como no hemos configurado ningún dominio
+para el sitio, nos da una URL temporal.
+
+00:06:01.436 --> 00:06:04.206 align:middle
+Cópiala, gírala y...
+
+00:06:05.516 --> 00:06:07.606 align:middle
+¡nuestro sitio está vivo!
+
+00:06:08.026 --> 00:06:10.046 align:middle
+No tiene ningún estilo...
+
+00:06:10.046 --> 00:06:14.936 align:middle
+ya que no hemos hablado de
+AssetMapper, ¡pero al menos funciona!
+
+00:06:15.486 --> 00:06:21.066 align:middle
+¿Pero cómo? ¿Cómo ha sabido ejecutar
+composer install y esas otras cosas?
+
+00:06:21.716 --> 00:06:25.206 align:middle
+¿Y la advertencia de Composer
+y el error de la base de datos?
+
+00:06:25.826 --> 00:06:27.936 align:middle
+Vamos a profundizar en
+todo eso a continuación.

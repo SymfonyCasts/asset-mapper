@@ -1,0 +1,339 @@
+WEBVTT
+
+00:00:01.136 --> 00:00:04.706 align:middle
+En lugar de decirte que el sitio
+es rápido, ¡vamos a demostrarlo!
+
+00:00:05.226 --> 00:00:10.066 align:middle
+En Chrome, hay una herramienta llamada "Lighthouse", que
+también puedes conseguir para algunos otros navegadores.
+
+00:00:10.776 --> 00:00:14.396 align:middle
+Ejecútala sólo para el rendimiento y
+selecciona "Analizar carga de página".
+
+00:00:15.056 --> 00:00:19.256 align:middle
+Esta es la mejor manera de ver si tienes algún
+problema de rendimiento en el frontend. Es
+
+00:00:19.856 --> 00:00:25.046 align:middle
+probable que nuestra puntuación sea bastante alta
+-simplemente porque nuestro sitio es pequeño y rápido-,
+
+00:00:25.326 --> 00:00:29.706 align:middle
+pero podemos utilizar el informe para
+detectar algunos posibles problemas.
+
+00:00:30.196 --> 00:00:31.416 align:middle
+Y... ¡sí!
+
+00:00:31.816 --> 00:00:34.896 align:middle
+Obtuvimos un 98 ¡sin sistema de construcción!
+
+00:00:35.056 --> 00:00:36.226 align:middle
+Es asombroso.
+
+00:00:36.656 --> 00:00:38.466 align:middle
+Pero podemos hacerlo aún mejor.
+
+00:00:39.206 --> 00:00:42.766 align:middle
+Si nos desplazamos hacia abajo, podemos ver
+dónde están nuestras áreas problemáticas.
+
+00:00:43.186 --> 00:00:48.166 align:middle
+La primera es "Eliminar recursos que bloquean la
+renderización", que apunta a nuestro archivo de fuentes.
+
+00:00:48.816 --> 00:00:52.896 align:middle
+Mucho de lo que vamos a hablar no
+tiene nada que ver con AssetMapper:
+
+00:00:53.256 --> 00:00:55.776 align:middle
+se trata simplemente del
+rendimiento del frontend en general.
+
+00:00:56.606 --> 00:01:02.506 align:middle
+Si abres templates/base.html.twig, tenemos una etiqueta
+<link> que apunta a este archivo de fuentes.
+
+00:01:03.286 --> 00:01:09.296 align:middle
+Cuando tu sitio ve una etiqueta `, la
+descarga antes de renderizar la página.
+
+00:01:09.646 --> 00:01:14.266 align:middle
+Así que básicamente congela el renderizado
+de la página hasta que finaliza la descarga.
+
+00:01:14.886 --> 00:01:15.996 align:middle
+Pero esto es interesante.
+
+00:01:16.536 --> 00:01:17.356 align:middle
+Abre ese archivo...
+
+00:01:18.116 --> 00:01:20.266 align:middle
+y veamos una versión no minificada.
+
+00:01:21.496 --> 00:01:24.026 align:middle
+Tiene un montón de posibles fuentes.
+
+00:01:24.516 --> 00:01:28.736 align:middle
+Así es como funciona: nuestro navegador
+descarga este archivo inmediatamente...
+
+00:01:29.206 --> 00:01:36.226 align:middle
+pero los propios archivos de fuentes no se descargarán
+hasta que y a menos que utilicemos esta fuente.
+
+00:01:36.926 --> 00:01:40.816 align:middle
+Además, font-display: swap le
+dice al navegador: Oye, está
+
+00:01:41.176 --> 00:01:44.846 align:middle
+bien renderizar un texto que se
+supone que utiliza esta fuente,
+
+00:01:45.096 --> 00:01:47.226 align:middle
+aunque la fuente no se
+haya descargado todavía.
+
+00:01:47.716 --> 00:01:51.066 align:middle
+Puedes utilizar primero la fuente
+predeterminada del sistema, mostrar el texto,
+
+00:01:51.306 --> 00:01:54.426 align:middle
+terminar de descargar este archivo
+de fuente y luego utilizarla.
+
+00:01:55.116 --> 00:01:58.846 align:middle
+Esencialmente, este archivo CSS
+está escrito de forma que todos
+
+00:01:58.846 --> 00:02:02.126 align:middle
+estos archivos de fuentes se
+descargarán perezosamente.
+
+00:02:02.916 --> 00:02:08.116 align:middle
+El problema, que en realidad no es un
+gran problema, es que, en este punto,
+
+00:02:08.426 --> 00:02:14.456 align:middle
+nuestro navegador simplemente ve un archivo CSS y
+piensa: ¡ Necesito descargar ese archivo CSS ahora mismo
+
+00:02:14.456 --> 00:02:16.996 align:middle
+y no puedo renderizar la
+página hasta que termine!
+
+00:02:17.516 --> 00:02:22.286 align:middle
+Una vez que por fin ve el contenido
+del CSS, descubre que hay un montón
+
+00:02:22.286 --> 00:02:24.716 align:middle
+de archivos de fuentes que
+puede descargar perezosamente.
+
+00:02:25.426 --> 00:02:28.886 align:middle
+Así pues, los archivos CSS son recursos
+que bloquean la renderización...
+
+00:02:29.086 --> 00:02:34.116 align:middle
+lo que normalmente es estupendo, porque no
+queremos que la página se renderice sin estilo
+
+00:02:34.116 --> 00:02:37.126 align:middle
+durante medio segundo antes
+de que se descargue el CSS.
+
+00:02:37.696 --> 00:02:42.326 align:middle
+Pero este archivo en concreto es curioso porque
+es un recurso que "bloquea la renderización"...
+
+00:02:42.546 --> 00:02:44.706 align:middle
+pero no contiene nada crítico.
+
+00:02:45.456 --> 00:02:48.716 align:middle
+Si nos preocupamos lo suficiente como para eliminar
+este recurso que bloquea la renderización,
+
+00:02:48.916 --> 00:02:51.196 align:middle
+podemos moverlo a app.css.
+
+00:02:52.006 --> 00:02:53.266 align:middle
+Empieza copiando este archivo...
+
+00:02:53.686 --> 00:02:59.036 align:middle
+o, en realidad, sólo las fuentes que necesitamos: muchas
+de ellas son para idiomas que no estamos utilizando.
+
+00:02:59.826 --> 00:03:01.496 align:middle
+Copiaré las dos fuentes latinas...
+
+00:03:01.816 --> 00:03:04.986 align:middle
+aunque es probable que ni siquiera
+necesitemos esta de extensión latina.
+
+00:03:05.646 --> 00:03:13.226 align:middle
+Después borra este archivo CSS por completo,
+ve a assets/styles/app.css, y pégalo.
+
+00:03:14.056 --> 00:03:15.796 align:middle
+No son URL reales...
+
+00:03:15.916 --> 00:03:17.476 align:middle
+así que copia la URL...
+
+00:03:20.046 --> 00:03:22.816 align:middle
+pega, quita el index.css...
+
+00:03:23.246 --> 00:03:24.626 align:middle
+y debería estar bien.
+
+00:03:25.666 --> 00:03:27.056 align:middle
+Vuelve a copiar la URL...
+
+00:03:27.556 --> 00:03:29.336 align:middle
+y haz lo mismo aquí abajo.
+
+00:03:30.586 --> 00:03:36.196 align:middle
+Perfecto. Esto añade cierta complejidad a
+nuestro código a cambio de una pequeña ganancia,
+
+00:03:36.456 --> 00:03:38.726 align:middle
+así que yo diría que es una prioridad menor.
+
+00:03:39.286 --> 00:03:42.326 align:middle
+Tenemos básicamente la misma
+cantidad de CSS que antes,
+
+00:03:42.586 --> 00:03:46.566 align:middle
+pero hemos eliminado un pequeño
+recurso de bloqueo innecesario.
+
+00:03:47.496 --> 00:03:49.176 align:middle
+El otro fallo que tenemos es similar.
+
+00:03:49.426 --> 00:03:53.336 align:middle
+Es para FontAwesome - concretamente,
+este archivo JavaScript.
+
+00:03:53.926 --> 00:03:56.456 align:middle
+También está en base.html.twig.
+
+00:03:57.316 --> 00:04:01.906 align:middle
+Como esta etiqueta <script>
+no tiene defer ni async,
+
+00:04:02.286 --> 00:04:05.026 align:middle
+también bloqueará la
+renderización de la página.
+
+00:04:05.826 --> 00:04:11.396 align:middle
+Si queremos, podemos añadir defer a esto, que
+dice: Comienza a descargar esto inmediatamente,
+
+00:04:11.716 --> 00:04:13.956 align:middle
+pero no bloquees la página
+mientras está terminando.
+
+00:04:14.596 --> 00:04:19.616 align:middle
+Como esto es para fuentes FontAwesome, en
+el peor de los casos la página se carga
+
+00:04:19.926 --> 00:04:22.826 align:middle
+y nuestros iconos de fuentes
+aparecen un momento después.
+
+00:04:23.816 --> 00:04:27.356 align:middle
+Bien, ahora que hemos cambiado un
+par de cosas, vamos a probarlo.
+
+00:04:27.886 --> 00:04:33.596 align:middle
+Para ahorrar tiempo de redistribución, volveré
+a mi sitio local y ejecutaré Lighthouse de nuevo.
+
+00:04:34.956 --> 00:04:36.086 align:middle
+"Analizar carga de página"...
+
+00:04:39.186 --> 00:04:41.246 align:middle
+hazlo un poco más grande, y...
+
+00:04:41.586 --> 00:04:44.526 align:middle
+¡impresionante! ¡Estamos
+obteniendo 100 localmente!
+
+00:04:45.186 --> 00:04:46.296 align:middle
+Pero si miras aquí abajo...
+
+00:04:46.486 --> 00:04:49.426 align:middle
+aún tenemos algunas oportunidades de mejora.
+
+00:04:50.186 --> 00:04:55.786 align:middle
+Vemos "Servir imágenes en formatos next gen",
+que es algo bueno para comprobar más adelante,
+
+00:04:55.786 --> 00:04:58.366 align:middle
+pero que no está relacionado
+con Symfony ni con AssetMapper.
+
+00:04:58.956 --> 00:05:04.256 align:middle
+Esto de "Evitar servir JavaScript heredado
+a navegadores modernos" creo que se refiere
+
+00:05:04.256 --> 00:05:09.556 align:middle
+al shim importmap: el código que hace que el mapa
+de importación funcione en todos los navegadores.
+
+00:05:10.086 --> 00:05:12.856 align:middle
+Es pequeño y necesario,
+así que no es gran cosa.
+
+00:05:13.356 --> 00:05:18.326 align:middle
+Pero debajo vemos "Evitar
+encadenar peticiones críticas".
+
+00:05:18.816 --> 00:05:21.896 align:middle
+Éste es probablemente el punto
+más importante de la lista.
+
+00:05:22.446 --> 00:05:23.866 align:middle
+Esto es lo que ocurre.
+
+00:05:24.346 --> 00:05:27.566 align:middle
+Como puedes ver, primero descarga el HTML.
+
+00:05:27.986 --> 00:05:32.866 align:middle
+Una vez que lo hace, se da cuenta de
+que necesita descargar este archivo CSS.
+
+00:05:33.546 --> 00:05:39.396 align:middle
+Una vez que descarga el archivo CSS, se da cuenta
+de que necesita descargar este archivo de fuentes.
+
+00:05:39.946 --> 00:05:41.036 align:middle
+¿Ves el problema? En
+
+00:05:41.656 --> 00:05:46.826 align:middle
+lugar de saber -desde el principio- que
+los necesita y descargarlos todos a la vez
+
+00:05:46.826 --> 00:05:51.396 align:middle
+en paralelo, nuestro navegador
+los va descubriendo poco a poco.
+
+00:05:52.026 --> 00:05:55.466 align:middle
+En última instancia, esto significa que este
+archivo de fuente tardará más en cargarse
+
+00:05:55.596 --> 00:05:59.486 align:middle
+porque no puede empezar a descargarlo
+hasta que descargue algunos otros archivos.
+
+00:06:00.126 --> 00:06:01.326 align:middle
+¿Cómo podemos solucionar esto?
+
+00:06:01.796 --> 00:06:02.626 align:middle
+Precargando.
+
+00:06:03.216 --> 00:06:05.796 align:middle
+Hablemos de este importante
+tema a continuación.

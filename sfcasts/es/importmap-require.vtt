@@ -1,0 +1,262 @@
+WEBVTT
+
+00:00:01.186 --> 00:00:05.366 align:middle
+En nuestro código, podemos utilizar
+declaraciones import con rutas relativas,
+
+00:00:05.366 --> 00:00:08.666 align:middle
+clases ES6: todo a lo que
+estamos acostumbrados.
+
+00:00:08.936 --> 00:00:10.936 align:middle
+Es lo de siempre.
+
+00:00:11.396 --> 00:00:14.936 align:middle
+Excepto, ¿cómo podemos
+utilizar paquetes de terceros?
+
+00:00:15.696 --> 00:00:22.316 align:middle
+Como vimos antes, podemos importar cosas a
+través de una URL completa, como import _ from,
+
+00:00:22.696 --> 00:00:25.956 align:middle
+y yo pegaré la URL CDN que usamos antes.
+
+00:00:26.476 --> 00:00:31.766 align:middle
+Hecho esto, el resto es normal:
+añadir _.camelCase() al registro.
+
+00:00:34.406 --> 00:00:35.976 align:middle
+Si refrescamos y comprobamos la consola...
+
+00:00:36.556 --> 00:00:37.826 align:middle
+funciona.
+
+00:00:38.356 --> 00:00:40.576 align:middle
+Pero ¡no me gusta!
+
+00:00:41.096 --> 00:00:46.276 align:middle
+No quiero tener que incluir esta URL loca en
+todos los sitios en los que utilice lodash.
+
+00:00:46.646 --> 00:00:48.626 align:middle
+¿Y qué pasa si actualizamos lodash...
+
+00:00:48.676 --> 00:00:52.426 align:middle
+y tengo que cambiar la URL
+en 10 archivos diferentes?
+
+00:00:52.676 --> 00:00:59.376 align:middle
+¡Qué pena! Si utilizáramos un sistema de compilación,
+como Webpack, podríamos decir simplemente: yarn add lodash
+
+00:00:59.456 --> 00:01:06.916 align:middle
+o npm install lodash No estamos utilizando
+yarn o npm, pero podemos hacer casi lo mismo.
+
+00:01:07.396 --> 00:01:13.226 align:middle
+En el terminal, abre una nueva pestaña y
+ejecuta php bin/console importmap:require seguido
+
+00:01:13.226 --> 00:01:19.406 align:middle
+del nombre del paquete NPM
+que queremos: lodash: ¡Listo!
+
+00:01:20.096 --> 00:01:26.676 align:middle
+Ha añadido lodash a importmap.php y nos dice que
+podemos utilizar el paquete como de costumbre.
+
+00:01:27.226 --> 00:01:30.906 align:middle
+Esto significa que podemos
+decir import _ from 'lodash'...
+
+00:01:31.496 --> 00:01:34.056 align:middle
+y todo funcionará correctamente.
+
+00:01:34.576 --> 00:01:43.076 align:middle
+¿Cómo? Cuando ejecutamos el comando, hizo un pequeño
+cambio: añadió esta sección a importmap.php.
+
+00:01:43.076 --> 00:01:45.786 align:middle
+Y aunque esto sea genial, no es magia.
+
+00:01:46.376 --> 00:01:51.656 align:middle
+Entre bastidores, el comando fue a la CDN
+de JSDelivr, encontró la última versión
+
+00:01:51.656 --> 00:01:55.726 align:middle
+de lodash, y luego añadió el
+conjunto de claves lodash a esa URL.
+
+00:01:55.756 --> 00:02:00.396 align:middle
+Si te acercas y miras la
+fuente de la página...
+
+00:02:00.396 --> 00:02:01.806 align:middle
+¡no hay sorpresa!
+
+00:02:02.076 --> 00:02:05.676 align:middle
+¡Tenemos una nueva entrada
+lodash dentro de la importmap !
+
+00:02:06.466 --> 00:02:12.746 align:middle
+Cuando nuestro navegador ve import _ from
+'lodash', busca lodash dentro de importmap,
+
+00:02:12.956 --> 00:02:16.636 align:middle
+encuentra esta URL y la descarga desde allí.
+
+00:02:17.126 --> 00:02:19.246 align:middle
+¡Nuestro navegador es el héroe!
+
+00:02:19.986 --> 00:02:24.476 align:middle
+Una pega es que no tenemos
+autocompletado en nuestro editor.
+
+00:02:24.916 --> 00:02:26.966 align:middle
+Dice "Módulo no instalado".
+
+00:02:27.436 --> 00:02:28.176 align:middle
+Y si digo _....
+
+00:02:28.306 --> 00:02:31.256 align:middle
+en realidad no funciona.
+
+00:02:31.636 --> 00:02:33.296 align:middle
+Autocompleta camelCase...
+
+00:02:33.336 --> 00:02:35.716 align:middle
+pero sólo porque lo estoy
+utilizando aquí abajo.
+
+00:02:35.716 --> 00:02:39.886 align:middle
+Espero que PhpStorm lo soporte mejor pronto.
+
+00:02:40.766 --> 00:02:43.396 align:middle
+Hay una solución, pero es un poco manual.
+
+00:02:43.986 --> 00:02:51.566 align:middle
+Copia el paquete, entra en base.html.twig y añade una
+etiqueta temporal <script> que apunte a esto.
+
+00:02:51.616 --> 00:02:54.386 align:middle
+Pulsa "alt" + "enter" y
+selecciona "Descargar biblioteca".
+
+00:02:55.156 --> 00:03:00.656 align:middle
+Esto descarga esto en la sección "Bibliotecas
+externas" de aquí abajo: /lodash.
+
+00:03:01.396 --> 00:03:04.066 align:middle
+Vale, elimina la etiqueta script. De
+
+00:03:04.286 --> 00:03:09.596 align:middle
+vuelta a app.js, seguirá subrayando la
+importación como si no supiera lo que es,
+
+00:03:10.086 --> 00:03:13.036 align:middle
+pero autocompleta cuando usamos _. algo.
+
+00:03:13.276 --> 00:03:16.846 align:middle
+Por ejemplo, tail() es de lodash.
+
+00:03:18.286 --> 00:03:21.556 align:middle
+¿Qué pasa con la actualización de las
+versiones de los paquetes dentro de importmap ?
+
+00:03:22.266 --> 00:03:24.436 align:middle
+Whelp, ¡hay un comando para eso!
+
+00:03:24.436 --> 00:03:29.196 align:middle
+php bin/console importmap:update
+Que recorrerá en bucle cada paquete
+
+00:03:29.196 --> 00:03:31.816 align:middle
+y actualizará su URL a la última versión.
+
+00:03:32.366 --> 00:03:34.626 align:middle
+Ésta ya es la última versión...
+
+00:03:35.136 --> 00:03:37.346 align:middle
+pero si la cambiamos a .19...
+
+00:03:37.716 --> 00:03:39.376 align:middle
+y ejecutamos el comando update...
+
+00:03:39.716 --> 00:03:42.506 align:middle
+vuelve a .21.
+
+00:03:43.286 --> 00:03:48.926 align:middle
+El comando podría ser más flexible -por ejemplo,
+permitiéndote actualizar sólo un paquete,
+
+00:03:49.096 --> 00:03:54.296 align:middle
+o teniendo algunas restricciones de versión-
+y esas cosas podrían añadirse en el futuro.
+
+00:03:54.296 --> 00:03:59.426 align:middle
+Por último, si no quieres depender
+de la CDN, no tienes por qué hacerlo.
+
+00:03:59.976 --> 00:04:05.206 align:middle
+Para evitarlo, cuando requieras el paquete
+-o en cualquier momento posterior- pasa la
+
+00:04:05.406 --> 00:04:13.096 align:middle
+opción--download: En importmap.php, esto
+sigue mostrando la URL de origen a la CDN,
+
+00:04:13.736 --> 00:04:17.836 align:middle
+pero descarga ese archivo en
+un directorio assets/vendor/.
+
+00:04:18.506 --> 00:04:22.756 align:middle
+Este downloaded_to apunta a la
+ruta lógica de ese archivo.
+
+00:04:23.556 --> 00:04:24.446 align:middle
+¿Cuál es el resultado?
+
+00:04:24.966 --> 00:04:26.626 align:middle
+Cuando vamos y actualizamos ....
+
+00:04:27.066 --> 00:04:29.506 align:middle
+y "Ver fuente de la página"...
+
+00:04:29.546 --> 00:04:32.726 align:middle
+¡el importmap apunta ahora al archivo local!
+
+00:04:33.086 --> 00:04:35.266 align:middle
+Ya no dependemos de la CDN.
+
+00:04:35.686 --> 00:04:37.086 align:middle
+Pero... ¿y ahora qué?
+
+00:04:37.496 --> 00:04:40.926 align:middle
+¿Confirmamos este archivo vendor/lodash.js?
+
+00:04:41.606 --> 00:04:42.436 align:middle
+La respuesta es...
+
+00:04:42.756 --> 00:04:47.166 align:middle
+sí. Al menos en este momento, esa
+es la única forma de versionar
+
+00:04:47.166 --> 00:04:49.356 align:middle
+ese archivo y mantenerlo en tu repositorio.
+
+00:04:50.106 --> 00:04:55.236 align:middle
+Así que, incluso sin npm ni yarn, podemos
+utilizar cualquier paquete npm que queramos.
+
+00:04:55.616 --> 00:05:00.636 align:middle
+¡Guau! Pero a veces, en lugar
+de importar un paquete entero,
+
+00:05:00.786 --> 00:05:03.586 align:middle
+puede que sólo queramos
+importar un archivo concreto.
+
+00:05:04.336 --> 00:05:06.296 align:middle
+Hablemos de cómo podemos
+hacerlo a continuación.

@@ -17,6 +17,8 @@ To do that, say `rel="preload"` then `href=""` and paste that long URL. And when
 preloading fonts, we need to add `as="font"`, `type="font/woff2"`, and
 `crossorigin=""` at the end.
 
+[[[ code('43068d15f9') ]]]
+
 Ok, let's see what Lighthouse thinks of this! After... we *still* score 100 -
 yay! -  and under "Avoid chaining critical requests", that font file is *gone*.
 
@@ -38,6 +40,8 @@ down here that looks similar: `<link rel="preload" href="">`. This time,
 use a Twig function called `preload()` passing the normal `asset()` function to point
 to `styles/app.tailwind.css`. In this case, this `preload` function needs another
 option called `as: 'style'`.
+
+[[[ code('ecf6b6c52d') ]]]
 
 That's it! Go refresh the page and "View page source". No surprise: this outputs
 a `preload` tag. And... so far, the `preload()` Twig function looks like nothing
@@ -73,6 +77,8 @@ with JavaScript.
 Over in `importmap.php`, there's a key called `preload` that we haven't
 talked about. It's set to `true` for `app`. Set that to `false`.
 
+[[[ code('315e3713ee') ]]]
+
 Now, move over and run another Lighthouse report. We still get a score of 100, but
 if we go down here, ah: "Avoid chaining critical requests" is back! And check it
 out! We have the HTML page, down to `app.js`, then `bootstrap.js`, the Stimulus
@@ -87,6 +93,8 @@ it has to *discover* them little-by-little.
 
 `preload` fixes that. Change this back to `true`, refresh the page, and view
 page's source.
+
+[[[ code('6fd1a495d9') ]]]
 
 We know that the `importmap()` Twig function dumps the `importmap` and the
 `<script type="module">`. But it *also* dumps these `modulepreload` things. These
@@ -122,6 +130,8 @@ if you want to avoid this chaining problem, you could add `preload` to the items
 we *know* will be critical to the page rendering. For example, `@hotwired/stimulus`
 is critical, `stimulus-bundle` is critical because that's what loads our controllers,
 and `@hotwired/turbo` is also critical.
+
+[[[ code('52e792cb98') ]]]
 
 When we refresh... nothing changes: we just have more `modulepreload` items in the
 HTML. If we run Lighthouse one more time, we're *still* scoring 100, and you can

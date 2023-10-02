@@ -1,0 +1,415 @@
+WEBVTT
+
+00:00:01.196 --> 00:00:03.466 align:middle
+Elimina la etiqueta <img>, para
+que podamos ver nuestra página normal.
+
+00:00:05.156 --> 00:00:09.106 align:middle
+No te preocupes por nuestro pequeño pingüino:
+seguimos teniéndolo aquí arriba en el logotipo.
+
+00:00:10.106 --> 00:00:14.486 align:middle
+Cuando actualicemos la página, observa
+que tenemos un mensaje console.log()...
+
+00:00:14.656 --> 00:00:18.226 align:middle
+que dice que viene de assets/app.js.
+
+00:00:18.906 --> 00:00:21.816 align:middle
+Si nos dirigimos a assets/app.js...
+
+00:00:22.376 --> 00:00:23.556 align:middle
+¡sí! ¡Ahí está!
+
+00:00:24.036 --> 00:00:29.656 align:middle
+Sabemos que aquí podemos escribir código ES6
+moderno, así como importar otros archivos.
+
+00:00:30.156 --> 00:00:31.986 align:middle
+Vamos a hacer todo eso.
+
+00:00:32.256 --> 00:00:38.426 align:middle
+Pero primero: ¿Cómo y por qué
+se está ejecutando este archivo?
+
+00:00:38.876 --> 00:00:43.076 align:middle
+Nuestro CSS se está cargando gracias a esta
+bonita y aburrida etiqueta <link>.
+
+00:00:44.036 --> 00:00:47.186 align:middle
+No vemos una etiqueta
+<script> para app.js...
+
+00:00:47.506 --> 00:00:50.506 align:middle
+pero sí vemos esta función importmap().
+
+00:00:50.876 --> 00:00:51.996 align:middle
+Y ahí está la clave.
+
+00:00:52.766 --> 00:00:55.246 align:middle
+De vuelta al sitio, mira el
+código fuente de la página.
+
+00:00:56.426 --> 00:00:57.066 align:middle
+Aquí abajo...
+
+00:00:57.876 --> 00:01:00.266 align:middle
+esto es lo que añade importmap.
+
+00:01:00.686 --> 00:01:08.116 align:middle
+Vamos a hablar de cada parte, pero lo más
+importante ahora mismo está al final:
+
+00:01:09.046 --> 00:01:13.306 align:middle
+Antes, cuando creamos un archivo
+app.js dentro del directorio public/,
+
+00:01:13.686 --> 00:01:17.026 align:middle
+éste es casi exactamente el código
+que escribimos para cargarlo.
+
+00:01:17.586 --> 00:01:20.756 align:middle
+Utilizamos import y luego
+la ruta a ese archivo.
+
+00:01:21.566 --> 00:01:24.426 align:middle
+Pero... esta vez, sólo dice app.
+
+00:01:25.006 --> 00:01:30.726 align:middle
+¿No debería decir algo
+como /assets/app.12345.js"?
+
+00:01:31.296 --> 00:01:34.966 align:middle
+¿Cómo sabe que app se refiere a
+la versión final de este archivo?
+
+00:01:35.846 --> 00:01:39.906 align:middle
+Aquí es donde brilla la
+parte importmap, aquí arriba.
+
+00:01:40.726 --> 00:01:44.726 align:middle
+Esta sección se genera a partir de un archivo
+importmap.php dentro de nuestro proyecto.
+
+00:01:45.076 --> 00:01:49.176 align:middle
+El archivo no es superinteresante
+todavía: será más útil pronto
+
+00:01:49.226 --> 00:01:51.406 align:middle
+, cuando hablemos de JavaScript de terceros.
+
+00:01:51.816 --> 00:01:59.466 align:middle
+Pero tiene esta clave app que apunta a nuestro
+archivo assets/app.js utilizando su ruta lógica.
+
+00:02:00.576 --> 00:02:05.246 align:middle
+Gracias a eso, este <script
+type="importmap"> se vuelca en la página.
+
+00:02:05.816 --> 00:02:10.466 align:middle
+Cuando importas algo que no
+empieza por ".", "/" o "../", se
+
+00:02:10.546 --> 00:02:14.206 align:middle
+denomina importación desnuda.
+
+00:02:14.806 --> 00:02:17.886 align:middle
+Normalmente lo vemos en
+bibliotecas de terceros. En
+
+00:02:18.386 --> 00:02:24.506 align:middle
+el entorno del navegador, cuando ve una "importación
+desnuda", tu navegador busca un importmap en
+
+00:02:24.506 --> 00:02:26.906 align:middle
+la página para encontrar una entrada
+que coincida. Nuestro navegador
+
+00:02:27.396 --> 00:02:33.746 align:middle
+ve import 'app', encuentra esta clave
+aquí, y esa es la ruta que descarga. De
+
+00:02:34.456 --> 00:02:38.376 align:middle
+hecho, copia esta ruta
+de aquí y la pega aquí.
+
+00:02:38.976 --> 00:02:44.636 align:middle
+Por eso se está ejecutando nuestro archivo app.js:
+¡es un trabajo en equipo entre el importmap y
+
+00:02:44.916 --> 00:02:49.366 align:middle
+el <script type="module"> extra
+que arranca nuestra aplicación! Lo
+
+00:02:50.296 --> 00:02:52.566 align:middle
+mejor de importmap es que
+
+00:02:52.566 --> 00:02:56.586 align:middle
+no es una cosa de Symfony:
+es una cosa de Internet. Es
+
+00:02:57.196 --> 00:02:59.136 align:middle
+cómo funciona tu navegador.
+
+00:02:59.646 --> 00:03:03.856 align:middle
+Tenemos este archivo importmap.php,
+que es una cosa de Symfony. Pero
+
+00:03:04.316 --> 00:03:07.576 align:middle
+una vez que está en la página,
+tu navegador es la estrella. Y
+
+00:03:08.286 --> 00:03:10.016 align:middle
+importmap funciona en... la mayoría de los
+
+00:03:10.186 --> 00:03:11.706 align:middle
+navegadores. Si
+
+00:03:12.226 --> 00:03:15.906 align:middle
+vas a "caniuse.com" y buscas "importmap"...
+
+00:03:17.026 --> 00:03:20.056 align:middle
+actualmente funciona en cerca del
+81% de los navegadores. Eso sería
+
+00:03:20.616 --> 00:03:26.926 align:middle
+un gran problema, si no fuera porque la
+función importmap() también vuelca un calco.
+
+00:03:27.726 --> 00:03:28.726 align:middle
+Puedes verlo aquí. Gracias a esto
+
+00:03:29.166 --> 00:03:34.936 align:middle
+, si un navegador no soporta importmap,
+esto añade esa funcionalidad. Así que
+
+00:03:35.306 --> 00:03:37.266 align:middle
+funcionará.
+
+00:03:38.486 --> 00:03:41.746 align:middle
+Entra en app.js: vamos a escribir
+algo de código moderno. En
+
+00:03:42.296 --> 00:03:45.436 align:middle
+assets/, primero crea un nuevo
+directorio llamado lib/. Y
+
+00:03:46.006 --> 00:03:49.096 align:middle
+dentro de él, un nuevo
+archivo llamado vinyl.js.
+
+00:03:50.286 --> 00:03:54.176 align:middle
+Puedes organizar las cosas como
+quieras, y éste es un ejemplo de cómo
+
+00:03:54.176 --> 00:03:56.526 align:middle
+aislar algo de código en
+su propio archivo. Voy a
+
+00:03:57.206 --> 00:03:59.416 align:middle
+pegar la misma clase que
+teníamos antes. De vuelta
+
+00:04:00.546 --> 00:04:08.476 align:middle
+a app.js, importa esto: import Vinyl y puedo pulsar
+"tab" para autocompletar la parte from './lib/vinyl'.
+
+00:04:08.996 --> 00:04:10.756 align:middle
+Instálalo
+
+00:04:11.426 --> 00:04:13.946 align:middle
+utilizando el mismo código
+que antes... y luego
+
+00:04:14.716 --> 00:04:17.666 align:middle
+console.log(mix.describe()). ¡ Me encanta
+
+00:04:18.476 --> 00:04:19.896 align:middle
+! Estamos codificando
+
+00:04:20.246 --> 00:04:22.426 align:middle
+como siempre y utilizando ./ para importar.
+
+00:04:22.766 --> 00:04:23.766 align:middle
+Pero cuando
+
+00:04:24.546 --> 00:04:26.676 align:middle
+volvemos a actualizar... no funciona.
+
+00:04:27.016 --> 00:04:28.526 align:middle
+Fíjate en el
+
+00:04:29.016 --> 00:04:35.306 align:middle
+404: /assets/lib/vinyl procedente de
+app.js. Entonces... ¿qué está pasando
+
+00:04:35.736 --> 00:04:37.276 align:middle
+aquí? Hablaremos más
+
+00:04:37.906 --> 00:04:42.686 align:middle
+adelante sobre la depuración, pero aquí tienes
+una pista: si alguna vez notas que tu navegador
+
+00:04:42.686 --> 00:04:48.456 align:middle
+intenta descargar una ruta que no incluye la
+parte "versión" en el nombre del archivo,
+
+00:04:48.456 --> 00:04:51.536 align:middle
+algo va mal en tu ruta... y deberías
+
+00:04:52.356 --> 00:04:54.036 align:middle
+comprobar si hay errores
+tipográficos. Nuestro problema es
+
+00:04:54.686 --> 00:04:57.846 align:middle
+que necesitamos añadir el .js. Resulta
+
+00:04:57.846 --> 00:05:03.246 align:middle
+que dejar el .js desactivado es
+una cosa de Node... y funciona
+
+00:05:03.616 --> 00:05:06.506 align:middle
+si estás programando en
+Node. Pero en verdaderos
+
+00:05:06.906 --> 00:05:11.886 align:middle
+entornos JavaScript, como en tu navegador,
+sí necesitas incluirlo. Si refrescamos
+
+00:05:12.776 --> 00:05:14.116 align:middle
+ahora... ¡ya está! En
+
+00:05:14.716 --> 00:05:15.326 align:middle
+realidad fue
+
+00:05:15.326 --> 00:05:20.826 align:middle
+culpa de mi editor que faltara el .js cuando
+lo autocompletó. Afortunadamente, ¡podemos
+
+00:05:21.536 --> 00:05:23.006 align:middle
+arreglarlo! Entra en la configuración de tu
+
+00:05:23.646 --> 00:05:27.406 align:middle
+PhpStorm y busca "usar extensión
+de archivo". En "Estilo de código"
+
+00:05:28.316 --> 00:05:33.976 align:middle
+y "JavaScript", cambia "Usar extensión
+de archivo" a "Siempre". Esta vez... si
+
+00:05:35.236 --> 00:05:35.706 align:middle
+decimos
+
+00:05:36.036 --> 00:05:39.396 align:middle
+import Vinyl y pulsamos
+"tabulador", ¡bien! Obtenemos el
+
+00:05:39.596 --> 00:05:41.126 align:middle
+.js. Pero la diversión no
+
+00:05:41.756 --> 00:05:46.696 align:middle
+termina: hay algo interesante que ocurre
+entre bastidores. Haz clic en este
+
+00:05:47.246 --> 00:05:48.616 align:middle
+console.log().. . para
+
+00:05:49.066 --> 00:05:53.166 align:middle
+ver fácilmente el origen del archivo
+final app.js. Sí, su contenido
+
+00:05:54.256 --> 00:05:59.966 align:middle
+es exactamente igual al del archivo original,
+incluido el import from './lib/vinyl.js'. Sólo hay un
+
+00:06:00.506 --> 00:06:01.946 align:middle
+problema:
+
+00:06:03.096 --> 00:06:09.066 align:middle
+¡ese no es el nombre final
+del archivo vinyl.js ! Ve a
+
+00:06:09.996 --> 00:06:13.976 align:middle
+las herramientas de red, selecciona "JS" y
+busca "vinyl". Todos los archivos servidos por
+
+00:06:14.876 --> 00:06:18.806 align:middle
+AssetMapper tienen una parte
+versionada en su nombre de archivo,
+
+00:06:18.806 --> 00:06:21.556 align:middle
+y lo vemos para vinyl.js.
+Pero entonces... ¿cómo
+
+00:06:21.556 --> 00:06:23.406 align:middle
+demonios
+
+00:06:23.706 --> 00:06:25.936 align:middle
+lee nuestro navegador ./lib/vinyl.js y sabe que
+
+00:06:26.526 --> 00:06:32.366 align:middle
+debe descargar este nombre de archivo
+tan largo? La respuesta, si ves
+
+00:06:33.196 --> 00:06:37.266 align:middle
+la fuente de la página, es... redoble
+dramático de tambores... el importmap. Y
+
+00:06:37.576 --> 00:06:38.866 align:middle
+esto me encanta.
+
+00:06:39.306 --> 00:06:40.826 align:middle
+El
+
+00:06:41.596 --> 00:06:42.416 align:middle
+importmap se construye a partir de
+
+00:06:42.866 --> 00:06:46.176 align:middle
+dos fuentes. La primera fuente es obvia:
+
+00:06:46.636 --> 00:06:49.586 align:middle
+importmap.php. Y pronto
+añadiremos más entradas.
+
+00:06:49.586 --> 00:06:53.176 align:middle
+La segunda fuente es más
+
+00:06:53.766 --> 00:06:56.326 align:middle
+sutil. Cada vez que nuestro
+JavaScript importa otro
+
+00:06:57.016 --> 00:07:02.206 align:middle
+archivo JavaScript utilizando una ruta relativa,
+ese archivo importado se añade automáticamente
+
+00:07:02.736 --> 00:07:05.866 align:middle
+. Esto es poderoso. Significa que nuestro
+
+00:07:06.496 --> 00:07:08.036 align:middle
+código final
+
+00:07:08.496 --> 00:07:12.956 align:middle
+puede tener el aspecto original:
+./lib/vinyl.js. Pero gracias a importmap,
+
+00:07:12.956 --> 00:07:14.376 align:middle
+nuestro
+
+00:07:15.216 --> 00:07:20.126 align:middle
+navegador descargará inteligentemente el
+archivo real con la parte de la versión larga en
+
+00:07:20.126 --> 00:07:22.166 align:middle
+el nombre. Esto es realmente
+un detalle interno,
+
+00:07:22.816 --> 00:07:26.916 align:middle
+pero está bien ver cómo funciona. Vale,
+hemos hablado un poco de importmaps...
+
+00:07:27.556 --> 00:07:30.036 align:middle
+pero no hemos visto su mayor
+
+00:07:30.246 --> 00:07:35.686 align:middle
+superpotencia: utilizar paquetes de
+terceros. Exploremos eso a continuación.

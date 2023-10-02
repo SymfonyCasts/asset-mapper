@@ -27,11 +27,18 @@ is pretty cool! We're going to let Symfony do its `build` thing, and afterward,
 add our own stuff. Right here, add `php bin/console asset-map:compile`.
 That should do it!
 
+[[[ code('5b64b210d7') ]]]
+
 Why are we running this during `build` and not `deploy`? As a rule of thumb, if
 a command's job is to "prepare" *files*, it should be in the `build` step.
 Or, another way to think about it is: if a command does *not* require a connection
 to the database or any other running services, there's a good chance it's a "build"
 thing.
+
+***TIP
+Keep your "deploy" step as fast as possible because the incoming requests are held until it finishes.
+You can find more information here: https://docs.platform.sh/overview/build-deploy.html#deploy-steps
+***
 
 Head back over here and run:
 
@@ -87,6 +94,8 @@ downloading that, moving it into the `/bin` directory (it doesn't really
 matter where it goes), making it executable, and then running
 that same command so that the output file *is* there by the time
 `asset-map:compile` runs.
+
+[[[ code('5faf3b125e') ]]]
 
 Oh, and don't forget about the TailwindBundle which makes using Tailwind - including
 this deploy step - a bit easier.

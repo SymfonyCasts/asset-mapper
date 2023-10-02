@@ -21,9 +21,15 @@ we can do something really similar.
 
 Let's start with CSS, which is pretty darn simple. In the `assets/styles/` directory,
 create an `admin.css` file and, to see if things are working, add `.admin-wrapper`
-with some X-Y padding. That'll add a little space right here. *Then*,
-go into the template for this page - `templates/admin/dashboard.html.twig` - and,
+with some X-Y padding. 
+
+[[[ code('bbe80d9cf4') ]]]
+
+That'll add a little space right here. *Then*, go into the template
+for this page - `templates/admin/dashboard.html.twig` - and,
 right here, add that class: `class="admin-wrapper"`.
+
+[[[ code('b7696d4790') ]]]
 
 At this point, the new `admin.css` file *is* technically available publicly... because
 it's in the `assets/` directory. But, we're not *using* it yet. To do that, we need
@@ -35,6 +41,8 @@ include the normal stuff and, down here, add `<link rel="stylesheet"` pointing t
 `asset('styles/admin.css')`. And... let me fix my typo up here. *That's* what
 we want.
 
+[[[ code('79f2e96dbd') ]]]
+
 Back on the site... yup! The CSS *is* being applied: we've got extra padding.
 Refreshingly simple.
 
@@ -43,6 +51,8 @@ Refreshingly simple.
 But... what about JavaScript? Once again, we'll start a lot like Encore. Create
 a new file... maybe next to `app.js` called `admin.js`. Add
 `console.log('admin.js file')` so we can see if it's loading.
+
+[[[ code('4fb4e62029') ]]]
 
 Like with the CSS file, this file *is* now publicly available... but nothing is
 *loading* it. Remember: the `app.js` file is loaded thanks to this
@@ -58,6 +68,8 @@ we're going to code as if we're in a JavaScript file. Say `import` and then the 
 to the JavaScript file. Effectively, we want something like - `/assets/admin.js`.
 But, of course, to get the real path we use the `asset()` function and pass the
 logical path: `admin.js`.
+
+[[[ code('369c9b0192') ]]]
 
 That's it! Let's try this thing! Refresh and check the console. Got it! Our `admin.js`
 file *is* being loaded! If you check out the page source... down here... *yep*. You

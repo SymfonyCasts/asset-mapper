@@ -57,6 +57,8 @@ of it, aside from `excluded_patterns`.
 Copy that key, spin over to `asset_mapper.yaml`, and on the same level as `paths`,
 paste. We want to exclude `assets/styles/app.css`.
 
+[[[ code('07a53d9490') ]]]
+
 But this isn't *quite* correct. To prove it, run
 
 ```terminal
@@ -66,6 +68,8 @@ php bin/console debug:asset
 again. If you look up... `assets/styles/app.css` is still there! That's because
 `excluded_patterns` is meant to be a *glob*. In other words, change this to
 `*/assets/styles/app.css`... and surround it by quotes.
+
+[[[ code('42f5f44348') ]]]
 
 This says that any "filesystem path" that ends with `/assets/styles/app.css` will
 be ignored. And when we try the command again...

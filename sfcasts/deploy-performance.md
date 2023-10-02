@@ -69,6 +69,8 @@ be more specific. For the regex, if the URL matches `/assets/` anything, then
 set the `expires` header to `365d`. Yes, 1 year - that's *forever* in Internet
 time!
 
+[[[ code('3d2011b3a2') ]]]
+
 Cool! Lets commit that... and deploy, deploy!
 
 ```terminal-silent skip-ci

@@ -35,6 +35,8 @@ deploys - PHP extensions, your PHP version, and quite a bit more.
 Anywhere inside, paste the `dependencies` line... and make sure it's not
 indented.
 
+[[[ code('b1a9891dc6') ]]]
+
 And just like that, we're using Composer version 2.
 
 ## Setting up the Database Serve
@@ -53,11 +55,15 @@ This is where we define *services* like databases, Redis, Elasticsearch and othe
 When we initialized the project, it noticed that we're using Postgres and added a
 database for us!
 
+[[[ code('e2d3109128') ]]]
+
 The error we're getting isn't because it can't find the database: it's because
 our PHP install is missing the `PDO_PGSQL` driver! And thanks to `.platform.app.yaml`,
 adding that is easy.
 
 Find `extensions`, and add `pdo_pgsql`.
+
+[[[ code('a31d9791f2') ]]]
 
 Ok, ready to re-deploy? Remember: deploying happens via a *push*, so we need to
 commit these files. Run `git commit -m` with an inspirational message.
@@ -120,6 +126,8 @@ that. Each "relationship" has an internal name. It could technically be anything
 but, in practice, you should use `database`. We'll see the *significance* of that
 in a moment. Set this to the word `database`, because that's the key we have here,
 then `:` followed by the *type* of the service, which is `postgresql`.
+
+[[[ code('d2e99c869e') ]]]
 
 This syntax has always looked weird to me. The *important* thing is that the key
 could be anything, like `banana`, but this `database` refers to this `database`
