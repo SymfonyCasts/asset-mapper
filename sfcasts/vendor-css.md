@@ -52,6 +52,10 @@ There are two important things about this. First, you absolutely *can* use
 Sass with AssetMapper. There are details in the documentation about how to do that...
 and hopefully we'll add a bundle soon to make it even easier.
 
+***SEEALSO
+Check the Sass bundle at [https://github.com/SymfonyCasts/sass-bundle](https://github.com/SymfonyCasts/sass-bundle)
+***
+
 Also, in a moment, we're going to add Tailwind CSS to our site, which doesn't require
 Sass, but has a very similar workflow because Tailwind needs to be "built".
 
