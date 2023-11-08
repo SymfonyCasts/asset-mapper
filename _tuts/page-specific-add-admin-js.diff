@@ -1,7 +1,0 @@
-diff --git a/assets/admin.js b/assets/admin.js
-new file mode 100644
-index 0000000..e90a589
---- /dev/null
-+++ b/assets/admin.js
-@@ -0,0 +1 @@
-+console.log('admin.js file!');
