@@ -19,7 +19,7 @@ have a `<link>` tag that points to this font file.
 
 [[[ code('0ed18657ba') ]]]
 
-When your site sees a `<link rel="stylesheet"> tag, it downloads it before it 
+When your site sees a `<link rel="stylesheet">` tag, it downloads it before it 
 renders the page. So it basically *freezes* the rendering of the page until 
 the download finishes.
 
