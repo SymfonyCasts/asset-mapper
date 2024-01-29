@@ -27,6 +27,11 @@ is pretty cool! We're going to let Symfony do its `build` thing, and afterward,
 add our own stuff. Right here, add `php bin/console asset-map:compile`.
 That should do it!
 
+***TIP
+Symfony + Platform.sh now detects AssetMapper and automatically runs this for
+you doing build. Woo!
+***
+
 [[[ code('5b64b210d7') ]]]
 
 Why are we running this during `build` and not `deploy`? As a rule of thumb, if
