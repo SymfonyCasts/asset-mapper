@@ -1,0 +1,218 @@
+diff --git a/.gitignore b/.gitignore
+index 1506387..97cd391 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -7,3 +7,7 @@
+ /var/
+ /vendor/
+ ###< symfony/framework-bundle ###
++
++###> symfony/asset-mapper ###
++/public/assets/
++###< symfony/asset-mapper ###
+diff --git a/assets/app.js b/assets/app.js
+new file mode 100644
+index 0000000..cb0082a
+--- /dev/null
++++ b/assets/app.js
+@@ -0,0 +1,7 @@
++/*
++ * Welcome to your app's main JavaScript file!
++ *
++ * This file will be included onto the page via the importmap() Twig function,
++ * which should already be in your base.html.twig.
++ */
++console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
+diff --git a/assets/styles/app.css b/assets/styles/app.css
+new file mode 100644
+index 0000000..dd6181a
+--- /dev/null
++++ b/assets/styles/app.css
+@@ -0,0 +1,3 @@
++body {
++    background-color: skyblue;
++}
+diff --git a/composer.json b/composer.json
+index c4115aa..6440fbe 100644
+--- a/composer.json
++++ b/composer.json
+@@ -15,6 +15,7 @@
+         "pagerfanta/twig": "^4.0",
+         "stof/doctrine-extensions-bundle": "^1.7",
+         "symfony/asset": "6.3.*",
++        "symfony/asset-mapper": "6.3.*",
+         "symfony/console": "6.3.*",
+         "symfony/dotenv": "6.3.*",
+         "symfony/flex": "^2",
+diff --git a/composer.lock b/composer.lock
+index 9c61d47..20fdbec 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "de213c82d96e6cd0545e0bc925d1c73a",
++    "content-hash": "4cc12cf30cdb6317423cf86e7e92f08e",
+     "packages": [
+         {
+             "name": "babdev/pagerfanta-bundle",
+@@ -2439,6 +2439,78 @@
+             ],
+             "time": "2023-04-21T14:41:17+00:00"
+         },
++        {
++            "name": "symfony/asset-mapper",
++            "version": "v6.3.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/asset-mapper.git",
++                "reference": "748ccc216ff439f1a54f6680dccdd895e2951568"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/asset-mapper/zipball/748ccc216ff439f1a54f6680dccdd895e2951568",
++                "reference": "748ccc216ff439f1a54f6680dccdd895e2951568",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=8.1",
++                "symfony/filesystem": "^5.4|^6.0",
++                "symfony/http-client": "^5.4|^6.0"
++            },
++            "require-dev": {
++                "symfony/asset": "^5.4|^6.0",
++                "symfony/browser-kit": "^5.4|^6.0",
++                "symfony/console": "^5.4|^6.0",
++                "symfony/finder": "^5.4|^6.0",
++                "symfony/framework-bundle": "^6.3",
++                "symfony/http-foundation": "^5.4|^6.0",
++                "symfony/http-kernel": "^5.4|^6.0"
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Component\\AssetMapper\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Maps directories of assets & makes them available in a public directory with versioned filenames.",
++            "homepage": "https://symfony.com",
++            "support": {
++                "source": "https://github.com/symfony/asset-mapper/tree/v6.3.0"
++            },
++            "funding": [
++                {
++                    "url": "https://symfony.com/sponsor",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/fabpot",
++                    "type": "github"
++                },
++                {
++                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
++                    "type": "tidelift"
++                }
++            ],
++            "time": "2023-05-29T13:12:36+00:00"
++        },
+         {
+             "name": "symfony/cache",
+             "version": "v6.3.0",
+diff --git a/config/packages/asset_mapper.yaml b/config/packages/asset_mapper.yaml
+new file mode 100644
+index 0000000..d1ac653
+--- /dev/null
++++ b/config/packages/asset_mapper.yaml
+@@ -0,0 +1,5 @@
++framework:
++    asset_mapper:
++        # The paths to make available to the asset mapper.
++        paths:
++            - assets/
+diff --git a/importmap.php b/importmap.php
+new file mode 100644
+index 0000000..5c2c21d
+--- /dev/null
++++ b/importmap.php
+@@ -0,0 +1,21 @@
++<?php
++
++/**
++ * Returns the import map for this application.
++ *
++ * - "path" is a path inside the asset mapper system. Use the
++ *     "debug:asset-map" command to see the full list of paths.
++ *
++ * - "preload" set to true for any modules that are loaded on the initial
++ *     page load to help the browser download them earlier.
++ *
++ * The "importmap:require" command can be used to add new entries to this file.
++ *
++ * This file has been auto-generated by the importmap commands.
++ */
++return [
++    'app' => [
++        'path' => 'app.js',
++        'preload' => true,
++    ],
++];
+diff --git a/symfony.lock b/symfony.lock
+index 978c970..44e6fe6 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -89,6 +89,21 @@
+     "symfony/asset": {
+         "version": "v6.0.3"
+     },
++    "symfony/asset-mapper": {
++        "version": "6.3",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "main",
++            "version": "6.3",
++            "ref": "e8c46ba5e488fc2d7462ab6832559ab93867370a"
++        },
++        "files": [
++            "assets/app.js",
++            "assets/styles/app.css",
++            "config/packages/asset_mapper.yaml",
++            "importmap.php"
++        ]
++    },
+     "symfony/cache": {
+         "version": "v6.0.2"
+     },
+diff --git a/templates/base.html.twig b/templates/base.html.twig
+index a26913f..dd4c21e 100644
+--- a/templates/base.html.twig
++++ b/templates/base.html.twig
+@@ -10,9 +10,11 @@
+         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+ 
+         {% block stylesheets %}
++            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+         {% endblock %}
+ 
+         {% block javascripts %}
++            {{ importmap() }}
+             <script src="https://kit.fontawesome.com/5a377fab5b.js" crossorigin="anonymous"></script>
+         {% endblock %}
+     </head>

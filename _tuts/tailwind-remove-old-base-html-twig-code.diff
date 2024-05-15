@@ -1,0 +1,22 @@
+diff --git a/templates/base.html.twig b/templates/base.html.twig
+index 3e760c5..6a3359c 100644
+--- a/templates/base.html.twig
++++ b/templates/base.html.twig
+@@ -11,7 +11,6 @@
+ 
+         {% block stylesheets %}
+             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5.0.3/index.min.css">
+-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha256-fx038NkLY4U1TCrBDiu5FWPEa9eiZu01EiLryshJbCo=" crossorigin="anonymous">
+             <link rel="stylesheet" href="{{ asset('styles/app.tailwind.css') }}">
+         {% endblock %}
+ 
+@@ -49,9 +48,6 @@
+             <!-- End Main Navigation -->
+         </div>
+ 
+-        <button class="btn btn-primary">Primary Button</button>
+-        <img src="{{ asset('images/penguin.png') }}">
+-
+         {% block body %}{% endblock %}
+ 
+         <!-- Footer -->

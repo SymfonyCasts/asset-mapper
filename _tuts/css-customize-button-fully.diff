@@ -1,0 +1,19 @@
+diff --git a/assets/styles/app.css b/assets/styles/app.css
+index d32b759..929165e 100644
+--- a/assets/styles/app.css
++++ b/assets/styles/app.css
+@@ -2,6 +2,14 @@
+     --bs-primary: #0de1fd;
+     --bs-border-radius: 1rem;
+ }
++.btn-primary {
++    --bs-btn-bg: var(--bs-primary);
++    --bs-btn-border-color: var(--bs-primary);
++    --bs-btn-disabled-bg: var(--bs-primary);
++    --bs-btn-disabled-border-color: var(--bs-primary);
++    --bs-btn-hover-bg: #0bbfd7;
++    --bs-btn-hover-border-color: #0ba7d7;
++}
+ body {
+     background-color: skyblue;
+ }

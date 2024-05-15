@@ -1,0 +1,12 @@
+diff --git a/assets/app.js b/assets/app.js
+index 343a4d4..5f16948 100644
+--- a/assets/app.js
++++ b/assets/app.js
+@@ -1,5 +1,5 @@
+ import Vinyl from './lib/vinyl.js';
+-import _ from 'lodash';
++import { camelCase } from 'lodash';
+ 
+ const mix = new Vinyl('Awesome Mix Vol. 1', 2014);
+-console.log(_.camelCase(mix.describe()));
++console.log(camelCase(mix.describe()));

@@ -4,7 +4,332 @@
             "id": "start",
             "name": "start",
             "description": null
+        },
+        {
+            "id": "basics-app-js-in-public",
+            "name": "Basics: app.js in public\/",
+            "description": null
+        },
+        {
+            "id": "basics-use-es6-class",
+            "name": "Basics: Use ES6 class",
+            "description": null
+        },
+        {
+            "id": "basics-import-other-module",
+            "name": "Basics: import other module",
+            "description": null
+        },
+        {
+            "id": "basics-script-type-module",
+            "name": "Basics: script type=\"module\"",
+            "description": null
+        },
+        {
+            "id": "basics-use-lodash-from-cdn",
+            "name": "Basics: use lodash from CDN",
+            "description": null
+        },
+        {
+            "id": "basics-remove-our-play-files",
+            "name": "Basics: remove our play files",
+            "description": null
+        },
+        {
+            "id": "install-install-asset-mapper",
+            "name": "Install: install asset-mapper",
+            "description": null
+        },
+        {
+            "id": "assetpaths-copy-image-into-project",
+            "name": "AssetPaths: copy image into project",
+            "description": null
+        },
+        {
+            "id": "assetpaths-asset-map-compile",
+            "name": "AssetPaths: asset-map:compile",
+            "description": null
+        },
+        {
+            "id": "assetpaths-remove-public-assets",
+            "name": "AssetPaths: remove public\/assets",
+            "description": null
+        },
+        {
+            "id": "assetpaths-move-favicons",
+            "name": "AssetPaths: move favicons",
+            "description": null
+        },
+        {
+            "id": "css-reference-image",
+            "name": "CSS: reference image",
+            "description": null
+        },
+        {
+            "id": "css-add-bootstrap-from-cdn",
+            "name": "CSS: add bootstrap from CDN",
+            "description": null
+        },
+        {
+            "id": "css-override-border-radius-css-variable",
+            "name": "CSS: override border-radius css variable",
+            "description": null
+        },
+        {
+            "id": "css-try-to-override-primary-color",
+            "name": "CSS: try to override primary color",
+            "description": null
+        },
+        {
+            "id": "css-customize-button-fully",
+            "name": "CSS: Customize button fully",
+            "description": null
+        },
+        {
+            "id": "css-add-inter-font",
+            "name": "CSS: Add Inter font",
+            "description": null
+        },
+        {
+            "id": "tailwind-ignore-downloaded-tailwindcss-file",
+            "name": "Tailwind: Ignore downloaded tailwindcss file",
+            "description": null
+        },
+        {
+            "id": "tailwind-init",
+            "name": "Tailwind: init",
+            "description": null
+        },
+        {
+            "id": "tailwind-customize-content-config",
+            "name": "Tailwind: customize content config",
+            "description": null
+        },
+        {
+            "id": "tailwind-copy-in-tailwind-code-to-app-css",
+            "name": "Tailwind: copy in Tailwind code to app.css",
+            "description": null
+        },
+        {
+            "id": "tailwind-include-new-built-file",
+            "name": "Tailwind: include new built file",
+            "description": null
+        },
+        {
+            "id": "tailwind-remove-old-base-html-twig-code",
+            "name": "Tailwind: Remove old base.html.twig code",
+            "description": null
+        },
+        {
+            "id": "tailwind-ignore-built-tailwind-css-file",
+            "name": "Tailwind: ignore built tailwind CSS file",
+            "description": null
+        },
+        {
+            "id": "javascript-create-vinyl-js",
+            "name": "JavaScript: create vinyl.js",
+            "description": null
+        },
+        {
+            "id": "javascript-import-without-js",
+            "name": "JavaScript: import without .js",
+            "description": null
+        },
+        {
+            "id": "javascript-add-js",
+            "name": "JavaScript: Add .js",
+            "description": null
+        },
+        {
+            "id": "importmap-use-lodash-from-full-url",
+            "name": "Importmap: use lodash from full URL",
+            "description": null
+        },
+        {
+            "id": "importmap-importmap-require-lodash",
+            "name": "Importmap: importmap:require lodash",
+            "description": null
+        },
+        {
+            "id": "importmap-download-lodash",
+            "name": "Importmap: download lodash",
+            "description": null
+        },
+        {
+            "id": "importmap-try-to-import-specific-module",
+            "name": "Importmap: Try to import specific module",
+            "description": null
+        },
+        {
+            "id": "importmap-importmap-remove-lodash",
+            "name": "Importmap: importmap:remove lodash",
+            "description": null
+        },
+        {
+            "id": "importmap-require-lodash-camelcase",
+            "name": "Importmap: require lodash\/camelCase",
+            "description": null
+        },
+        {
+            "id": "stimulus-install-stimulus-bundle",
+            "name": "Stimulus: install stimulus-bundle",
+            "description": null
+        },
+        {
+            "id": "stimulus-use-the-hello-controller",
+            "name": "Stimulus: use the hello controller",
+            "description": null
+        },
+        {
+            "id": "stimulus-output-loader-js-directly",
+            "name": "Stimulus: output loader.js directly",
+            "description": null
+        },
+        {
+            "id": "stimulus-add-goodbye-controller",
+            "name": "Stimulus: Add goodbye_controller",
+            "description": null
+        },
+        {
+            "id": "stimulus-remove-outputting-loader-js",
+            "name": "Stimulus: remove outputting loader.js",
+            "description": null
+        },
+        {
+            "id": "stimulus-install-ux-turbo",
+            "name": "Stimulus: Install ux-turbo",
+            "description": null
+        },
+        {
+            "id": "stimulus-make-controller-lazy",
+            "name": "Stimulus: make controller lazy",
+            "description": null
+        },
+        {
+            "id": "debugging-add-a-404-image",
+            "name": "Debugging: add a 404 image",
+            "description": null
+        },
+        {
+            "id": "debugging-fix-404",
+            "name": "Debugging: Fix 404",
+            "description": null
+        },
+        {
+            "id": "debugging-remove-image",
+            "name": "Debugging: remove image",
+            "description": null
+        },
+        {
+            "id": "debugging-remove-js-on-an-import",
+            "name": "Debugging: Remove .js on an import",
+            "description": null
+        },
+        {
+            "id": "debugging-re-add-js",
+            "name": "Debugging: Re-add .js",
+            "description": null
+        },
+        {
+            "id": "page-specific-create-css-file",
+            "name": "Page-Specific: Create CSS file",
+            "description": null
+        },
+        {
+            "id": "page-specific-include-css-link-tag",
+            "name": "Page-Specific: include CSS link tag",
+            "description": null
+        },
+        {
+            "id": "page-specific-add-admin-js",
+            "name": "Page-Specific: Add admin.js",
+            "description": null
+        },
+        {
+            "id": "page-specific-add-manual-script-module",
+            "name": "Page-Specific: Add manual script module",
+            "description": null
+        },
+        {
+            "id": "deploy-try-to-hide-app-css",
+            "name": "Deploy: try to hide app.css",
+            "description": null
+        },
+        {
+            "id": "deploy-add-in-front-to-hide-it",
+            "name": "Deploy: Add * in front to hide it",
+            "description": null
+        },
+        {
+            "id": "deploy-symfony-project-init",
+            "name": "Deploy: symfony project:init",
+            "description": null
+        },
+        {
+            "id": "deploy-adding-composer-pgsql",
+            "name": "Deploy: Adding composer + pgsql",
+            "description": null
+        },
+        {
+            "id": "deploy-adding-database-relationship",
+            "name": "Deploy: Adding database relationship",
+            "description": null
+        },
+        {
+            "id": "deploy-add-asset-map-compile-to-build",
+            "name": "Deploy: Add asset-map:compile to build",
+            "description": null
+        },
+        {
+            "id": "deploy-add-tailwind-compile",
+            "name": "Deploy: Add tailwind compile",
+            "description": null
+        },
+        {
+            "id": "deploy-add-long-expires",
+            "name": "Deploy: Add long expires",
+            "description": null
+        },
+        {
+            "id": "optimizing-inlining-font-files",
+            "name": "Optimizing: inlining font files",
+            "description": null
+        },
+        {
+            "id": "optimizing-add-defer-to-fontawesome",
+            "name": "Optimizing: add defer to fontawesome",
+            "description": null
+        },
+        {
+            "id": "optimizing-preloading-font",
+            "name": "Optimizing: preloading font",
+            "description": null
+        },
+        {
+            "id": "optimizing-install-web-link",
+            "name": "Optimizing: install web-link",
+            "description": null
+        },
+        {
+            "id": "optimizing-preload-css-file",
+            "name": "Optimizing: preload CSS file",
+            "description": null
+        },
+        {
+            "id": "optimizing-turn-off-preloading",
+            "name": "Optimizing: turn off preloading",
+            "description": null
+        },
+        {
+            "id": "optimizing-reactivate-preload",
+            "name": "Optimizing: reactivate preload",
+            "description": null
+        },
+        {
+            "id": "optimizing-preload-other-js-files",
+            "name": "Optimizing: Preload other .js files",
+            "description": null
         }
     ],
-    "sha": "c475f187fb2fb19fd05aee79935de3616c273646"
+    "sha": "fb0f33f1bfb38ecd886325cf9fadf6b533b2f912"
 }

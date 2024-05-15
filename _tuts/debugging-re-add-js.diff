@@ -1,0 +1,11 @@
+diff --git a/assets/app.js b/assets/app.js
+index dadeba9..33ae015 100644
+--- a/assets/app.js
++++ b/assets/app.js
+@@ -1,5 +1,5 @@
+ import './bootstrap.js';
+-import Vinyl from './lib/vinyl';
++import Vinyl from './lib/vinyl.js';
+ import camelCase from 'lodash/camelCase';
+ 
+ const mix = new Vinyl('Awesome Mix Vol. 1', 2014);

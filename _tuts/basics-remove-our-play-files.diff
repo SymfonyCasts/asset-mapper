@@ -1,0 +1,40 @@
+diff --git a/public/app.js b/public/app.js
+deleted file mode 100644
+index 9c09d03..0000000
+--- a/public/app.js
++++ /dev/null
+@@ -1,5 +0,0 @@
+-import MixedVinyl from './vinyl.js';
+-import _ from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm';
+-
+-const mix = new MixedVinyl('Awesome Mix Vol. 1', 2014);
+-console.log(_.camelCase(mix.describe()));
+diff --git a/public/vinyl.js b/public/vinyl.js
+deleted file mode 100644
+index 8d9ee64..0000000
+--- a/public/vinyl.js
++++ /dev/null
+@@ -1,11 +0,0 @@
+-export default class {
+-    constructor(title, year) {
+-        this.title = title;
+-        this.year = year;
+-    }
+-
+-    describe() {
+-        return `${this.title} was released in ${this.year}`;
+-    }
+-}
+-
+diff --git a/templates/base.html.twig b/templates/base.html.twig
+index 94020c4..a26913f 100644
+--- a/templates/base.html.twig
++++ b/templates/base.html.twig
+@@ -13,7 +13,6 @@
+         {% endblock %}
+ 
+         {% block javascripts %}
+-            <script type="module">import '{{ asset('app.js') }}';</script>
+             <script src="https://kit.fontawesome.com/5a377fab5b.js" crossorigin="anonymous"></script>
+         {% endblock %}
+     </head>

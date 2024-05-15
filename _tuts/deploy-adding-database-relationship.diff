@@ -1,0 +1,14 @@
+diff --git a/.platform.app.yaml b/.platform.app.yaml
+index 84b389f..97406ad 100644
+--- a/.platform.app.yaml
++++ b/.platform.app.yaml
+@@ -15,6 +15,9 @@ runtime:
+         - ctype
+         - pdo_pgsql
+ 
++relationships:
++    database: "database:postgresql"
++
+ #variables:
+ #    php:
+ #        # uncomment on PHP 7.4+

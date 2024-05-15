@@ -1,0 +1,15 @@
+diff --git a/tailwind.config.js b/tailwind.config.js
+new file mode 100644
+index 0000000..d947ab1
+--- /dev/null
++++ b/tailwind.config.js
+@@ -0,0 +1,9 @@
++/** @type {import('tailwindcss').Config} */
++module.exports = {
++  content: [],
++  theme: {
++    extend: {},
++  },
++  plugins: [],
++}
++

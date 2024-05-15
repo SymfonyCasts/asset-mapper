@@ -1,0 +1,24 @@
+diff --git a/.platform.app.yaml b/.platform.app.yaml
+index f9941f4..84b389f 100644
+--- a/.platform.app.yaml
++++ b/.platform.app.yaml
+@@ -2,6 +2,10 @@ name: app
+ 
+ type: php:8.1
+ 
++dependencies:
++    php:
++        composer/composer: "^2"
++
+ runtime:
+     extensions:
+         - apcu
+@@ -9,7 +13,7 @@ runtime:
+         - sodium
+         - iconv
+         - ctype
+-        
++        - pdo_pgsql
+ 
+ #variables:
+ #    php:

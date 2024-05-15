@@ -1,0 +1,19 @@
+diff --git a/templates/admin/dashboard.html.twig b/templates/admin/dashboard.html.twig
+index 6a32d68..6adc22b 100644
+--- a/templates/admin/dashboard.html.twig
++++ b/templates/admin/dashboard.html.twig
+@@ -6,6 +6,14 @@
+     <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
+ {% endblock %}
+ 
++{% block javascripts %}
++    {{ parent() }}
++
++    <script type="module">
++        import '{{ asset('admin.js') }}';
++    </script>
++{% endblock %}
++
+ {% block body %}
+     <div class="admin-wrapper">
+         <h1 class="text-xl font-bold">Admin Dashboard</h1>
