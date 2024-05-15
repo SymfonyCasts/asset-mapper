@@ -11,7 +11,7 @@ index 37df148..780b4fb 100644
          "twig/extra-bundle": "^2.12|^3.0",
          "twig/twig": "^2.12|^3.0"
 diff --git a/composer.lock b/composer.lock
-index acbe5c0..b4a58f7 100644
+index 2833981..cbc679b 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
