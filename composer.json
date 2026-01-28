@@ -3,7 +3,7 @@
     "license": "proprietary",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "babdev/pagerfanta-bundle": "^4.0",
@@ -40,7 +40,7 @@
         },
         "sort-packages": true,
         "platform": {
-            "php": "8.1.0"
+            "php": "8.2.0"
         }
     },
     "autoload": {
